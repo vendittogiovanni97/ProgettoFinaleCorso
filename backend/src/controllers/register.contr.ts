@@ -44,7 +44,7 @@ export const register = async (
       // Gestione del caso di email o username duplicati
       response.status(409).json("Email or username already exists");
     } else {
-      response.status(500).json("Internal server error");
+      response.status(409).json("Email or username already exists");
     }
   }
 }
