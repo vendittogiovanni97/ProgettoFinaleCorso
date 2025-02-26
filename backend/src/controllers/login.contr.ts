@@ -11,7 +11,6 @@ const login = async (
 ) => {
   const {body} = request;
   console.log('dati', body)
-  console.log('body')
 
   const user = await dbClient.userAccount.findUnique({
     where: {
