@@ -9,7 +9,9 @@ const login = async (
   request: Request<undefined, unknown, LoginInfo>,
   response: Response
 ) => {
-  const { body } = request;
+  const {body} = request;
+  console.log('dati', body)
+  console.log('body')
 
   const user = await dbClient.userAccount.findUnique({
     where: {
