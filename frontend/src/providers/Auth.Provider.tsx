@@ -4,6 +4,8 @@ import { LoginForm } from "../types/Login.Form.Type";
 import { RegisterForm } from "../types/Register.Form.Type";
 import { serverConfig } from "../config/fetchUrl";
 import { AuthContextType } from "../types/Auth.Context.type";
+import { backendFetch } from "../rest/backendFetch";
+
 
 export const AuthContext = createContext<AuthContextType>({
   login: async (data: LoginForm) => false,
@@ -18,20 +20,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const login = async (data: LoginForm) => {
     console.log('data', data)
-    const response = await fetch(
-      `${serverConfig.basePath}${serverConfig.basePort}${serverConfig.baseRest}/account/login`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password
-        }),
-        credentials: 'include',
-        headers: {'content-type':'application/json'} 
-      }
+    const { responseBody } = await backendFetch(
+      "/account/login",
+      "post",
+      data
     );
 
-    const res = await response.json();
+    const res = await responseBody.json();
     if (res.status === 200) {
       setIsLogged(true);
       setUserLogged(res.data);
@@ -42,17 +37,20 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   const register = async (data: RegisterForm) => {
-    const response = await fetch(
-      `${serverConfig.basePath}${serverConfig.basePort}${serverConfig.baseRest}/account/register`,
-      {
-        method: "POST",
-        body: JSON.stringify(data),
+    try {
+      const { fetchResult, responseBody } = await backendFetch(
+        "/account/register",
+        "post",
+        data
+      );
+
+      if (responseBody.status === 200) {
+        return true;
+      } else {
+        return false;
       }
-    );
-    const res = await response.json();
-    if (res.status === 200) {
-      return  true;
-    } else {
+    } catch (error) {
+      console.error("Errore durante la registrazione:", error);
       return false;
     }
   };

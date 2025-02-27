@@ -1,6 +1,8 @@
 import { useContext, useState } from "react"
-import { LoginForm } from "../types/Login.Form.Type";
-import { AuthContext } from "../providers/Auth.Provider";
+import { LoginForm } from "../../types/Login.Form.Type";
+import { AuthContext } from "../../providers/Auth.Provider";
+import { Link } from "react-router-dom";
+import './login.css'
 
 export function LoginComponents() {
   const [email, setEmail]= useState('');
@@ -18,10 +20,12 @@ export function LoginComponents() {
     }
   }
   return (
-    <div>
+    <div className="login-container">
+      <h1>Login</h1>
         <input onChange={(e)=> setEmail(e.target.value)}type="text" name="Email" placeholder="inserisci email"/>
         <input onChange={(e)=> setPassword(e.target.value)}type="text" name="password" placeholder="inserisci password"/>
         <button onClick={handleSubmit}>Login</button>
+        <p>Se non sei registrato, <Link to="/register">registrati</Link></p>
     </div>
   )
 } 
