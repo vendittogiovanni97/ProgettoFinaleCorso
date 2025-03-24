@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,63 +10,154 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
+
+enum ChannelType {
+  TEXT
+  VOICE
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  MEMBER
+}
+
+enum UserStatus {
+  ONLINE
+  OFFLINE
+  AWAY
+  DO_NOT_DISTURB
+}
+
 model User {
-  id         Int        @id @default(autoincrement())
-  firstName  String
-  lastName   String
-  birthDate  DateTime   @db.Date
-  accounts   UserAccount[]
-  messages   Message[]
-  biography  Biography?
-  chats      ChatMember[]
-}
-
-model UserAccount {
-  idAccount Int    @id @default(autoincrement())
-  userId    Int
-  username  String @unique
-  email     String @unique
+  id        Int      @id @default(autoincrement())
+  firstname String?     @db.VarChar(10)
+  lastname  String?     @db.VarChar(10)
+  username  String      @unique
+  email     String      @unique
   password  String
-  user      User   @relation(fields: [userId], references: [id])
+  avatar    String?
+  status    UserStatus? @default(OFFLINE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
-  @@map("user_accounts")  // Nome della tabella se diverso
+  // Relazioni
+  ownedServers         Server[]
+  channelMessages      ChannelMessage[]
+  sentMessages         DirectMessage[]  @relation("SentMessages")
+  receivedMessages     DirectMessage[]  @relation("ReceivedMessages")
+  serverMemberships    ServerMember[]
+  friendshipsInitiated Friendship[]     @relation("UserFriendships")
+  friendshipsReceived  Friendship[]     @relation("FriendFriendships")
+
+  @@map("users")
 }
 
-model Message {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  messageText String  @db.Text
-  sentAt     DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
+model Server {
+  id        Int      @id @default(autoincrement())
+  name      String
+  icon      String?
+  ownerId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("messages") // Nome della tabella se diverso
+  // Relazioni
+  owner    User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  channels Channel[]
+  members  ServerMember[]
+
+  @@index([ownerId])
+  @@map("servers")
 }
 
-model Chat {
-  id        Int          @id @default(autoincrement())
-  chatName  String
-  createdAt DateTime     @default(now())
-  members   ChatMember[]
+model Channel {
+  id        Int         @id @default(autoincrement())
+  name      String
+  type      ChannelType
+  serverId  Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
-  @@map("chats") // Nome della tabella se diverso
+  // Relazioni
+  server   Server           @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  messages ChannelMessage[]
+
+  @@index([serverId])
+  @@map("channels")
 }
 
-model ChatMember {
+model ServerMember {
   id       Int     @id @default(autoincrement())
   userId   Int
-  chatId   Int
-  joinedAt DateTime @default(now())
-  user     User    @relation(fields: [userId], references: [id])
-  chat     Chat    @relation(fields: [chatId], references: [id])
+  serverId Int
+  role     MemberRole @default(MEMBER)
+  nickname String?
+  joinedAt DateTime   @default(now())
 
-  @@map("chat_members") // Nome della tabella se diverso
+  // Relazioni
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, serverId])
+  @@index([userId])
+  @@index([serverId])
+  @@map("server_members")
 }
 
-model Biography {
-  id        Int    @id @default(autoincrement())
-  userId    Int @unique
-  biography String
-  user      User   @relation(fields: [userId], references: [id])
+model DirectMessage {
+  id         Int      @id @default(autoincrement())
+  content    String   @db.Text
+  senderId   Int
+  receiverId Int
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  @@map("biographies") // Nome della tabella se diverso
+  // Relazioni
+  sender   User @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId])
+  @@index([receiverId])
+  @@map("direct_messages")
+}
+
+model ChannelMessage {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  userId    Int
+  channelId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relazioni
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([channelId])
+  @@map("channel_messages")
+}
+
+model Friendship {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  friendId  Int
+  status    FriendshipStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relazioni
+  user   User @relation("UserFriendships", fields: [userId], references: [id], onDelete: Cascade)
+  friend User @relation("FriendFriendships", fields: [friendId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, friendId])
+  @@index([userId])
+  @@index([friendId])
+  @@map("friendships")
 }

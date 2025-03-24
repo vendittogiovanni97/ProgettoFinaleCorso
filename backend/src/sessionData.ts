@@ -1,40 +1,39 @@
-import 'express-session'
-import { SessionData } from 'express-session';
+import "express-session";
+import { SessionData } from "express-session";
 
-
-declare module 'express-session' {
+declare module "express-session" {
   interface SessionData {
-      userId: number;
-      email: string;
-      firstName: string;
+    id: number;
+    email: string;
+    username: string;
   }
 }
 
 export class SessionManager {
-  private static instance : SessionManager
-  private session : Map <string, SessionData> = new Map()
+  private static instance: SessionManager;
+  private session: Map<string, SessionData> = new Map();
 
-  public static getInstance(){
-    if(!SessionManager.instance) {
-      return SessionManager.instance= new SessionManager()
-    }else{
-      return SessionManager.instance
+  public static getInstance() {
+    if (!SessionManager.instance) {
+      return (SessionManager.instance = new SessionManager());
+    } else {
+      return SessionManager.instance;
     }
   }
 
-  public createSession(session:SessionData){
-    this.session.set(session.firstName, session)
+  public createSession(session: SessionData) {
+    this.session.set(session.username, session);
   }
 
-  public getSession(nome:string){
-    return this.session.get(nome)
+  public getSession(nome: string) {
+    return this.session.get(nome);
   }
 
-  public deleteSession(nome:string){
-    this.session.delete(nome)
+  public deleteSession(nome: string) {
+    this.session.delete(nome);
   }
 
-  getAllSession(){
-    return this.session
+  getAllSession() {
+    return this.session;
   }
 }

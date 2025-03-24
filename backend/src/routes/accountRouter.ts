@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { register } from "../controllers/register.contr";
-import login from "../controllers/login.contr";
+import login from "../controllers/auth/login.contr";
+import { checkAuth } from "../middleware/isLogginMiddleware";
+import { logout } from "../controllers/auth/loggout";
+import { register } from "../controllers/auth/register.contr";
 
 
 const accountRoutes = (app:Router) => {
@@ -8,7 +10,7 @@ const accountRoutes = (app:Router) => {
 
   router.post("/register", register);
   router.post("/login", login);
-  router.post("/logout",);
+  router.post("/logout", [checkAuth], logout );
   router.put("/password",)
 
   app.use("/account", router)
