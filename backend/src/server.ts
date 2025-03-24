@@ -12,7 +12,7 @@ import { oggi } from "./configuration/time.config";
 import { errorHandler } from "./middleware/errorMiddleware";
 
 dotenv.config();
-
+//prova
 const port = process.env.PORT; 
 
 if (process.env.SESSION_SECRET === undefined) {
