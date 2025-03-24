@@ -1,9 +1,6 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { ProfilePageParams } from '../types/typesProfilePage';
-
-  
-
+import React from "react";
+import { useParams } from "react-router-dom";
+import { ProfilePageParams } from "../types/components/typesProfilePage";
 
 const ProfilePage: React.FC = () => {
   const { userId } = useParams<ProfilePageParams>();

@@ -10,9 +10,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { Contact } from "../types/typesChatLists";
-import { Group } from "../types/typesChatLists";
-import { Channel } from "../types/typesDiscordSidebar";
+import { Contact } from "../types/components/typesChatLists";
+import { Group } from "../types/components/typesChatLists";
+import { Channel } from "../types/components/typesDiscordSidebar";
 
 interface AddParticipantsModalProps {
   onAddParticipant: (participant: {

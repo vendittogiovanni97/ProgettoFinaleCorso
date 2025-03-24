@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, PropsWithChildren, useState } from "react";
-import { LoginForm } from "../types/Login.Form.Type";
-import { RegisterForm } from "../types/Register.Form.Type";
-import { AuthContextType } from "../types/Auth.Context.type";
+import { LoginForm } from "../types/typesFetch/Login.Form.Type";
+import { RegisterForm } from "../types/typesFetch/Register.Form.Type";
 import backendFetch from "../services/api";
+import { AuthContextType } from "../types/typesContext/Auth.Context.type";
 
 export const AuthContext = createContext<AuthContextType>({
   login: async (data: LoginForm) => false,

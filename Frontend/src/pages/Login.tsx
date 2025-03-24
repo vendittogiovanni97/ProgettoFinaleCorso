@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
-import styled from "styled-components";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { Form, Button as Button2 } from "react-bootstrap";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import "./Login.css";
+import "../css/Login.css";
 import { AuthContext } from "../context/Auth.Provider";
 import { Link } from "react-router-dom";
+import { styled } from "styled-components";
 
 // Interfaccia per i dati del form
 interface FormData {
   email: string;
   password: string;
 }
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -88,7 +87,6 @@ const ErrorMessage = styled.p`
   margin-bottom: 1rem;
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RecoverPasswordLink = styled.a`
   color: #0066cc;
   text-decoration: none;
@@ -99,7 +97,6 @@ const RecoverPasswordLink = styled.a`
   }
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RegisterLink = styled.a`
   color: #0066cc;
   text-decoration: none;
@@ -110,7 +107,6 @@ const RegisterLink = styled.a`
     text-decoration: underline;
   }
 `;
-
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",

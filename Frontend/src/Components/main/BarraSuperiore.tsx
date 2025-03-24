@@ -13,8 +13,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { ResponsiveAppBarProps } from "../types/typesDashboard";
 import { useNavigate } from "react-router-dom";
+import { ResponsiveAppBarProps } from "../../types/components/typesDashboard";
 
 // Definisci i colori del tema
 const themeColors = {

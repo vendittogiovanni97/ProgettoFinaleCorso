@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './ContactInfoPanel.css';
-import MediaGalleryPage from './MediaGalleryPage';
+import React, { useState } from "react";
+import "../css/ContactInfoPanel.css";
+import MediaGalleryPage from "./MediaGalleryPage";
 
 interface ContactInfoPanelProps {
   contact: {
@@ -15,7 +15,7 @@ interface ContactInfoPanelProps {
   onClose: () => void;
   sharedMedia: Array<{
     id: number;
-    type: 'image' | 'document' | 'link';
+    type: "image" | "document" | "link";
     preview: string;
     name?: string;
     timestamp: Date;
@@ -23,13 +23,17 @@ interface ContactInfoPanelProps {
   }>;
 }
 
-const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({ contact, onClose, sharedMedia }) => {
+const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
+  contact,
+  onClose,
+  sharedMedia,
+}) => {
   const [showMediaGallery, setShowMediaGallery] = useState(false);
-  
+
   const mediaByType = {
-    image: sharedMedia.filter(item => item.type === 'image'),
-    document: sharedMedia.filter(item => item.type === 'document'),
-    link: sharedMedia.filter(item => item.type === 'link')
+    image: sharedMedia.filter((item) => item.type === "image"),
+    document: sharedMedia.filter((item) => item.type === "document"),
+    link: sharedMedia.filter((item) => item.type === "link"),
   };
 
   const handleMediaClick = () => {
@@ -42,7 +46,7 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({ contact, onClose, s
 
   if (showMediaGallery) {
     return (
-      <MediaGalleryPage 
+      <MediaGalleryPage
         media={sharedMedia}
         onClose={handleCloseMediaGallery}
         contactName={contact.name}
@@ -69,7 +73,9 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({ contact, onClose, s
             )}
           </div>
           <h3 className="contact-info-name">{contact.name}</h3>
-          <p className="contact-info-phone">{contact.phone || "+39 123 456 7890"}</p>
+          <p className="contact-info-phone">
+            {contact.phone || "+39 123 456 7890"}
+          </p>
         </div>
 
         <div className="contact-info-section">
@@ -78,31 +84,41 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({ contact, onClose, s
         </div>
 
         <div className="contact-info-section">
-          <div className="contact-info-media-header" onClick={handleMediaClick} style={{ cursor: 'pointer' }}>
+          <div
+            className="contact-info-media-header"
+            onClick={handleMediaClick}
+            style={{ cursor: "pointer" }}
+          >
             <h4>Media, link e documenti</h4>
-            <span className="contact-info-media-count">{sharedMedia.length}</span>
+            <span className="contact-info-media-count">
+              {sharedMedia.length}
+            </span>
             <span className="contact-info-media-arrow">›</span>
           </div>
-          
-          <div className="contact-info-media-grid" onClick={handleMediaClick} style={{ cursor: 'pointer' }}>
-            {sharedMedia.slice(0, 3).map(media => (
+
+          <div
+            className="contact-info-media-grid"
+            onClick={handleMediaClick}
+            style={{ cursor: "pointer" }}
+          >
+            {sharedMedia.slice(0, 3).map((media) => (
               <div className="contact-info-media-item" key={media.id}>
                 <div className="media-preview">
-                  {media.type === 'image' && (
+                  {media.type === "image" && (
                     <img src={media.preview} alt="Media preview" />
                   )}
-                  {media.type === 'document' && (
+                  {media.type === "document" && (
                     <div className="document-preview">
                       <span>📄</span>
                     </div>
                   )}
-                  {media.type === 'link' && (
+                  {media.type === "link" && (
                     <div className="link-preview">
                       <span>🔗</span>
                     </div>
                   )}
                 </div>
-                {media.type === 'image' && (
+                {media.type === "image" && (
                   <span className="media-duration">{media.size}</span>
                 )}
               </div>
@@ -113,7 +129,9 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({ contact, onClose, s
         <div className="contact-info-section">
           <div className="contact-info-option">
             <span className="contact-info-option-icon">⭐</span>
-            <span className="contact-info-option-text">Messaggi importanti</span>
+            <span className="contact-info-option-text">
+              Messaggi importanti
+            </span>
             <span className="contact-info-option-arrow">›</span>
           </div>
         </div>

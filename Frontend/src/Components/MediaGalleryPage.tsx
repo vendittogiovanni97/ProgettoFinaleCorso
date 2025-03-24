@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import './MediaGalleryPage.css';
+import React, { useState } from "react";
+import "../css/MediaGalleryPage.css";
 
 interface MediaGalleryPageProps {
   media: Array<{
     id: number;
-    type: 'image' | 'document' | 'link';
+    type: "image" | "document" | "link";
     preview: string;
     name?: string;
     timestamp: Date;
@@ -14,13 +14,19 @@ interface MediaGalleryPageProps {
   contactName: string;
 }
 
-const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({ media, onClose, contactName }) => {
-  const [activeTab, setActiveTab] = useState<'media' | 'documents' | 'links'>('media');
+const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({
+  media,
+  onClose,
+  contactName,
+}) => {
+  const [activeTab, setActiveTab] = useState<"media" | "documents" | "links">(
+    "media"
+  );
 
-  const filteredMedia = media.filter(item => {
-    if (activeTab === 'media') return item.type === 'image';
-    if (activeTab === 'documents') return item.type === 'document';
-    if (activeTab === 'links') return item.type === 'link';
+  const filteredMedia = media.filter((item) => {
+    if (activeTab === "media") return item.type === "image";
+    if (activeTab === "documents") return item.type === "document";
+    if (activeTab === "links") return item.type === "link";
     return true;
   });
 
@@ -34,46 +40,48 @@ const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({ media, onClose, con
       </div>
 
       <div className="media-gallery-tabs">
-        <button 
-          className={`tab-button ${activeTab === 'media' ? 'active' : ''}`}
-          onClick={() => setActiveTab('media')}
+        <button
+          className={`tab-button ${activeTab === "media" ? "active" : ""}`}
+          onClick={() => setActiveTab("media")}
         >
           Media
         </button>
-        <button 
-          className={`tab-button ${activeTab === 'documents' ? 'active' : ''}`}
-          onClick={() => setActiveTab('documents')}
+        <button
+          className={`tab-button ${activeTab === "documents" ? "active" : ""}`}
+          onClick={() => setActiveTab("documents")}
         >
           Documenti
         </button>
-        <button 
-          className={`tab-button ${activeTab === 'links' ? 'active' : ''}`}
-          onClick={() => setActiveTab('links')}
+        <button
+          className={`tab-button ${activeTab === "links" ? "active" : ""}`}
+          onClick={() => setActiveTab("links")}
         >
           Link
         </button>
       </div>
 
       <div className="media-gallery-content">
-        {activeTab === 'media' && (
+        {activeTab === "media" && (
           <div className="media-section">
             <div className="media-time-label">QUESTO MESE</div>
             <div className="media-grid">
-              {filteredMedia.map(item => (
+              {filteredMedia.map((item) => (
                 <div className="media-item" key={item.id}>
-                  {item.type === 'image' && (
+                  {item.type === "image" && (
                     <div className="media-preview">
                       <img src={item.preview} alt="Media preview" />
-                      {item.size && <span className="media-duration">{item.size}</span>}
+                      {item.size && (
+                        <span className="media-duration">{item.size}</span>
+                      )}
                     </div>
                   )}
-                  {item.type === 'document' && (
+                  {item.type === "document" && (
                     <div className="document-preview">
                       <span className="document-icon">📄</span>
                       <span className="document-name">{item.name}</span>
                     </div>
                   )}
-                  {item.type === 'link' && (
+                  {item.type === "link" && (
                     <div className="link-preview">
                       <span className="link-icon">🔗</span>
                       <span className="link-name">{item.name}</span>
@@ -85,11 +93,11 @@ const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({ media, onClose, con
           </div>
         )}
 
-        {activeTab === 'documents' && (
+        {activeTab === "documents" && (
           <div className="documents-section">
             <div className="media-time-label">QUESTO MESE</div>
             <div className="documents-list">
-              {filteredMedia.map(item => (
+              {filteredMedia.map((item) => (
                 <div className="document-item" key={item.id}>
                   <div className="document-icon">📄</div>
                   <div className="document-info">
@@ -104,11 +112,11 @@ const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({ media, onClose, con
           </div>
         )}
 
-        {activeTab === 'links' && (
+        {activeTab === "links" && (
           <div className="links-section">
             <div className="media-time-label">QUESTO MESE</div>
             <div className="links-list">
-              {filteredMedia.map(item => (
+              {filteredMedia.map((item) => (
                 <div className="link-item" key={item.id}>
                   <div className="link-preview">
                     <img src={item.preview} alt="Link preview" />
