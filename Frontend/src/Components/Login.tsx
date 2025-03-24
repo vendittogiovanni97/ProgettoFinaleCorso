@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useContext, useState } from "react";
+import styled from "styled-components";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
 import { Form, Button as Button2 } from "react-bootstrap";
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
-import './Login.css';
+import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import "./Login.css";
+import { AuthContext } from "../context/Auth.Provider";
+import { Link } from "react-router-dom";
 
 // Interfaccia per i dati del form
 interface FormData {
-  nome: string;
-  cognome: string;
   email: string;
-  dataDiNascita: string;
   password: string;
-  confermaPassword: string;
 }
 
 const Container = styled.div`
@@ -36,7 +35,8 @@ const LoginButton = styled.button`
   color: #ffcc00;
   font-weight: bold;
   cursor: pointer;
-  font-size: 1rem;`;
+  font-size: 1rem;
+`;
 
 const FormContainer = styled.div`
   background-color: #ffd700;
@@ -88,22 +88,24 @@ const ErrorMessage = styled.p`
   margin-bottom: 1rem;
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RecoverPasswordLink = styled.a`
   color: #0066cc;
   text-decoration: none;
   cursor: pointer;
-  
+
   &:hover {
     text-decoration: underline;
   }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RegisterLink = styled.a`
   color: #0066cc;
   text-decoration: none;
   cursor: pointer;
   margin-left: 5px;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -111,44 +113,31 @@ const RegisterLink = styled.a`
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    nome: '',
-    cognome: '',
-    email: '',
-    dataDiNascita: '',
-    password: '',
-    confermaPassword: '',
+    email: "",
+    password: "",
   });
 
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-
-  // Funzione per validare la password
-  const validatePassword = (password: string): boolean => {
-    const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
-    return regex.test(password);
-  };
+  const { login } = useContext(AuthContext);
 
   // Gestione del submit del form
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validazione della password
-    if (!validatePassword(formData.password)) {
-      setError('La password deve contenere almeno 6 caratteri, un numero e un carattere speciale.');
-      return;
+    const dataLogin = {
+      email: formData.email, // Correggi qui
+      password: formData.password, // E qui
+    };
+    const response = await login(dataLogin);
+    if (response) {
+      console.log("Login Successful");
+      navigate("/dashboard");
+    } else {
+      alert("Credenziali non valide");
     }
-
-    // Verifica che la password e la conferma password siano uguali
-    if (formData.password !== formData.confermaPassword) {
-      setError('Le password non coincidono.');
-      return;
-    }
-
-    setError('');
-    console.log('Dati inviati:', formData);
-    // Qui puoi aggiungere la logica per la registrazione (ad esempio, una chiamata API)
   };
 
   // Mostra/nascondi password
@@ -167,50 +156,44 @@ const Login: React.FC = () => {
 
   // Gestione del login con Google
   const handleGoogleLogin = (): void => {
-    console.log('Login con Google effettuato');
+    console.log("Login con Google effettuato");
   };
 
   // Gestione del login con Facebook
   const handleFacebookLogin = (): void => {
-    console.log('Login con Facebook effettuato');
-  };
-
-  // Reindirizza alla pagina di registrazione
-  const handleRegistrationClick = (): void => {
-    navigate('/Registration');
-  };
-
-  const handleResetPasswordClick = (): void => {
-    navigate('/ResetPassword');
-  };
-
-  // Reindirizza alla Dashboard
-  const handleDashboardClick = (): void => {
-    if (formData.email === 'eleonoratornesi@gmail.com' && formData.password === 'password1999!') {
-      navigate('/Dashboard');
-    } else {
-      alert('Credenziali non valide');
-    }
+    console.log("Login con Facebook effettuato");
   };
 
   return (
-    <Container style={{ backgroundImage: 'url(/pics/image1.jpg)', backgroundSize: 'cover'}}>
-      <h1 style={{ position: 'fixed', top: '300px', left: '15%', transform: 'translateX(-50%)', margin: '20px 0', color: '#ffd700' }}>
-        WELCOME TO 
-        <h4>DROCSID</h4>
-      </h1>
-      
-      <FormContainer style={{position: 'fixed'}}>
+    <Container
+      style={{
+        backgroundImage: "url(/pics/image1.jpg)",
+        backgroundSize: "cover",
+      }}
+    >
+      <h3
+        style={{
+          position: "fixed",
+          top: "300px",
+          left: "15%",
+          transform: "translateX(-50%)",
+          margin: "20px 0",
+          color: "#ffd700",
+        }}
+      >
+        WELCOME TO DROCSID
+      </h3>
+      <FormContainer style={{ position: "fixed" }}>
         <Typography
           component="h2"
           variant="h5"
           sx={{
-            width: '100%',
-            color: 'black',
-            fontSize: 'clamp(1.9rem, 11vw, 2.7rem)',
+            width: "100%",
+            color: "black",
+            fontSize: "clamp(1.9rem, 11vw, 2.7rem)",
             mb: 3,
-            textAlign: 'center',
-            fontWeight: 'bold'
+            textAlign: "center",
+            fontWeight: "bold",
           }}
         >
           Login
@@ -227,7 +210,7 @@ const Login: React.FC = () => {
           />
           <PasswordContainer>
             <PasswordInput
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={formData.password}
@@ -238,41 +221,65 @@ const Login: React.FC = () => {
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </PasswordButton>
           </PasswordContainer>
-          
+
           {error && <ErrorMessage>{error}</ErrorMessage>}
           <Form.Group controlId="formRememberMe">
             <Form.Check
               type="checkbox"
               label="Ricordami"
               checked={rememberMe}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRememberMe(e.target.checked)}
-              style={{color: 'black', fontWeight: 'bold'}}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setRememberMe(e.target.checked)
+              }
+              style={{ color: "black", fontWeight: "bold" }}
             />
           </Form.Group>
-          <LoginButton type="button" onClick={handleDashboardClick}>
-            Accedi
-          </LoginButton>
+          <LoginButton type="submit">Accedi</LoginButton>
         </StyledForm>
         <div className="text-center mt-3">
-          <p style={{color: 'black', fontWeight: 'bold'}}>Hai dimenticato la password?</p>
-          <RecoverPasswordLink onClick={handleResetPasswordClick} style={{textDecoration: 'none', color: 'black', fontWeight: 'bold'}}>
+          <p style={{ color: "black", fontWeight: "bold" }}>
+            Hai dimenticato la password?
+          </p>
+          <Link
+            to={"/resetpassword"}
+            style={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
             Recupera Password
-          </RecoverPasswordLink>
+          </Link>
         </div>
         <div className="text-center mt-3">
-          <Button2 variant="outline-danger" onClick={handleGoogleLogin} className="social-button google-button">
+          <Button2
+            variant="outline-danger"
+            onClick={handleGoogleLogin}
+            className="social-button google-button"
+          >
             <FontAwesomeIcon icon={faGoogle} /> Accedi con Google
           </Button2>
-          <Button2 variant="outline-primary" onClick={handleFacebookLogin} className="social-button facebook-button mt-2">
+          <Button2
+            variant="outline-primary"
+            onClick={handleFacebookLogin}
+            className="social-button facebook-button mt-2"
+          >
             <FontAwesomeIcon icon={faFacebook} /> Accedi con Facebook
           </Button2>
         </div>
         <div className="text-center mt-3">
-          <p style= {{color: 'black', fontWeight: 'bold'}}>
+          <p style={{ color: "black", fontWeight: "bold" }}>
             Non hai un account?
-            <RegisterLink onClick={handleRegistrationClick} style={{textDecoration: 'none', color: 'black', fontWeight: 'bold'}}>
+            <Link
+              to={"/registration"}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
               Registrati
-            </RegisterLink>
+            </Link>
           </p>
         </div>
       </FormContainer>

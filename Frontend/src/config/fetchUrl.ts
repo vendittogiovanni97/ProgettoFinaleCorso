@@ -1,5 +1,5 @@
 const serverConfig = {
-  basePath: "http://localhost:",
+  basePath: "https://localhost:",
   basePort: "8080",
   baseRest: "/rest",
 };
