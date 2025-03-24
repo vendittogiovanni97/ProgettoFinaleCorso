@@ -25,7 +25,7 @@ import { serverConfig } from "../config/fetchUrl";
     );
 
     const responseBody = await fetchResult.json();
-    const responseDetails= responseBody.details
+    const responseDetails = responseBody.details;
     //console.log("RESPONSE FETCH ", fetchResult, responseBody);
 
     return { fetchResult, responseBody, responseDetails };
