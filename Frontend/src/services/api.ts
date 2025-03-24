@@ -1,6 +1,6 @@
-import { serverConfig } from "../config/fetchUrl";
+import serverConfig from "../config/fetchUrl";
 
- const backendFetch = async (
+const backendFetch = async (
   url: string,
   method: "get" | "post" | "delete" | "put" = "get",
   body?: unknown
