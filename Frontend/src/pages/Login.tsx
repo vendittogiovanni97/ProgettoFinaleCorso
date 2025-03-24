@@ -9,13 +9,24 @@ import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import "../css/Login.css";
 import { AuthContext } from "../context/Auth.Provider";
 import { Link } from "react-router-dom";
-import { styled } from "styled-components";
+import {
+  Container,
+  ErrorMessage,
+  FormContainer,
+  Input,
+  LoginButton,
+  PasswordButton,
+  PasswordContainer,
+  PasswordInput,
+  StyledForm,
+} from "../styled/LoginStyled";
 
 // Interfaccia per i dati del form
 interface FormData {
   email: string;
   password: string;
 }
+/*
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -107,6 +118,8 @@ const RegisterLink = styled.a`
     text-decoration: underline;
   }
 `;
+
+ */
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
