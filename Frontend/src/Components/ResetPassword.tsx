@@ -28,13 +28,8 @@ const Card = styled(MuiCard)(() => ({
 }));
 
 const ContainerResetPassword = styled(Stack)(() => ({
-  height: "100vh",
-  minHeight: "100%",
-  padding: "16px",
-  "@media (min-width: 600px)": {
-    padding: "32px",
-  },
   backgroundImage: "url(/pics/image1.jpg)",
+  backgroundSize,
 }));
 
 const StyledButton = styled(Button)(() => ({
