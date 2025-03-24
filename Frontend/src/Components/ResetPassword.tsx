@@ -28,8 +28,12 @@ const Card = styled(MuiCard)(() => ({
 }));
 
 const ContainerResetPassword = styled(Stack)(() => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
   backgroundImage: "url(/pics/image1.jpg)",
-  backgroundSize,
+  backgroundSize: "cover",
 }));
 
 const StyledButton = styled(Button)(() => ({
@@ -167,7 +171,9 @@ const ResetPassword: React.FC = () => {
           }}
         >
           <FormControl>
-            <StyledFormLabel htmlFor="email">Email</StyledFormLabel>
+            <StyledFormLabel sx={{ color: "#ffd700" }} htmlFor="email">
+              Email
+            </StyledFormLabel>
             <StyledTextField
               error={emailError}
               helperText={emailErrorMessage}
@@ -183,7 +189,9 @@ const ResetPassword: React.FC = () => {
             />
           </FormControl>
           <FormControl>
-            <StyledFormLabel htmlFor="password">Password</StyledFormLabel>
+            <StyledFormLabel sx={{ color: "#ffd700" }} htmlFor="password">
+              Password
+            </StyledFormLabel>
             <StyledTextField
               error={passwordError}
               helperText={passwordErrorMessage}
@@ -196,7 +204,10 @@ const ResetPassword: React.FC = () => {
               fullWidth
               variant="outlined"
             />
-            <StyledFormLabel htmlFor="confirmPassword" sx={{ mt: 2 }}>
+            <StyledFormLabel
+              htmlFor="confirmPassword"
+              sx={{ mt: 2, color: "#ffd700" }}
+            >
               Conferma Password
             </StyledFormLabel>
             <StyledTextField
