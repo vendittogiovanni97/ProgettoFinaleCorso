@@ -1,6 +1,6 @@
 import { serverConfig } from "../config/fetchUrl";
 
-export const backendFetch = async (
+ const backendFetch = async (
   url: string,
   method: "get" | "post" | "delete" | "put" = "get",
   body?: unknown
@@ -33,3 +33,5 @@ export const backendFetch = async (
     throw new Error(`Errore nella fetch: ${error}`);
   }
 };
+
+export default backendFetch;
