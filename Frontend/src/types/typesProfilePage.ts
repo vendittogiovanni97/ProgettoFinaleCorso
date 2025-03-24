@@ -1,0 +1,1 @@
+export type ProfilePageParams = Record<string, string | undefined>;
