@@ -196,9 +196,9 @@ const Login: React.FC = () => {
   return (
     <Container style={{ backgroundImage: 'url(/pics/image1.jpg)', backgroundSize: 'cover'}}>
       <h1 style={{ position: 'fixed', top: '300px', left: '15%', transform: 'translateX(-50%)', margin: '20px 0', color: '#ffd700' }}>
-        WELCOME TO 
+        WELCOME TO  </h1>
         <h4>DROCSID</h4>
-      </h1>
+     
       
       <FormContainer style={{position: 'fixed'}}>
         <Typography
