@@ -6,7 +6,7 @@ interface MediaGalleryPageProps {
     id: number;
     type: "image" | "document" | "link";
     preview: string;
-    name?: string;     //mammt//
+    name?: string;     
     timestamp: Date;
     size?: string;
   }>;
