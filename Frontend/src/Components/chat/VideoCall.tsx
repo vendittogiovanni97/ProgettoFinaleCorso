@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Box, IconButton, Modal, Typography } from '@mui/material';
 import { Close, Mic, MicOff, Videocam, VideocamOff, PersonAdd, CallEnd } from '@mui/icons-material';
 import './VideoCall.css';
-import AddParticipantsModal from './AddPartecipantsModal'; // Assicurati che il percorso sia corretto
-import { Participant } from '../types/typesVideocall'; // Assicurati che il tipo sia definito
+import AddParticipantsModal from '../AddPartecipantsModal'; // Assicurati che il percorso sia corretto
+import { Participant } from '../../types/components/typesVideocall' // Assicurati che il tipo sia definito
 
 const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isMicMuted, setIsMicMuted] = useState(false); // Stato per il microfono
