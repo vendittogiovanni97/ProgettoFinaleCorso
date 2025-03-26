@@ -180,7 +180,7 @@ const Login: React.FC = () => {
         backgroundSize: "cover",
       }}
     >
-      <h3
+      <h1
         style={{
           position: "fixed",
           top: "300px",
@@ -191,7 +191,7 @@ const Login: React.FC = () => {
         }}
       >
         WELCOME TO DROCSID
-      </h3>
+      </h1>
       <FormContainer style={{ position: "fixed" }}>
         <Typography
           component="h2"
