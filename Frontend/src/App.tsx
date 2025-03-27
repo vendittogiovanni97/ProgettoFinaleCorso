@@ -14,7 +14,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/registration" element={<RegistrationForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile/:userId" element={<ProfilePage />} />{" "}
+        <Route path="/profile" element={<ProfilePage />} />{" "}
         {/* Nuova rotta per il profilo */}
         <Route path="/notfound" element={<NotFound404Paged />} />
         <Route path="*" element={<Login />} />
