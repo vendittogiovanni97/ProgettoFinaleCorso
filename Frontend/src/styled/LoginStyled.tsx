@@ -39,6 +39,8 @@ export const Input = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
+  background: white;
+  color: black;
 `;
 export const PasswordContainer = styled.div`
   position: relative;
@@ -50,6 +52,8 @@ export const PasswordInput = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
+  background: white;
+  color: black;
 `;
 
 export const PasswordButton = styled.button`
