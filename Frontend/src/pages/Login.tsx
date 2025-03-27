@@ -131,7 +131,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const { login } = useContext(AuthContext);
-
+  const [isOvered, setIsOvered] = useState(false);
   // Gestione del submit del form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -243,7 +243,13 @@ const Login: React.FC = () => {
               style={{ color: "black", fontWeight: "bold" }}
             />
           </Form.Group>
-          <LoginButton type="submit">Accedi</LoginButton>
+          
+          <LoginButton style= {{background: isOvered ? '#ffb700' : 'black', color: isOvered ? 'black': '#ffd700'}} type="submit" 
+          onMouseEnter={() => setIsOvered(true)}
+          onMouseLeave={() => setIsOvered(false)}>
+            
+          Accedi</LoginButton>
+          
         </StyledForm>
         <div className="text-center mt-3">
           <p style={{ color: "black", fontWeight: "bold" }}>
@@ -255,8 +261,7 @@ const Login: React.FC = () => {
               textDecoration: "none",
               color: "black",
               fontWeight: "bold",
-            }}
-          >
+            }}>
             Recupera Password
           </Link>
         </div>

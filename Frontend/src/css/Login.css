@@ -15,7 +15,6 @@
 }
 
 .login-button {
-    background-color: #5865f2; /* Colore del bottone */
     border: none;
     border-radius: 5px; /* Bordi arrotondati */
     width: 100%;
@@ -24,9 +23,6 @@
     color: white; /* Colore del testo */
 }
 
-.login-button:hover {
-    background-color: #434f9e; /* Colore più scuro al passaggio del mouse */
-}
 
 
 .social-button {
