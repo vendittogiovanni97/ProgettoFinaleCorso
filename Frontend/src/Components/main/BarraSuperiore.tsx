@@ -80,6 +80,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     if (setting === "Logout") {
       navigate("/Login");
     }
+    if (setting === "Profile") {
+      navigate("/profile");
+    }
   };
 
   const handleSearch = () => {

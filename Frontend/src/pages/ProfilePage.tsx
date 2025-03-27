@@ -1,43 +1,56 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { 
-  FaEdit, 
-  FaUser, 
-  FaEnvelope, 
-  FaBirthdayCake, 
-  FaMapMarkerAlt, 
+import React, { useState } from "react";
+import { useEffect } from "react";
+import {
+  FaEdit,
+  FaUser,
+  FaEnvelope,
+  FaBirthdayCake,
+  FaMapMarkerAlt,
   FaMobileAlt,
-  FaBriefcase
-} from 'react-icons/fa';
-import { Container, ProfileGrid, ProfileSidebar, Avatar, SocialLinks, ProfileContent, ProfileSection, EditableField, BioSection, BioTextarea, } from '../styled/ProfilePageStyle';
-
+  FaBriefcase,
+} from "react-icons/fa";
+import {
+  Container,
+  ProfileGrid,
+  ProfileSidebar,
+  Avatar,
+  SocialLinks,
+  ProfileContent,
+  ProfileSection,
+  EditableField,
+  BioSection,
+  BioTextarea,
+} from "../styled/ProfilePageStyle";
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState({
-    firstName: 'Alec',
-    lastName: 'Thompson',
-    jobTitle: 'Professional Developer',
-    age: '28',
-    birthDate: '1995-06-15',
-    email: 'alecthompson@mail.com',
-    phone: '(44) 123 1234 123',
-    location: 'New York, USA',
-    bio: 'Strategic thinker and innovative problem solver with a passion for turning complex challenges into elegant solutions. Experienced in developing scalable technologies and leading high-performance teams. Believer in continuous learning and pushing boundaries of what\'s possible.'
+    firstName: "Alec",
+    lastName: "Thompson",
+    jobTitle: "Professional Developer",
+    age: "28",
+    birthDate: "1995-06-15",
+    email: "alecthompson@mail.com",
+    phone: "(44) 123 1234 123",
+    location: "New York, USA",
+    bio: "Strategic thinker and innovative problem solver with a passion for turning complex challenges into elegant solutions. Experienced in developing scalable technologies and leading high-performance teams. Believer in continuous learning and pushing boundaries of what's possible.",
   });
 
   const [age, setAge] = useState(0);
 
-  const calculateAge = (birthDate:string): number => {
+  const calculateAge = (birthDate: string): number => {
     const today = new Date();
     const birthDateObj = new Date(birthDate);
     let age = today.getFullYear() - birthDateObj.getFullYear();
     const monthDifference = today.getMonth() - birthDateObj.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDateObj.getDate())
+    ) {
       age--;
     }
     return age;
   };
-  
+
   useEffect(() => {
     setAge(calculateAge(profile.birthDate));
   }, [profile.birthDate]);
@@ -51,28 +64,28 @@ const ProfilePage: React.FC = () => {
     email: false,
     phone: false,
     location: false,
-    bio: false
+    bio: false,
   });
 
   const handleInputChange = (field: keyof typeof profile, value: string) => {
-    setProfile(prev => ({
+    setProfile((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const toggleEdit = (field: keyof typeof editingFields) => {
-    setEditingFields(prev => ({
+    setEditingFields((prev) => ({
       ...prev,
-      [field]: !prev[field]
+      [field]: !prev[field],
     }));
   };
 
   const renderEditableField = (
-    field: keyof typeof profile, 
-    label: string, 
+    field: keyof typeof profile,
+    label: string,
     icon: React.ReactNode,
-    type: string = 'text'
+    type: string = "text"
   ) => {
     return (
       <EditableField>
@@ -91,10 +104,7 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
         {!editingFields[field] && (
-          <FaEdit 
-            className="edit-icon" 
-            onClick={() => toggleEdit(field)}
-          />
+          <FaEdit className="edit-icon" onClick={() => toggleEdit(field)} />
         )}
       </EditableField>
     );
@@ -105,60 +115,66 @@ const ProfilePage: React.FC = () => {
       <ProfileGrid>
         <ProfileSidebar>
           <Avatar>
-            <img 
-              src="/pics/default-avatar.png" 
-              alt="Profile" 
-            />
+            <img src="/pics/default-avatar.png" alt="Profile" />
           </Avatar>
-          <h2>{profile.firstName} {profile.lastName}</h2>
-          <p style={{ color: 'rgba(255,215,0,0.7)', marginTop: '10px' }}>
+          <h2>
+            {profile.firstName} {profile.lastName}
+          </h2>
+          <p style={{ color: "rgba(255,215,0,0.7)", marginTop: "10px" }}>
             {profile.jobTitle}
           </p>
-          
-          <SocialLinks>
-         
-          </SocialLinks>
+
+          <SocialLinks></SocialLinks>
         </ProfileSidebar>
-        
+
         <ProfileContent>
           <ProfileSection>
-            {renderEditableField('firstName', 'First Name', <FaUser />, 'text')}
-            {renderEditableField('lastName', 'Last Name', <FaUser />, 'text')}
+            {renderEditableField("firstName", "First Name", <FaUser />, "text")}
+            {renderEditableField("lastName", "Last Name", <FaUser />, "text")}
           </ProfileSection>
-          
+
           <ProfileSection>
-             <EditableField>
+            <EditableField>
               <div className="field-content">
                 <FaBirthdayCake />
                 {editingFields.birthDate ? (
                   <input
                     type="date"
                     value={profile.birthDate}
-                    onChange={(e) => handleInputChange('birthDate', e.target.value)}
-                    onBlur={() => toggleEdit('birthDate')}
+                    onChange={(e) =>
+                      handleInputChange("birthDate", e.target.value)
+                    }
+                    onBlur={() => toggleEdit("birthDate")}
                     autoFocus
                   />
                 ) : (
-                  <span>{profile.birthDate} (Age: {age})</span>
+                  <span>
+                    {profile.birthDate} (Age: {age})
+                  </span>
                 )}
               </div>
               {!editingFields.birthDate && (
-                <FaEdit 
-                  className="edit-icon" 
-                  onClick={() => toggleEdit('birthDate')}
+                <FaEdit
+                  className="edit-icon"
+                  onClick={() => toggleEdit("birthDate")}
                 />
               )}
             </EditableField>
           </ProfileSection>
 
           <ProfileSection>
-            {renderEditableField('email', 'Email', <FaEnvelope />, 'email')}
-            {renderEditableField('phone', 'Phone', <FaMobileAlt />)}
+            {renderEditableField("email", "Email", <FaEnvelope />, "email")}
+            {renderEditableField("phone", "Phone", <FaMobileAlt />)}
           </ProfileSection>
 
           <ProfileSection>
-            {renderEditableField('jobTitle', 'Job Title', <FaBriefcase />, 'text')}
-            {renderEditableField('location', 'Location', <FaMapMarkerAlt />)}
+            {renderEditableField(
+              "jobTitle",
+              "Job Title",
+              <FaBriefcase />,
+              "text"
+            )}
+            {renderEditableField("location", "Location", <FaMapMarkerAlt />)}
           </ProfileSection>
 
           <BioSection>
@@ -167,8 +183,8 @@ const ProfilePage: React.FC = () => {
                 {editingFields.bio ? (
                   <BioTextarea
                     value={profile.bio}
-                    onChange={(e) => handleInputChange('bio', e.target.value)}
-                    onBlur={() => toggleEdit('bio')}
+                    onChange={(e) => handleInputChange("bio", e.target.value)}
+                    onBlur={() => toggleEdit("bio")}
                     autoFocus
                   />
                 ) : (
@@ -176,9 +192,9 @@ const ProfilePage: React.FC = () => {
                 )}
               </div>
               {!editingFields.bio && (
-                <FaEdit 
-                  className="edit-icon" 
-                  onClick={() => toggleEdit('bio')}
+                <FaEdit
+                  className="edit-icon"
+                  onClick={() => toggleEdit("bio")}
                 />
               )}
             </EditableField>

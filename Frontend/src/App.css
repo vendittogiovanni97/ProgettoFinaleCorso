@@ -1,3 +1,4 @@
+@import "tailwindcss";
 :root {
   --primary-color: #ffd700; /* Giallo dorato */
   --secondary-color: #ffa500; /* Giallo arancione */
@@ -9,19 +10,17 @@
   --hover-color: rgba(255, 215, 0, 0.1); /* Giallo trasparente per hover */
 }
 
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
   background-color: var(--background-dark);
   color: var(--text-light);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -131,7 +130,6 @@ body {
   overflow: hidden;
 }
 
-
 .chat-container {
   flex: 1;
   display: flex;
@@ -153,7 +151,6 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 
-
 .user-info {
   display: flex;
   align-items: center;
@@ -174,10 +171,9 @@ body {
 
 .user-details a {
   font-size: 16px;
-  font-weight: 600; 
+  font-weight: 600;
   text-decoration-line: none;
   color: var(--text-light);
-
 }
 
 .user-details p {
@@ -475,7 +471,7 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   margin-left: 5px;
 }
 
@@ -493,11 +489,11 @@ body {
   .main-content {
     flex-direction: column;
   }
-  
+
   .chat-layout {
     flex-direction: column;
   }
-  
+
   .chat-list-panel {
     width: 100%;
     min-width: 100%;
@@ -505,7 +501,7 @@ body {
     position: absolute;
     z-index: 10;
   }
-  
+
   .mobile-only {
     display: flex;
   }

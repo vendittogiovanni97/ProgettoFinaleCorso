@@ -1,16 +1,18 @@
-import styled from 'styled-components';
-import { keyframes } from 'styled-components';
-
-
+import styled from "styled-components";
+import { keyframes } from "styled-components";
 
 export const Container = styled.div`
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
   padding: 60px 20px;
   justify-content: center;
   align-items: center;
-  font-family: 'Inter', 'Arial', sans-serif;
+  font-family: "Inter", "Arial", sans-serif;
+  background-image: url(/pics/image1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; // Changed from 'contain' to 'cover'
+  background-attachment: fixed; // This ensures the background stays in place during scrolling
 `;
 
 export const ProfileGrid = styled.div`
@@ -23,6 +25,7 @@ export const ProfileGrid = styled.div`
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  max-height: 1200px;
 `;
 
 export const ProfileSidebar = styled.div`
@@ -78,7 +81,6 @@ export const ProfileContent = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 25px;
 `;
-
 
 const slideIn = keyframes`
   from {
