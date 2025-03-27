@@ -1,19 +1,191 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { ProfilePageParams } from "../types/components/typesProfilePage";
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { 
+  FaEdit, 
+  FaUser, 
+  FaEnvelope, 
+  FaBirthdayCake, 
+  FaMapMarkerAlt, 
+  FaMobileAlt,
+  FaBriefcase
+} from 'react-icons/fa';
+import { Container, ProfileGrid, ProfileSidebar, Avatar, SocialLinks, ProfileContent, ProfileSection, EditableField, BioSection, BioTextarea, } from '../styled/ProfilePageStyle';
+
 
 const ProfilePage: React.FC = () => {
-  const { userId } = useParams<ProfilePageParams>();
+  const [profile, setProfile] = useState({
+    firstName: 'Alec',
+    lastName: 'Thompson',
+    jobTitle: 'Professional Developer',
+    age: '28',
+    birthDate: '1995-06-15',
+    email: 'alecthompson@mail.com',
+    phone: '(44) 123 1234 123',
+    location: 'New York, USA',
+    bio: 'Strategic thinker and innovative problem solver with a passion for turning complex challenges into elegant solutions. Experienced in developing scalable technologies and leading high-performance teams. Believer in continuous learning and pushing boundaries of what\'s possible.'
+  });
 
-  // Qui puoi fare una chiamata API per ottenere i dettagli dell'utente
-  // in base all'ID (userId).
+  const [age, setAge] = useState(0);
+
+  const calculateAge = (birthDate:string): number => {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDifference = today.getMonth() - birthDateObj.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+      age--;
+    }
+    return age;
+  };
+  
+  useEffect(() => {
+    setAge(calculateAge(profile.birthDate));
+  }, [profile.birthDate]);
+
+  const [editingFields, setEditingFields] = useState({
+    firstName: false,
+    lastName: false,
+    jobTitle: false,
+    age: false,
+    birthDate: false,
+    email: false,
+    phone: false,
+    location: false,
+    bio: false
+  });
+
+  const handleInputChange = (field: keyof typeof profile, value: string) => {
+    setProfile(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const toggleEdit = (field: keyof typeof editingFields) => {
+    setEditingFields(prev => ({
+      ...prev,
+      [field]: !prev[field]
+    }));
+  };
+
+  const renderEditableField = (
+    field: keyof typeof profile, 
+    label: string, 
+    icon: React.ReactNode,
+    type: string = 'text'
+  ) => {
+    return (
+      <EditableField>
+        <div className="field-content">
+          {icon}
+          {editingFields[field] ? (
+            <input
+              type={type}
+              value={profile[field]}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              onBlur={() => toggleEdit(field)}
+              autoFocus
+            />
+          ) : (
+            <span>{profile[field]}</span>
+          )}
+        </div>
+        {!editingFields[field] && (
+          <FaEdit 
+            className="edit-icon" 
+            onClick={() => toggleEdit(field)}
+          />
+        )}
+      </EditableField>
+    );
+  };
 
   return (
-    <div>
-      <h1>Profilo di {userId}</h1>
-      {/* Mostra i dettagli del profilo qui */}
-      <p>ID utente: {userId}</p>
-    </div>
+    <Container>
+      <ProfileGrid>
+        <ProfileSidebar>
+          <Avatar>
+            <img 
+              src="/pics/default-avatar.png" 
+              alt="Profile" 
+            />
+          </Avatar>
+          <h2>{profile.firstName} {profile.lastName}</h2>
+          <p style={{ color: 'rgba(255,215,0,0.7)', marginTop: '10px' }}>
+            {profile.jobTitle}
+          </p>
+          
+          <SocialLinks>
+         
+          </SocialLinks>
+        </ProfileSidebar>
+        
+        <ProfileContent>
+          <ProfileSection>
+            {renderEditableField('firstName', 'First Name', <FaUser />, 'text')}
+            {renderEditableField('lastName', 'Last Name', <FaUser />, 'text')}
+          </ProfileSection>
+          
+          <ProfileSection>
+             <EditableField>
+              <div className="field-content">
+                <FaBirthdayCake />
+                {editingFields.birthDate ? (
+                  <input
+                    type="date"
+                    value={profile.birthDate}
+                    onChange={(e) => handleInputChange('birthDate', e.target.value)}
+                    onBlur={() => toggleEdit('birthDate')}
+                    autoFocus
+                  />
+                ) : (
+                  <span>{profile.birthDate} (Age: {age})</span>
+                )}
+              </div>
+              {!editingFields.birthDate && (
+                <FaEdit 
+                  className="edit-icon" 
+                  onClick={() => toggleEdit('birthDate')}
+                />
+              )}
+            </EditableField>
+          </ProfileSection>
+
+          <ProfileSection>
+            {renderEditableField('email', 'Email', <FaEnvelope />, 'email')}
+            {renderEditableField('phone', 'Phone', <FaMobileAlt />)}
+          </ProfileSection>
+
+          <ProfileSection>
+            {renderEditableField('jobTitle', 'Job Title', <FaBriefcase />, 'text')}
+            {renderEditableField('location', 'Location', <FaMapMarkerAlt />)}
+          </ProfileSection>
+
+          <BioSection>
+            <EditableField>
+              <div className="field-content">
+                {editingFields.bio ? (
+                  <BioTextarea
+                    value={profile.bio}
+                    onChange={(e) => handleInputChange('bio', e.target.value)}
+                    onBlur={() => toggleEdit('bio')}
+                    autoFocus
+                  />
+                ) : (
+                  <p>{profile.bio}</p>
+                )}
+              </div>
+              {!editingFields.bio && (
+                <FaEdit 
+                  className="edit-icon" 
+                  onClick={() => toggleEdit('bio')}
+                />
+              )}
+            </EditableField>
+          </BioSection>
+        </ProfileContent>
+      </ProfileGrid>
+    </Container>
   );
 };
 
