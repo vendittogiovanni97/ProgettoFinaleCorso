@@ -1,29 +1,3 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #2f3136; /* Colore di sfondo scuro */
-    color: white; /* Colore del testo */
-}
-
-.login-card {
-    background-color: #36393f; /* Colore della card */
-    border-radius: 10px; /* Bordi arrotondati */
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra */
-}
-
-.login-button {
-    border: none;
-    border-radius: 5px; /* Bordi arrotondati */
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    color: white; /* Colore del testo */
-}
-
-
 
 .social-button {
     width: 100%;

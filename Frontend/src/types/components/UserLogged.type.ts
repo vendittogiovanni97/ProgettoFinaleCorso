@@ -4,3 +4,8 @@ export type User= {
   email: string,
 
 }
+
+export interface FormData {
+  email: string;
+  password: string;
+}
