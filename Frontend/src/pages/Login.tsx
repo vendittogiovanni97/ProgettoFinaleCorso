@@ -4,9 +4,8 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
-import { Form, Button as Button2 } from "react-bootstrap";
+import { Form} from "react-bootstrap";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import "../css/Login.css";
 import { AuthContext } from "../context/Auth.Provider";
 import { Link } from "react-router-dom";
 import { FormData } from "../types/components/UserLogged.type";
@@ -16,6 +15,7 @@ import {
   FormContainer,
   Input,
   LoginButton,
+  Button2,
   PasswordButton,
   PasswordContainer,
   PasswordInput,
@@ -36,6 +36,11 @@ const Login: React.FC = () => {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const { login } = useContext(AuthContext);
   const [isOvered, setIsOvered] = useState(false);
+  const [isGoogleHovered, setIsGoogleHovered] = useState(false);
+  const [isFacebookHovered, setIsFacebookHovered] = useState(false);
+  const [welcomeClicked, setWelcomeClicked ] = useState(false);
+
+
   // Gestione del submit del form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,6 +82,10 @@ const Login: React.FC = () => {
     console.log("Login con Facebook effettuato");
   };
 
+  const handleWelcomeClick = () =>{
+    setWelcomeClicked(!welcomeClicked);
+  }
+
   return (
     <Container
       style={{
@@ -84,18 +93,47 @@ const Login: React.FC = () => {
         backgroundSize: "cover",
       }}
     >
-      <h1
-        style={{
-          position: "fixed",
-          top: "300px",
-          left: "15%",
-          transform: "translateX(-50%)",
-          margin: "20px 0",
-          color: "#ffd700",
-        }}
-      >
-        WELCOME TO DROCSID
-      </h1>
+      <div
+       onClick={handleWelcomeClick}
+       style={{
+         position: "fixed",
+         top: "380px",
+         left: "20%",
+         transform: "translateX(-50%)",
+         display: "flex-grow",
+         flexDirection: "column",
+         alignItems: "center",
+         cursor: "pointer"
+       }}
+     >
+       <h1
+         className={`
+           text-3xl 
+           font-bold 
+           text-[#ffd700] 
+           bottom: 500px
+         `}
+       >
+         WELCOME TO
+       </h1>
+       <h2 
+         className={`
+          text-8xl
+          font-extrabold 
+          text-[#ffd700]
+          transition-all 
+          duration-300 
+          ease-in-out
+          hover:text-white
+          hover:drop-shadow-[0_0_15px_rgba(255,215,0,0.9)]
+          hover:animate-bounce
+          ${welcomeClicked ? 'scale-110' : ''}
+        `}
+       >
+         DROCSID
+       </h2>
+     </div>
+
       <FormContainer style={{ position: "fixed" }}>
         <Typography
           component="h2"
@@ -171,16 +209,24 @@ const Login: React.FC = () => {
         </div>
         <div className="text-center mt-3">
           <Button2
-            variant="outline-danger"
             onClick={handleGoogleLogin}
             className="social-button google-button"
+            style={{
+              background: isGoogleHovered ? '#ffb700' : 'black',
+              color: isGoogleHovered ? 'black': '#ffd700'}}
+            onMouseEnter={() => setIsGoogleHovered (true)}
+            onMouseLeave={() => setIsGoogleHovered (false)}
           >
             <FontAwesomeIcon icon={faGoogle} /> Accedi con Google
           </Button2>
           <Button2
-            variant="outline-primary"
             onClick={handleFacebookLogin}
             className="social-button facebook-button mt-2"
+            style= {{
+              background: isFacebookHovered ? '#ffb700' : 'black',
+              color: isFacebookHovered ? 'black' : '#ffd700'}}
+            onMouseEnter={() => setIsFacebookHovered(true)}
+            onMouseLeave={() => setIsFacebookHovered(false)}
           >
             <FontAwesomeIcon icon={faFacebook} /> Accedi con Facebook
           </Button2>

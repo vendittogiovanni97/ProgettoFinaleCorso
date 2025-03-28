@@ -21,6 +21,19 @@ export const LoginButton = styled.button`
   font-size: 1rem;
 `;
 
+export const Button2 = styled.button`
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #000000;
+  color: #ffcc00;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+`;
+
 export const FormContainer = styled.div`
   background-color: #ffd700;
   padding: 2rem;
@@ -39,8 +52,6 @@ export const Input = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background: white;
-  color: black;
 `;
 export const PasswordContainer = styled.div`
   position: relative;
@@ -52,8 +63,6 @@ export const PasswordInput = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background: white;
-  color: black;
 `;
 
 export const PasswordButton = styled.button`
