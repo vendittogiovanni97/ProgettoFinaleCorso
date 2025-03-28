@@ -10,20 +10,14 @@
   --hover-color: rgba(255, 215, 0, 0.1); /* Giallo trasparente per hover */
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
 
-body {
+/*body {
   background-color: var(--background-dark);
   color: var(--text-light);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-}
+}*/
 
 .app-wrapper {
   display: flex;
@@ -40,45 +34,6 @@ body {
   height: calc(100vh - 64px);
   margin-top: 64px; /* Space for top bar */
   overflow: hidden;
-}
-
-/* Barra superiore (AppBar) */
-.responsive-app-bar {
-  background-color: var(--background-light);
-  color: var(--text-light);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.app-logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  color: var(--text-light);
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-.nav-link:hover {
-  background-color: var(--hover-color);
 }
 
 /* Sidebar modificata (ora vuota) */

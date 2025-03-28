@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChatListsProps } from "../../types/components/typesChatLists";
+import * as S from "../../styled/ChatListStyled";
 
 const ChatLists: React.FC<ChatListsProps> = ({
   contacts,
@@ -19,87 +20,82 @@ const ChatLists: React.FC<ChatListsProps> = ({
   );
 
   const handleTabClick = (tab: "groups" | "people") => {
-    console.log(`Tab clicked: ${tab}`);
     setActiveTab(tab);
   };
 
   const handleChatClick = (id: number, isGroup: boolean, name: string) => {
-    console.log(`Chat clicked: ${id}, isGroup: ${isGroup}, name: ${name}`);
     onSelectChat(id, isGroup, name);
   };
 
   return (
-    <div className="chat-lists">
-      <div className="search-container">
-        <input
+    <S.ChatListsContainer>
+      <S.SearchContainer>
+        <S.SearchInput
           type="text"
           placeholder="Search..."
-          className="search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-      </div>
+      </S.SearchContainer>
 
-      <div className="tabs">
-        <div
-          className={`tab ${activeTab === "groups" ? "active" : ""}`}
+      <S.TabsContainer>
+        <S.Tab
+          active={activeTab === "groups"}
           onClick={() => handleTabClick("groups")}
         >
           Groups
-        </div>
-        <div
-          className={`tab ${activeTab === "people" ? "active" : ""}`}
+        </S.Tab>
+        <S.Tab
+          active={activeTab === "people"}
           onClick={() => handleTabClick("people")}
         >
           People
-        </div>
-      </div>
+        </S.Tab>
+      </S.TabsContainer>
 
-      <div className="chat-list">
+      <S.ChatList>
         {activeTab === "people" &&
           filteredContacts.map((contact) => (
-            <div
+            <S.ChatItem
               key={contact.id}
-              className={`chat-item ${activeChatId === contact.id ? "active" : ""}`}
+              active={activeChatId === contact.id}
               onClick={() => handleChatClick(contact.id, false, contact.name)}
             >
-              <div className="chat-avatar">{contact.name.charAt(0)}</div>
-              <div className="chat-details">
-                <div className="chat-name">
+              <S.ChatAvatar>{contact.name.charAt(0)}</S.ChatAvatar>
+              <S.ChatDetails>
+                <S.ChatName>
                   {contact.name}
-                  {contact.isOnline && (
-                    <span className="status-indicator"></span>
-                  )}
-                </div>
-                <div className="chat-preview">{contact.status}</div>
-              </div>
-              <div className="chat-meta">
-                <div className="chat-time">{contact.lastSeen}</div>
-                {Math.random() > 0.5 && <div className="unread-badge">1</div>}
-              </div>
-            </div>
+                  {contact.isOnline && <S.StatusIndicator />}
+                </S.ChatName>
+                <S.ChatPreview>{contact.status}</S.ChatPreview>
+              </S.ChatDetails>
+              <S.ChatMeta>
+                <S.ChatTime>{contact.lastSeen}</S.ChatTime>
+                {Math.random() > 0.5 && <S.UnreadBadge>1</S.UnreadBadge>}
+              </S.ChatMeta>
+            </S.ChatItem>
           ))}
 
         {activeTab === "groups" &&
           filteredGroups.map((group) => (
-            <div
+            <S.ChatItem
               key={group.id}
-              className={`chat-item ${activeChatId === group.id ? "active" : ""}`}
+              active={activeChatId === group.id}
               onClick={() => handleChatClick(group.id, true, group.name)}
             >
-              <div className="chat-avatar">{group.name.charAt(0)}</div>
-              <div className="chat-details">
-                <div className="chat-name">{group.name}</div>
-                <div className="chat-preview">{group.description}</div>
-              </div>
-              <div className="chat-meta">
-                <div className="chat-time">{group.lastActive}</div>
-                {Math.random() > 0.5 && <div className="unread-badge">2</div>}
-              </div>
-            </div>
+              <S.ChatAvatar>{group.name.charAt(0)}</S.ChatAvatar>
+              <S.ChatDetails>
+                <S.ChatName>{group.name}</S.ChatName>
+                <S.ChatPreview>{group.description}</S.ChatPreview>
+              </S.ChatDetails>
+              <S.ChatMeta>
+                <S.ChatTime>{group.lastActive}</S.ChatTime>
+                {Math.random() > 0.5 && <S.UnreadBadge>2</S.UnreadBadge>}
+              </S.ChatMeta>
+            </S.ChatItem>
           ))}
-      </div>
-    </div>
+      </S.ChatList>
+    </S.ChatListsContainer>
   );
 };
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,18 +15,9 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { ResponsiveAppBarProps } from "../../types/components/typesDashboard";
+import themeColors from "../../styled/BarraSuperioreStyled";
 
-// Definisci i colori del tema
-const themeColors = {
-  primary: "#ffd700", // Giallo dorato
-  secondary: "#ffa500", // Giallo arancione
-  backgroundDark: "#1a1a1a", // Nero scuro
-  backgroundLight: "#2a2a2a", // Grigio scuro
-  textLight: "#ffffff", // Testo bianco
-  textDark: "#000000", // Testo nero
-  borderColor: "#444", // Colore del bordo
-  hoverColor: "rgba(255, 215, 0, 0.1)", // Giallo trasparente per hover
-};
+
 
 // Stile per la barra di ricerca
 const Search = styled("div")(({ theme }) => ({
@@ -67,8 +58,28 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const [searchValue, setSearchValue] = React.useState("");
+  const [searchValue, setSearchValue] = React.useState<string>("");
+  
   const navigate = useNavigate();
+
+  const handleSearch = () => {
+      // Trim the search value to remove whitespace
+      const trimmedSearch = searchValue.trim();
+  
+    // Check if search value is not empty
+    if (trimmedSearch) {
+      // Log the search value (replace with your actual search logic)
+      console.log("Search value:", trimmedSearch);
+  
+      // Example navigation or search action
+      // You can customize this based on your application's requirements
+      navigate(`/search?q=${encodeURIComponent(trimmedSearch)}`);
+    } else {
+      // Optional: Handle empty search 
+      // You might want to show a toast, snackbar, or just do nothing
+      console.warn("Search input is empty");
+    }
+  };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -85,15 +96,6 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     }
   };
 
-  const handleSearch = () => {
-    console.log("Search value:", searchValue);
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
-  };
 
   return (
     <AppBar
@@ -169,7 +171,6 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
               inputProps={{ "aria-label": "search" }}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              onKeyPress={handleKeyPress}
             />
             <Box sx={{ flexGrow: 1 }}>
               <IconButton
