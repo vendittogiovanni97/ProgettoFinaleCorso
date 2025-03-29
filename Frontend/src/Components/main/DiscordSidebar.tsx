@@ -1,14 +1,14 @@
+// DiscordSidebar.tsx
 import React from "react";
 import { useState } from "react";
-import "../../css/DiscordSidebar.css";
 import {
   CategoryProps,
   ServerIconProps,
-  MinimizedChatProps,
   DiscordSidebarProps,
   Server,
   Channel,
 } from "../../types/components/typesDiscordSidebar";
+import * as S from '../../styled/DiscordSidebarStyled';
 
 const Category: React.FC<CategoryProps> = ({
   name,
@@ -19,28 +19,28 @@ const Category: React.FC<CategoryProps> = ({
   activeChannelId,
 }) => {
   return (
-    <div className="discord-category">
-      <div className="discord-category-header" onClick={onToggle}>
-        <span className="discord-category-arrow">
+    <S.DiscordCategory>
+      <S.DiscordCategoryHeader onClick={onToggle}>
+        <S.DiscordCategoryArrow>
           {isCollapsed ? "▸" : "▾"}
-        </span>
-        <span className="discord-category-name">{name}</span>
-      </div>
+        </S.DiscordCategoryArrow>
+        <S.DiscordCategoryName>{name}</S.DiscordCategoryName>
+      </S.DiscordCategoryHeader>
       {!isCollapsed && (
-        <div className="discord-channel-list">
+        <S.DiscordChannelList>
           {channels.map((channel) => (
-            <div
+            <S.DiscordChannel
               key={channel.id}
-              className={`discord-channel ${activeChannelId === channel.id ? "active" : ""}`}
+              $active={activeChannelId === channel.id}
               onClick={() => onSelectChannel(channel)}
             >
-              <span className="discord-channel-icon"> 🔊</span>
-              <span className="discord-channel-name">{channel.name}</span>
-            </div>
+              <S.DiscordChannelIcon> 🔊</S.DiscordChannelIcon>
+              <S.DiscordChannelName>{channel.name}</S.DiscordChannelName>
+            </S.DiscordChannel>
           ))}
-        </div>
+        </S.DiscordChannelList>
       )}
-    </div>
+    </S.DiscordCategory>
   );
 };
 
@@ -50,56 +50,19 @@ const ServerIcon: React.FC<ServerIconProps> = ({
   onClick,
 }) => {
   return (
-    <div
-      className={`discord-server-icon ${isActive ? "active" : ""}`}
+    <S.DiscordServerIcon 
+      $active={isActive}
       onClick={onClick}
     >
       {server.avatar ? (
-        <img src={server.avatar} alt={server.name} />
+        <S.DiscordServerIconImg src={server.avatar} alt={server.name} />
       ) : (
-        <div className="discord-server-initial">{server.name.charAt(0)}</div>
+        <S.DiscordServerInitial>{server.name.charAt(0)}</S.DiscordServerInitial>
       )}
       {server.unreadCount && (
-        <div className="discord-unread-badge">{server.unreadCount}</div>
+        <S.DiscordUnreadBadge>{server.unreadCount}</S.DiscordUnreadBadge>
       )}
-    </div>
-  );
-};
-
-const MinimizedChat: React.FC<MinimizedChatProps> = ({
-  username,
-  isConnected,
-  onToggleChat,
-}) => {
-  return (
-    <div className="discord-minimized-chat">
-      <div className="discord-user-area">
-        <div className="discord-user-avatar">{username.charAt(0)}</div>
-        <div className="discord-user-details">
-          <div className="discord-username">{username}</div>
-          <div className="discord-status">
-            {isConnected ? "Online" : "Offline"}
-          </div>
-        </div>
-      </div>
-      <div className="discord-chat-controls">
-        <button className="discord-chat-button">
-          <span role="img" aria-label="microphone">
-            🎤
-          </span>
-        </button>
-        <button className="discord-chat-button">
-          <span role="img" aria-label="headphones">
-            🎧
-          </span>
-        </button>
-        <button className="discord-chat-button" onClick={onToggleChat}>
-          <span role="img" aria-label="settings">
-            ⚙️
-          </span>
-        </button>
-      </div>
-    </div>
+    </S.DiscordServerIcon>
   );
 };
 
@@ -127,7 +90,6 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = ({ onChannelSelect }) => {
   const [collapsedCategories, setCollapsedCategories] = useState<
     Record<string, boolean>
   >({});
-  const [isChatMinimized, setIsChatMinimized] = useState(true);
 
   const handleServerSelect = (serverId: string) => {
     setActiveServer(serverId);
@@ -145,13 +107,9 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = ({ onChannelSelect }) => {
     }));
   };
 
-  const toggleChat = () => {
-    setIsChatMinimized(!isChatMinimized);
-  };
-
   return (
-    <div className="discord-sidebar-container">
-      <div className="discord-server-list">
+    <S.DiscordSidebarContainer>
+      <S.DiscordServerList>
         {servers.map((server) => (
           <ServerIcon
             key={server.id}
@@ -160,23 +118,23 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = ({ onChannelSelect }) => {
             onClick={() => handleServerSelect(server.id)}
           />
         ))}
-        <div className="discord-server-icon add-server">
+        <S.DiscordServerIcon $addServer>
           <span>+</span>
-        </div>
-        <div className="discord-server-icon explore">
+        </S.DiscordServerIcon>
+        <S.DiscordServerIcon $explore>
           <span role="img" aria-label="explore">
             🔍
           </span>
-        </div>
-      </div>
+        </S.DiscordServerIcon>
+      </S.DiscordServerList>
 
-      <div className="discord-channel-sidebar">
-        <div className="discord-server-header">
+      <S.DiscordChannelSidebar>
+        <S.DiscordServerHeader>
           <h3>Server Progetto</h3>
-          <span className="server-dropdown">▾</span>
-        </div>
+          <S.ServerDropdown>▾</S.ServerDropdown>
+        </S.DiscordServerHeader>
 
-        <div className="discord-categories">
+        <S.DiscordCategories>
           {categories.map((category) => (
             <Category
               key={category.id}
@@ -188,15 +146,9 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = ({ onChannelSelect }) => {
               activeChannelId={activeChannel}
             />
           ))}
-        </div>
-
-        <MinimizedChat
-          username="candyvd"
-          isConnected={true}
-          onToggleChat={toggleChat}
-        />
-      </div>
-    </div>
+        </S.DiscordCategories>
+      </S.DiscordChannelSidebar>
+    </S.DiscordSidebarContainer>
   );
 };
 

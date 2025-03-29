@@ -35,9 +35,3 @@ export interface ServerIconProps {
   isActive: boolean;
   onClick: () => void;
 }
-
-export interface MinimizedChatProps {
-  username: string;
-  isConnected: boolean;
-  onToggleChat: () => void;
-}

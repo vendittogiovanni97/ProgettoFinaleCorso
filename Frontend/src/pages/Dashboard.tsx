@@ -179,7 +179,6 @@ function Dashboard() {
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [showChatList, setShowChatList] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isMinimizedChat, setIsMinimizedChat] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -246,7 +245,7 @@ function Dashboard() {
       "Ciao! Come stai?",
       "Interessante, dimmi di più.",
       "Non sono sicuro di aver capito.",
-      "Scusa per il ritardo nella risposta!",
+      "Suca per il ritardo nella risposta!",
       "Hai programmi per il fine settimana?",
       "Cosa ne pensi di questo tempo?",
       "Ho visto un film fantastico ieri sera!",
@@ -300,9 +299,6 @@ function Dashboard() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const toggleMinimizedChat = () => {
-    setIsMinimizedChat(!isMinimizedChat);
-  };
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
@@ -457,48 +453,6 @@ function Dashboard() {
           </div>
         </div>
       </div>
-
-      {isMinimizedChat && (
-        <div className="discord-minimized-floating-chat">
-          <div className="discord-minimized-chat-header">
-            <div className="discord-minimized-chat-title">Chat</div>
-            <button
-              className="discord-minimized-chat-close"
-              onClick={toggleMinimizedChat}
-            >
-              ×
-            </button>
-          </div>
-          <div className="discord-minimized-chat-content">
-            <div className="discord-minimized-messages">
-              {messages.slice(-3).map((message) => (
-                <div
-                  key={message.id}
-                  className={`discord-minimized-message ${message.sender === "user" ? "user-message" : "other-message"}`}
-                >
-                  <span className="discord-minimized-sender">
-                    {message.sender === "user" ? "You" : currentChatName}:
-                  </span>
-                  <span className="discord-minimized-text">{message.text}</span>
-                </div>
-              ))}
-            </div>
-            <div className="discord-minimized-input">
-              <input
-                type="text"
-                placeholder="Message..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    handleSendMessage(e);
-                  }
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,27 +1,7 @@
 import React, { useState } from "react";
-import "../css/ContactInfoPanel.css";
 import MediaGalleryPage from "./MediaGalleryPage";
-
-interface ContactInfoPanelProps {
-  contact: {
-    id: number;
-    name: string;
-    status: string;
-    avatar: string;
-    lastSeen: string;
-    isOnline: boolean;
-    phone?: string;
-  };
-  onClose: () => void;
-  sharedMedia: Array<{
-    id: number;
-    type: "image" | "document" | "link";
-    preview: string;
-    name?: string;
-    timestamp: Date;
-    size?: string;
-  }>;
-}
+import * as S from "../styled/ContactMediaPanelStyled";
+import { ContactInfoPanelProps } from "../types/components/typesContactMediaPanel";
 
 const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
   contact,
@@ -55,119 +35,68 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
   }
 
   return (
-    <div className="contact-info-panel">
-      <div className="contact-info-header">
-        <button className="icon-button" onClick={onClose}>
+    <S.ContactInfoPanelContainer>
+      <S.ContactInfoHeader>
+        <S.IconButton onClick={onClose}>
           <span>✕</span>
-        </button>
+        </S.IconButton>
         <h2>Info contatto</h2>
-      </div>
+      </S.ContactInfoHeader>
 
-      <div className="contact-info-content">
-        <div className="contact-info-avatar-container">
-          <div className="contact-info-avatar">
+      <S.ContactInfoContent>
+        <S.ContactInfoAvatarContainer>
+          <S.ContactInfoAvatar>
             {contact.avatar ? (
-              <img src={contact.avatar} alt={contact.name} />
+              <S.AvatarImg src={contact.avatar} alt={contact.name} />
             ) : (
-              <div className="avatar-placeholder">{contact.name.charAt(0)}</div>
+              <S.AvatarPlaceholder>{contact.name.charAt(0)}</S.AvatarPlaceholder>
             )}
-          </div>
-          <h3 className="contact-info-name">{contact.name}</h3>
-          <p className="contact-info-phone">
+          </S.ContactInfoAvatar>
+          <S.ContactInfoName>{contact.name}</S.ContactInfoName>
+          <S.ContactInfoPhone>
             {contact.phone || "+39 123 456 7890"}
-          </p>
-        </div>
+          </S.ContactInfoPhone>
+        </S.ContactInfoAvatarContainer>
 
-        <div className="contact-info-section">
-          <h4>Info</h4>
-          <p className="contact-info-status">{contact.status}</p>
-        </div>
+        <S.ContactInfoSection>
+          <S.SectionTitle>Info</S.SectionTitle>
+          <S.ContactInfoStatus>{contact.status}</S.ContactInfoStatus>
+        </S.ContactInfoSection>
 
-        <div className="contact-info-section">
-          <div
-            className="contact-info-media-header"
-            onClick={handleMediaClick}
-            style={{ cursor: "pointer" }}
-          >
-            <h4>Media, link e documenti</h4>
-            <span className="contact-info-media-count">
-              {sharedMedia.length}
-            </span>
-            <span className="contact-info-media-arrow">›</span>
-          </div>
+        <S.ContactInfoSection>
+          <S.ContactInfoMediaHeader onClick={handleMediaClick}>
+            <S.SectionTitle>Media, link e documenti</S.SectionTitle>
+            <S.MediaCount>{sharedMedia.length}</S.MediaCount>
+            <S.MediaArrow>›</S.MediaArrow>
+          </S.ContactInfoMediaHeader>
 
-          <div
-            className="contact-info-media-grid"
-            onClick={handleMediaClick}
-            style={{ cursor: "pointer" }}
-          >
+          <S.ContactInfoMediaGrid onClick={handleMediaClick}>
             {sharedMedia.slice(0, 3).map((media) => (
-              <div className="contact-info-media-item" key={media.id}>
-                <div className="media-preview">
+              <S.MediaItem key={media.id}>
+                <S.MediaPreview>
                   {media.type === "image" && (
-                    <img src={media.preview} alt="Media preview" />
+                    <S.MediaImg src={media.preview} alt="Media preview" />
                   )}
                   {media.type === "document" && (
-                    <div className="document-preview">
+                    <S.DocumentPreview>
                       <span>📄</span>
-                    </div>
+                    </S.DocumentPreview>
                   )}
                   {media.type === "link" && (
-                    <div className="link-preview">
+                    <S.LinkPreview>
                       <span>🔗</span>
-                    </div>
+                    </S.LinkPreview>
                   )}
-                </div>
+                </S.MediaPreview>
                 {media.type === "image" && (
-                  <span className="media-duration">{media.size}</span>
+                  <S.MediaDuration>{media.size}</S.MediaDuration>
                 )}
-              </div>
+              </S.MediaItem>
             ))}
-          </div>
-        </div>
-
-        <div className="contact-info-section">
-          <div className="contact-info-option">
-            <span className="contact-info-option-icon">⭐</span>
-            <span className="contact-info-option-text">
-              Messaggi importanti
-            </span>
-            <span className="contact-info-option-arrow">›</span>
-          </div>
-        </div>
-
-        <div className="contact-info-section">
-          <div className="contact-info-option">
-            <span className="contact-info-option-icon">🔔</span>
-            <span className="contact-info-option-text">Silenzia notifiche</span>
-            <div className="contact-info-toggle">
-              <div className="toggle-track">
-                <div className="toggle-thumb"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="contact-info-section">
-          <div className="contact-info-option">
-            <span className="contact-info-option-icon">⏱️</span>
-            <span className="contact-info-option-text">Messaggi effimeri</span>
-            <span className="contact-info-option-value">No</span>
-            <span className="contact-info-option-arrow">›</span>
-          </div>
-        </div>
-
-        <div className="contact-info-section">
-          <div className="contact-info-option">
-            <span className="contact-info-option-icon">🔒</span>
-            <span className="contact-info-option-text">Crittografia</span>
-          </div>
-          <p className="contact-info-encryption-note">
-            I messaggi sono crittografati end-to-end. Tocca per verificare.
-          </p>
-        </div>
-      </div>
-    </div>
+          </S.ContactInfoMediaGrid>
+        </S.ContactInfoSection>
+      </S.ContactInfoContent>
+    </S.ContactInfoPanelContainer>
   );
 };
 

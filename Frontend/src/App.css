@@ -48,14 +48,6 @@
   z-index: 1;
 }
 
-/*.empty-sidebar {
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-}*/
-
 /* Layout per la chat e la lista delle chat */
 .chat-layout {
   display: flex;
