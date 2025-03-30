@@ -5,6 +5,7 @@ import RegistrationForm from "./pages/Registration";
 import ResetPassword from "./pages/ResetPassword";
 import ProfilePage from "./pages/ProfilePage"; // Importa il componente ProfilePage
 import NotFound404Paged from "./pages/notFound";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/registration" element={<RegistrationForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfilePage />} />{" "}
+        <Route path="/profile/user:id" element={<Profile />} />
         {/* Nuova rotta per il profilo */}
         <Route path="/notfound" element={<NotFound404Paged />} />
         <Route path="*" element={<Login />} />
