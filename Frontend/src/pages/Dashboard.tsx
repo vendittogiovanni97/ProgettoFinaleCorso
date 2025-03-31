@@ -6,14 +6,14 @@ import { Contact } from "../types/components/typesDashboard";
 import { Group } from "../types/components/typesDashboard";
 import { SharedMedia } from "../types/components/typesDashboard";
 import "../App.css";
-import { VideoCall } from "@mui/icons-material";
+import VideoCall from "../../src/Components/chat/VideoCall"; // Correct import for VideoCall component
 import ChatLists from "../Components/chat/ChatLists";
 import ResponsiveAppBar from "../Components/main/BarraSuperiore";
 import DiscordSidebar from "../Components/main/DiscordSidebar";
 
 function Dashboard() {
   const [showContactInfo, setShowContactInfo] = useState(false);
-  const [isVideoCallOpen, setIsVideoCallOpen] = useState(false); // Stato per la videochiamata
+  const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
 
   // Create shared media state
   const [sharedMedia] = useState<SharedMedia[]>([
@@ -220,9 +220,6 @@ function Dashboard() {
     }));
     setNewMessage("");
 
-    setMessages([...messages, userMessage]);
-    setNewMessage("");
-
     // Simulate response
     setTimeout(() => {
       const responseMessage: Message = {
@@ -299,7 +296,6 @@ function Dashboard() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
   };
@@ -345,47 +341,47 @@ function Dashboard() {
             )}
 
             <div className="chat-area">
+              <div className="chat-header">
+                <div className="user-info">
+                  <div className="avatar">{currentChatName.charAt(0)}</div>
+                  <div className="user-details">
+                    <a
+                      href={`/profile/${currentChatId}`}
+                      target="_blank"
+                      rel="noopeener noreferrer"
+                      className="user-name"
+                    >
+                      {currentChatName}
+                    </a>
+                    <p>{isOnline ? "Online" : lastSeen}</p>
+                  </div>
+                </div>
+                <div className="header-actions">
+                  <button
+                    className="icon-button"
+                    onClick={handleVideoCallClick}
+                  >
+                    📞
+                  </button>
+                  <button
+                    className="icon-button"
+                    onClick={handleVideoCallClick}
+                  >
+                    📹
+                  </button>
+                  <button
+                    className="icon-button"
+                    onClick={toggleContactInfo}
+                  >
+                    ⋮
+                  </button>
+                </div>
+              </div>
+
               {isVideoCallOpen ? (
                 <VideoCall onClose={handleVideoCallClick} />
               ) : (
                 <div className="chat-container">
-                  <div className="chat-header">
-                    <div className="user-info">
-                      <div className="avatar">{currentChatName.charAt(0)}</div>
-                      <div className="user-details">
-                        <a
-                          href={`/profile/${currentChatId}`}
-                          target="_blank"
-                          rel="noopeener noreferrer"
-                          className="user-name"
-                        >
-                          {currentChatName}
-                        </a>
-                        <p>{isOnline ? "Online" : lastSeen}</p>
-                      </div>
-                    </div>
-                    <div className="header-actions">
-                      <button
-                        className="icon-button"
-                        onClick={handleVideoCallClick}
-                      >
-                        📞
-                      </button>
-                      <button
-                        className="icon-button"
-                        onClick={handleVideoCallClick}
-                      >
-                        📹
-                      </button>
-                      <button
-                        className="icon-button"
-                        onClick={toggleContactInfo}
-                      >
-                        ⋮
-                      </button>
-                    </div>
-                  </div>
-
                   <div className="messages-container">
                     {messages.map((message) => (
                       <div

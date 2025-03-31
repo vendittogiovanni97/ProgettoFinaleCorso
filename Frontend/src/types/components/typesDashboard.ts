@@ -6,13 +6,13 @@ export interface Message {
 }
 
 export interface Contact {
-  id?: number;
-  name?: string;
-  status?: string;
-  avatar?: string;
-  lastSeen?: string;
-  isOnline?: boolean;
-  phone?: string;
+  id: number;
+  name: string;
+  status: string;
+  avatar: string;
+  lastSeen: string;
+  isOnline: boolean;
+  phone: string;
 }
 
 export interface Group {

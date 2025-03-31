@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Modal, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Close, Mic, MicOff, Videocam, VideocamOff, PersonAdd, CallEnd } from '@mui/icons-material';
-import './VideoCall.css';
-import AddParticipantsModal from '../AddPartecipantsModal'; // Assicurati che il percorso sia corretto
-import { Participant } from '../../types/components/typesVideocall' // Assicurati che il tipo sia definito
+import AddParticipantsModal from '../AddPartecipantsModal';
+import { Participant } from '../../types/components/typesVideocall';
+import {
+  VideoCallContainer,
+  VideoCallHeader,
+  VideoCallContent,
+  ParticipantVideo,
+  ParticipantName,
+  RemoveParticipant,
+  CallControls,
+  IconButton,
+  AddParticipantsModal as StyledModal,
+  ModalHeader,
+  ModalContent,
+  ExpandedView,
+  ExpandedParticipant
+} from '../../styled/VideoCallStyled'; // Assume this is where you save the styled components
 
 const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const [isMicMuted, setIsMicMuted] = useState(false); // Stato per il microfono
-  const [isVideoOn, setIsVideoOn] = useState(true); // Stato per la videocamera
+  const [isMicMuted, setIsMicMuted] = useState(false);
+  const [isVideoOn, setIsVideoOn] = useState(true);
   const [participants, setParticipants] = useState<Participant[]>([
-    { id: 'me', name: 'Tu' }, // Aggiungi te stesso come partecipante predefinito
-  ]); // Stato per i partecipanti
-  const [showAddParticipants, setShowAddParticipants] = useState(false); // Stato per mostrare/nascondere la modalità di aggiunta
-  const [expandedParticipant, setExpandedParticipant] = useState<string | number | null>(null); // Stato per il partecipante ingrandito
+    { id: 'me', name: 'Tu' },
+  ]);
+  const [showAddParticipants, setShowAddParticipants] = useState(false);
+  const [expandedParticipant, setExpandedParticipant] = useState<string | number | null>(null);
 
   const toggleMic = () => {
     setIsMicMuted(!isMicMuted);
@@ -43,92 +57,90 @@ const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <Box className="video-call-container">
-      <Box className="video-call-header">
+    <VideoCallContainer>
+      <VideoCallHeader>
         <IconButton onClick={onClose}>
           <Close />
         </IconButton>
-      </Box>
-      <Box className="video-call-content">
+      </VideoCallHeader>
+      
+      <VideoCallContent>
         {participants.map((participant) => (
-          <Box
+          <ParticipantVideo
             key={participant.id}
-            className={`participant-video ${expandedParticipant === participant.id ? 'expanded' : ''}`}
+            expanded={expandedParticipant === participant.id}
             onClick={() => handleParticipantClick(participant.id)}
           >
             <img src="/media/user1.jpg" alt="Participant" />
-            <Typography className="participant-name">{participant.name}</Typography>
+            <ParticipantName>{participant.name}</ParticipantName>
             {participant.id !== 'me' && (
-              <IconButton
-                className="remove-participant"
+              <RemoveParticipant
                 onClick={(e) => {
-                  e.stopPropagation(); // Evita che il clic si propaghi al riquadro
+                  e.stopPropagation();
                   removeParticipant(participant.id);
                 }}
               >
                 <Close />
-              </IconButton>
+              </RemoveParticipant>
             )}
-          </Box>
+          </ParticipantVideo>
         ))}
-      </Box>
-      <Box className="call-controls">
-        <IconButton
-          className={`icon-button ${isMicMuted ? 'muted' : ''}`}
+      </VideoCallContent>
+      
+      <CallControls>
+        <IconButton 
+          muted={isMicMuted}
           onClick={toggleMic}
         >
           {isMicMuted ? <MicOff /> : <Mic />}
         </IconButton>
         <IconButton
-          className={`icon-button ${!isVideoOn ? 'disabled' : ''}`}
+          disabled={!isVideoOn}
           onClick={toggleVideo}
         >
           {isVideoOn ? <Videocam /> : <VideocamOff />}
         </IconButton>
-        <IconButton className="icon-button" onClick={handleAddParticipantsClick}>
+        <IconButton onClick={handleAddParticipantsClick}>
           <PersonAdd />
         </IconButton>
-        <IconButton className="icon-button end-call" onClick={onClose}>
+        <IconButton endCall onClick={onClose}>
           <CallEnd />
         </IconButton>
-      </Box>
+      </CallControls>
 
-      {/* Modalità di aggiunta partecipanti */}
-      <Modal open={showAddParticipants} onClose={() => setShowAddParticipants(false)}>
-        <Box className="add-participants-modal">
-          <Box className="modal-header">
+      {showAddParticipants && (
+        <StyledModal>
+          <ModalHeader>
             <Typography variant="h6">Aggiungi partecipanti</Typography>
             <IconButton onClick={() => setShowAddParticipants(false)}>
               <Close />
             </IconButton>
-          </Box>
-          <Box className="modal-content">
+          </ModalHeader>
+          <ModalContent>
             <AddParticipantsModal
               onAddParticipant={addParticipant}
               onClose={() => setShowAddParticipants(false)}
             />
-          </Box>
-        </Box>
-      </Modal>
+          </ModalContent>
+        </StyledModal>
+      )}
 
-      {/* Vista ingrandita del partecipante */}
       {expandedParticipant && (
-        <Box className="expanded-view">
-          <Box className="expanded-participant">
+        <ExpandedView>
+          <ExpandedParticipant>
             <IconButton
-              className="close-expanded-view"
               onClick={handleCloseExpandedView}
             >
               <Close />
             </IconButton>
             <img src="/media/user1.jpg" alt="Participant" />
-            <Typography className="participant-name">
+            <ParticipantName>
               {participants.find((p) => p.id === expandedParticipant)?.name}
-            </Typography>
-          </Box>
-        </Box>
+            </ParticipantName>
+          </ExpandedParticipant>
+        </ExpandedView>
       )}
-    </Box>
+    </VideoCallContainer>
   );
 };
 
