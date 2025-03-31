@@ -1,14 +1,5 @@
 import styled from "styled-components";
-
-interface ParticipantVideoProps {
-  expanded?: boolean;
-}
-
-interface IconButtonProps {
-  muted?: boolean;
-  disabled?: boolean;
-  endCall?: boolean;
-}
+import {IconButtonProps, ParticipantVideoProps} from "../types/components/typesVideocall"
 
 export const VideoCallContainer = styled.div`
   display: flex;
@@ -17,8 +8,9 @@ export const VideoCallContainer = styled.div`
   width: 100%;
   background-color: var(--background-dark);
   color: var(--text-light);
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
+  flex:1;
 `;
 
 export const VideoCallHeader = styled.div`
