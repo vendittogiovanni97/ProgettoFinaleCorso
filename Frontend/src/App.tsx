@@ -16,7 +16,10 @@ function App() {
         <Route path="/registration" element={<RegistrationForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfilePage />} />{" "}
-        <Route path="/profile/user:id" element={<Profile />} />
+        <Route
+          path="/profile/user:id"
+          element={<Profile contact={{ name: "Anil" }} />}
+        />
         {/* Nuova rotta per il profilo */}
         <Route path="/notfound" element={<NotFound404Paged />} />
         <Route path="*" element={<Login />} />

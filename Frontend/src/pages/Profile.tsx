@@ -14,16 +14,21 @@ import {
   Avatar,
   ProfileContent,
   ProfileSection,
+  H2Style,
 } from "../styled/ProfilePageStyle";
-import { ContactProfilePageProps } from "../types/components/typesProfile";
+import { Contact } from "../types/components/typesDashboard";
+import "../styled/ProfilePageStyle";
 
+export interface ContactProfilePageProps {
+  contact: Contact;
+}
 const Profile: React.FC<ContactProfilePageProps> = ({ contact }) => {
   const [profileDetails, setProfileDetails] = useState({
-    firstName: contact.name.split(" ")[0],
-    lastName: contact.name.split(" ").slice(1).join(" ") || "",
+    firstName: contact.name?.split(" ")[0],
+    lastName: contact.name?.split(" ").slice(1).join(" ") || "",
     jobTitle: "Not Specified",
     birthDate: "Not Specified",
-    email: `${contact.name.toLowerCase().replace(" ", ".")}@example.com`,
+    email: `${contact.name?.toLowerCase().replace(" ", ".")}@example.com`,
     location: "Not specified",
     bio: contact.status || "No additional bio available.",
   });
@@ -37,7 +42,7 @@ const Profile: React.FC<ContactProfilePageProps> = ({ contact }) => {
               alt={`${contact.name}'s profile`}
             />
           </Avatar>
-          <h2>{contact.name}</h2>
+          <H2Style>{contact.name}</H2Style>
           <p style={{ color: "rgba(255,215,0,0.7", marginTop: "10px" }}>
             {profileDetails.jobTitle}
           </p>

@@ -20,6 +20,7 @@ import {
   EditableField,
   BioSection,
   BioTextarea,
+  H2Style,
 } from "../styled/ProfilePageStyle";
 
 const ProfilePage: React.FC = () => {
@@ -117,9 +118,9 @@ const ProfilePage: React.FC = () => {
           <Avatar>
             <img src="/pics/default-avatar.png" alt="Profile" />
           </Avatar>
-          <h2>
+          <H2Style>
             {profile.firstName} {profile.lastName}
-          </h2>
+          </H2Style>
           <p style={{ color: "rgba(255,215,0,0.7)", marginTop: "10px" }}>
             {profile.jobTitle}
           </p>

@@ -57,6 +57,9 @@ export const Avatar = styled.div`
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
   }
 `;
+export const H2Style = styled.div`
+  color: #ffd700;
+`;
 
 export const SocialLinks = styled.div`
   display: flex;
@@ -102,6 +105,7 @@ export const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  color: #ffd700;
 
   &:hover {
     background: rgba(255, 255, 255, 0.08);

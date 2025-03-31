@@ -1,17 +1,17 @@
 export interface Message {
   id: number;
   text: string;
-  sender: 'user' | 'other';
+  sender: "user" | "other";
   timestamp: Date;
 }
 
-export  interface Contact {
-  id: number;
-  name: string;
-  status: string;
-  avatar: string;
-  lastSeen: string;
-  isOnline: boolean;
+export interface Contact {
+  id?: number;
+  name?: string;
+  status?: string;
+  avatar?: string;
+  lastSeen?: string;
+  isOnline?: boolean;
   phone?: string;
 }
 
@@ -25,7 +25,7 @@ export interface Group {
 
 export interface SharedMedia {
   id: number;
-  type: 'image' | 'document' | 'link';
+  type: "image" | "document" | "link";
   preview: string;
   name?: string;
   timestamp: Date;
@@ -35,4 +35,3 @@ export interface SharedMedia {
 export interface ResponsiveAppBarProps {
   onMenuClick: () => void;
 }
-
