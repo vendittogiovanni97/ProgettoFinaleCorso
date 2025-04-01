@@ -311,11 +311,6 @@ function Dashboard() {
     setMessages(channelMessages[channelId] || []);
   };
 
-  // Funzione per aprire/chiudere la videochiamata
-  const handleVideoCallClick = () => {
-    setIsVideoCallOpen(!isVideoCallOpen);
-  };
-
   return (
     <div className="app-container">
       <div className="app-wrapper">
@@ -359,15 +354,9 @@ function Dashboard() {
                 <div className="header-actions">
                   <button
                     className="icon-button"
-                    onClick={handleVideoCallClick}
+                    onClick={() => setIsVideoCallOpen(!isVideoCallOpen)}
                   >
-                    📞
-                  </button>
-                  <button
-                    className="icon-button"
-                    onClick={handleVideoCallClick}
-                  >
-                    📹
+                    {isVideoCallOpen ? "💬" : "📹"}
                   </button>
                   <button
                     className="icon-button"
@@ -379,7 +368,7 @@ function Dashboard() {
               </div>
 
               {isVideoCallOpen ? (
-                <VideoCall onClose={handleVideoCallClick} />
+                <VideoCall onClose={() => setIsVideoCallOpen(false)} />
               ) : (
                 <div className="chat-container">
                   <div className="messages-container">
@@ -452,5 +441,6 @@ function Dashboard() {
     </div>
   );
 }
+
 
 export default Dashboard;

@@ -11,7 +11,7 @@ export const VideoCallContainer = styled.div`
   width: 100%;
   background-color: var(--background-dark);
   color: var(--text-light);
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
 `;
 

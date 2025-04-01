@@ -98,6 +98,14 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.video-call-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--background-dark);
+}
+
 .user-info {
   display: flex;
   align-items: center;
