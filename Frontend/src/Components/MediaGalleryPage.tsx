@@ -1,27 +1,33 @@
 import React, { useState } from "react";
-import "../css/MediaGalleryPage.css";
-
-interface MediaGalleryPageProps {
-  media: Array<{
-    id: number;
-    type: "image" | "document" | "link";
-    preview: string;
-    name?: string;     
-    timestamp: Date;
-    size?: string;
-  }>;
-  onClose: () => void;
-  contactName: string;
-}
+import { MediaGalleryPageProps } from "../types/components/typesMediaGalleryPage";
+import {
+  MediaGalleryContainer,
+  Header,
+  BackButton,
+  Title,
+  TabsContainer,
+  TabButton,
+  Content,
+  TimeLabel,
+  MediaGrid,
+  MediaItem,
+  MediaPreview,
+  MediaDuration,
+  ItemsList,
+  ListItem,
+  ItemIcon,
+  ItemInfo,
+  ItemName,
+  ItemDate,
+  LinkPreview
+} from "../styled/MediaGalleryPageStyled";
 
 const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({
   media,
   onClose,
   contactName,
 }) => {
-  const [activeTab, setActiveTab] = useState<"media" | "documents" | "links">(
-    "media"
-  );
+  const [activeTab, setActiveTab] = useState<"media" | "documents" | "links">("media");
 
   const filteredMedia = media.filter((item) => {
     if (activeTab === "media") return item.type === "image";
@@ -31,109 +37,97 @@ const MediaGalleryPage: React.FC<MediaGalleryPageProps> = ({
   });
 
   return (
-    <div className="media-gallery-page">
-      <div className="media-gallery-header">
-        <button className="icon-button" onClick={onClose}>
+    <MediaGalleryContainer>
+      <Header>
+        <BackButton onClick={onClose}>
           <span>←</span>
-        </button>
-        <h2>{contactName}</h2>
-      </div>
+        </BackButton>
+        <Title>{contactName}</Title>
+      </Header>
 
-      <div className="media-gallery-tabs">
-        <button
-          className={`tab-button ${activeTab === "media" ? "active" : ""}`}
+      <TabsContainer>
+        <TabButton 
+          active={activeTab === "media"} 
           onClick={() => setActiveTab("media")}
         >
           Media
-        </button>
-        <button
-          className={`tab-button ${activeTab === "documents" ? "active" : ""}`}
+        </TabButton>
+        <TabButton 
+          active={activeTab === "documents"} 
           onClick={() => setActiveTab("documents")}
         >
           Documenti
-        </button>
-        <button
-          className={`tab-button ${activeTab === "links" ? "active" : ""}`}
+        </TabButton>
+        <TabButton 
+          active={activeTab === "links"} 
           onClick={() => setActiveTab("links")}
         >
           Link
-        </button>
-      </div>
+        </TabButton>
+      </TabsContainer>
 
-      <div className="media-gallery-content">
+      <Content>
         {activeTab === "media" && (
-          <div className="media-section">
-            <div className="media-time-label">QUESTO MESE</div>
-            <div className="media-grid">
+          <div>
+            <TimeLabel>QUESTO MESE</TimeLabel>
+            <MediaGrid>
               {filteredMedia.map((item) => (
-                <div className="media-item" key={item.id}>
+                <MediaItem key={item.id}>
                   {item.type === "image" && (
-                    <div className="media-preview">
+                    <MediaPreview>
                       <img src={item.preview} alt="Media preview" />
                       {item.size && (
-                        <span className="media-duration">{item.size}</span>
+                        <MediaDuration>{item.size}</MediaDuration>
                       )}
-                    </div>
+                    </MediaPreview>
                   )}
-                  {item.type === "document" && (
-                    <div className="document-preview">
-                      <span className="document-icon">📄</span>
-                      <span className="document-name">{item.name}</span>
-                    </div>
-                  )}
-                  {item.type === "link" && (
-                    <div className="link-preview">
-                      <span className="link-icon">🔗</span>
-                      <span className="link-name">{item.name}</span>
-                    </div>
-                  )}
-                </div>
+                </MediaItem>
               ))}
-            </div>
+            </MediaGrid>
           </div>
         )}
 
         {activeTab === "documents" && (
-          <div className="documents-section">
-            <div className="media-time-label">QUESTO MESE</div>
-            <div className="documents-list">
+          <div>
+            <TimeLabel>QUESTO MESE</TimeLabel>
+            <ItemsList>
               {filteredMedia.map((item) => (
-                <div className="document-item" key={item.id}>
-                  <div className="document-icon">📄</div>
-                  <div className="document-info">
-                    <div className="document-name">{item.name}</div>
-                    <div className="document-date">
+                <ListItem key={item.id}>
+                  <ItemIcon>📄</ItemIcon>
+                  <ItemInfo>
+                    <ItemName>{item.name}</ItemName>
+                    <ItemDate>
                       {item.timestamp.toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
+                    </ItemDate>
+                  </ItemInfo>
+                </ListItem>
               ))}
-            </div>
+            </ItemsList>
           </div>
         )}
 
         {activeTab === "links" && (
-          <div className="links-section">
-            <div className="media-time-label">QUESTO MESE</div>
-            <div className="links-list">
+          <div>
+            <TimeLabel>QUESTO MESE</TimeLabel>
+            <ItemsList>
               {filteredMedia.map((item) => (
-                <div className="link-item" key={item.id}>
-                  <div className="link-preview">
+                <ListItem key={item.id}>
+                  <LinkPreview>
                     <img src={item.preview} alt="Link preview" />
-                  </div>
-                  <div className="link-info">
-                    <div className="link-name">{item.name}</div>
-                    <div className="link-date">
+                  </LinkPreview>
+                  <ItemInfo>
+                    <ItemName>{item.name}</ItemName>
+                    <ItemDate>
                       {item.timestamp.toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
+                    </ItemDate>
+                  </ItemInfo>
+                </ListItem>
               ))}
-            </div>
+            </ItemsList>
           </div>
         )}
-      </div>
-    </div>
+      </Content>
+    </MediaGalleryContainer>
   );
 };
 
