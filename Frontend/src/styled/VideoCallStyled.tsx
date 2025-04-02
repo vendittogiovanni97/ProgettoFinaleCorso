@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {
-  ParticipantVideoProps,
-  IconButtonProps,
-} from "../types/components/typesVideocall";
+import {IconButtonProps, ParticipantVideoProps} from "../types/components/typesVideocall"
 
 export const VideoCallContainer = styled.div`
   display: flex;
@@ -13,6 +10,7 @@ export const VideoCallContainer = styled.div`
   color: var(--text-light);
   border-radius: 0;
   overflow: hidden;
+  flex:1;
 `;
 
 export const VideoCallHeader = styled.div`
@@ -44,10 +42,8 @@ export const ParticipantVideo = styled.div<ParticipantVideoProps>`
   height: 150px;
   cursor: pointer;
   transition: transform 0.3s ease;
-
-  ${(props) =>
-    props.expanded &&
-    `
+  
+  ${props => props.expanded && `
     position: fixed;
     top: 0;
     left: 0;
@@ -56,7 +52,7 @@ export const ParticipantVideo = styled.div<ParticipantVideoProps>`
     z-index: 1000;
     border-radius: 0;
   `}
-
+  
   img {
     width: 100%;
     height: 100%;
@@ -109,22 +105,16 @@ export const IconButton = styled.button<IconButtonProps>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
-  ${(props) =>
-    props.muted &&
-    `
+  
+  ${props => props.muted && `
     background-color: #ff4444;
   `}
-
-  ${(props) =>
-    props.disabled &&
-    `
+  
+  ${props => props.disabled && `
     background-color: #888;
   `}
   
-  ${(props) =>
-    props.endCall &&
-    `
+  ${props => props.endCall && `
     background-color: #ff4444;
   `}
 `;
@@ -175,7 +165,7 @@ export const ExpandedParticipant = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  
   img {
     width: 100%;
     height: 100%;
