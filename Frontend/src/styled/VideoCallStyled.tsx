@@ -23,6 +23,7 @@ export const VideoCallHeader = styled.div`
 export const VideoCallContent = styled.div`
   flex: 1;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -41,16 +42,18 @@ export const ParticipantVideo = styled.div<ParticipantVideoProps>`
   width: 200px;
   height: 150px;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  
-  ${props => props.expanded && `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    border-radius: 0;
+
+  transition: all 0.3s ease;
+
+  ${(props) =>
+    props.selected &&
+    `
+    width: 300px;
+    height: 225px;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 2px solid var(--primary-color);
+    order: -1;
   `}
   
   img {
@@ -109,12 +112,25 @@ export const IconButton = styled.button<IconButtonProps>`
   ${props => props.muted && `
     background-color: #ff4444;
   `}
+<<<<<<< HEAD
   
   ${props => props.disabled && `
     background-color: #888;
   `}
   
   ${props => props.endCall && `
+=======
+
+  ${(props) =>
+    props.videoOff &&
+    `
+    background-color: #888;
+  `}
+    
+  ${(props) =>
+    props.endCall &&
+    `
+>>>>>>> 7d7f6876be892d60bf60eb81ea6aa834f69aebc3
     background-color: #ff4444;
   `}
 `;
@@ -143,6 +159,7 @@ export const ModalContent = styled.div`
   max-height: 300px;
   overflow-y: auto;
 `;
+<<<<<<< HEAD
 
 export const ExpandedView = styled.div`
   position: fixed;
@@ -172,3 +189,5 @@ export const ExpandedParticipant = styled.div`
     object-fit: cover;
   }
 `;
+=======
+>>>>>>> 7d7f6876be892d60bf60eb81ea6aa834f69aebc3
