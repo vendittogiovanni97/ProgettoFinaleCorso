@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import {IconButtonProps, ParticipantVideoProps} from "../types/components/typesVideocall"
+import {
+  IconButtonProps,
+  ParticipantVideoProps,
+} from "../types/components/typesVideocall";
 
 export const VideoCallContainer = styled.div`
   display: flex;
@@ -10,7 +13,7 @@ export const VideoCallContainer = styled.div`
   color: var(--text-light);
   border-radius: 0;
   overflow: hidden;
-  flex:1;
+  flex: 1;
 `;
 
 export const VideoCallHeader = styled.div`
@@ -55,7 +58,7 @@ export const ParticipantVideo = styled.div<ParticipantVideoProps>`
     border: 2px solid var(--primary-color);
     order: -1;
   `}
-  
+
   img {
     width: 100%;
     height: 100%;
@@ -108,18 +111,12 @@ export const IconButton = styled.button<IconButtonProps>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
-  ${props => props.muted && `
+
+  ${(props) =>
+    props.muted &&
+    `
     background-color: #ff4444;
   `}
-<<<<<<< HEAD
-  
-  ${props => props.disabled && `
-    background-color: #888;
-  `}
-  
-  ${props => props.endCall && `
-=======
 
   ${(props) =>
     props.videoOff &&
@@ -130,7 +127,6 @@ export const IconButton = styled.button<IconButtonProps>`
   ${(props) =>
     props.endCall &&
     `
->>>>>>> 7d7f6876be892d60bf60eb81ea6aa834f69aebc3
     background-color: #ff4444;
   `}
 `;
@@ -161,7 +157,6 @@ export const ModalContent = styled.div`
   max-height: 300px;
   overflow-y: auto;
 `;
-<<<<<<< HEAD
 
 export const ExpandedView = styled.div`
   position: fixed;
@@ -184,12 +179,10 @@ export const ExpandedParticipant = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 `;
-=======
->>>>>>> 7d7f6876be892d60bf60eb81ea6aa834f69aebc3
