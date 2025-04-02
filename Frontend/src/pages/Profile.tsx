@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   FaUser,
   FaEnvelope,
@@ -20,11 +21,40 @@ import { Contact } from "../types/components/typesDashboard";
 import "../styled/ProfilePageStyle";
 
 export interface ContactProfilePageProps {
-  contact: Contact;
+  contact?: Contact; // Make contact optional as we'll load it from the ID
 }
-const Profile: React.FC<ContactProfilePageProps> = ({ contact }) => {
+
+const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact }) => {
+  const { id } = useParams<{ id: string }>();
+  const [contact, setContact] = useState<Contact | null>(initialContact || null);
+  
+  useEffect(() => {
+    // If no initial contact is provided, we could fetch the contact based on the ID
+    if (!initialContact && id) {
+      // In a real app, you would fetch the contact data from your API here
+      // For now, we'll simulate with a mock contact
+      const fetchedContact: Contact = {
+        id: parseInt(id),
+        name: `User ${id}`, // This would come from your API
+        status: "Active",
+        lastSeen: "2:02pm",
+        isOnline: true,
+        avatar: "/pics.png",
+        phone: "+39 392 123 4567"
+      };
+      setContact(fetchedContact);
+    } else if (initialContact) {
+      setContact(initialContact);
+    }
+  }, [id, initialContact]);
+
+  // Handle loading state
+  if (!contact) {
+    return <div>Loading profile...</div>;
+  }
+
   const [profileDetails, setProfileDetails] = useState({
-    firstName: contact.name?.split(" ")[0],
+    firstName: contact.name?.split(" ")[0] || "",
     lastName: contact.name?.split(" ").slice(1).join(" ") || "",
     jobTitle: "Not Specified",
     birthDate: "Not Specified",
@@ -32,6 +62,7 @@ const Profile: React.FC<ContactProfilePageProps> = ({ contact }) => {
     location: "Not specified",
     bio: contact.status || "No additional bio available.",
   });
+
   return (
     <Container>
       <ProfileGrid>
