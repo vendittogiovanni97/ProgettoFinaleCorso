@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
-import { Typography } from '@mui/material';
-import { Close, Mic, MicOff, Videocam, VideocamOff, PersonAdd, CallEnd } from '@mui/icons-material';
-import AddParticipantsModal from '../AddPartecipantsModal';
-import { Participant } from '../../types/components/typesVideocall';
+import React, { useState } from "react";
+import { Typography } from "@mui/material";
+import {
+  Close,
+  Mic,
+  MicOff,
+  Videocam,
+  VideocamOff,
+  PersonAdd,
+  CallEnd,
+} from "@mui/icons-material";
+import AddParticipantsModal from "../AddPartecipantsModal";
+import { Participant } from "../../types/components/typesVideocall";
 import {
   VideoCallContainer,
   VideoCallHeader,
@@ -15,18 +23,18 @@ import {
   AddParticipantsModal as StyledModal,
   ModalHeader,
   ModalContent,
-  ExpandedView,
-  ExpandedParticipant
-} from '../../styled/VideoCallStyled'; // Assume this is where you save the styled components
+} from "../../styled/VideoCallStyled"; // Assume this is where you save the styled components
 
 const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [participants, setParticipants] = useState<Participant[]>([
-    { id: 'me', name: 'Tu' },
+    { id: "me", name: "Tu" },
   ]);
   const [showAddParticipants, setShowAddParticipants] = useState(false);
-  const [expandedParticipant, setExpandedParticipant] = useState<string | number | null>(null);
+  const [selectedParticipant, setSelectedParticipant] = useState<
+    string | number | null
+  >(null);
 
   const toggleMic = () => {
     setIsMicMuted(!isMicMuted);
@@ -42,6 +50,9 @@ const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const removeParticipant = (id: string | number) => {
     setParticipants((prev) => prev.filter((p) => p.id !== id));
+    if (selectedParticipant === id) {
+      setSelectedParticipant(null);
+    }
   };
 
   const handleAddParticipantsClick = () => {
@@ -49,55 +60,39 @@ const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   const handleParticipantClick = (id: string | number) => {
-    setExpandedParticipant(id);
-  };
-
-  const handleCloseExpandedView = () => {
-    setExpandedParticipant(null);
+    setSelectedParticipant((prevSelected) => (prevSelected === id ? null : id));
   };
 
   return (
     <VideoCallContainer>
-      <VideoCallHeader>
-        <IconButton onClick={onClose}>
-          <Close />
-        </IconButton>
-      </VideoCallHeader>
-      
+      <VideoCallHeader></VideoCallHeader>
+
       <VideoCallContent>
         {participants.map((participant) => (
           <ParticipantVideo
             key={participant.id}
-            expanded={expandedParticipant === participant.id}
+            selected={selectedParticipant === participant.id}
             onClick={() => handleParticipantClick(participant.id)}
           >
             <img src="/media/user1.jpg" alt="Participant" />
             <ParticipantName>{participant.name}</ParticipantName>
-            {participant.id !== 'me' && (
+            {participant.id !== "me" && (
               <RemoveParticipant
                 onClick={(e) => {
-                  e.stopPropagation();
+                  e.stopPropagation(); // Previene la propagazione dell'evento
                   removeParticipant(participant.id);
                 }}
-              >
-                <Close />
-              </RemoveParticipant>
+              ></RemoveParticipant>
             )}
           </ParticipantVideo>
         ))}
       </VideoCallContent>
-      
+
       <CallControls>
-        <IconButton 
-          muted={isMicMuted}
-          onClick={toggleMic}
-        >
+        <IconButton muted={isMicMuted} onClick={toggleMic}>
           {isMicMuted ? <MicOff /> : <Mic />}
         </IconButton>
-        <IconButton
-          disabled={!isVideoOn}
-          onClick={toggleVideo}
-        >
+        <IconButton videoOff={!isVideoOn} onClick={toggleVideo}>
           {isVideoOn ? <Videocam /> : <VideocamOff />}
         </IconButton>
         <IconButton onClick={handleAddParticipantsClick}>
@@ -124,24 +119,9 @@ const VideoCall: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </ModalContent>
         </StyledModal>
       )}
-
-      {expandedParticipant && (
-        <ExpandedView>
-          <ExpandedParticipant>
-            <IconButton
-              onClick={handleCloseExpandedView}
-            >
-              <Close />
-            </IconButton>
-            <img src="/media/user1.jpg" alt="Participant" />
-            <ParticipantName>
-              {participants.find((p) => p.id === expandedParticipant)?.name}
-            </ParticipantName>
-          </ExpandedParticipant>
-        </ExpandedView>
-      )}
     </VideoCallContainer>
   );
 };
 
 export default VideoCall;
+//

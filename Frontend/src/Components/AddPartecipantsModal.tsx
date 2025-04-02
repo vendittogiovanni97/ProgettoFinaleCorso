@@ -1,32 +1,21 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-} from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Box, List, ListItemAvatar, ListItemText } from "@mui/material";
 import { Contact } from "../types/components/typesChatLists";
 import { Group } from "../types/components/typesChatLists";
 import { Channel } from "../types/components/typesDiscordSidebar";
-
-interface AddParticipantsModalProps {
-  onAddParticipant: (participant: {
-    id: string | number;
-    name: string;
-  }) => void;
-  onClose: () => void;
-}
+import { AddParticipantsModalProps } from "../types/components/typesAddParticipantsModal";
+import {
+  StyleTypography,
+  StyleListItem,
+  StyleAvatar,
+  StyleListItemText,
+} from "../styled/AddParticipantsModalStyled";
+import { MdOutlineVolumeUp } from "react-icons/md";
 
 const AddParticipantsModal: React.FC<AddParticipantsModalProps> = ({
   onAddParticipant,
   onClose,
 }) => {
-  // Esempio di dati (dovrebbero essere passati come props o recuperati da uno stato globale)
   const contacts: Contact[] = [
     {
       id: 1,
@@ -71,64 +60,55 @@ const AddParticipantsModal: React.FC<AddParticipantsModalProps> = ({
 
   return (
     <Box className="add-participants-modal">
-      <Box className="modal-header">
-        <Typography variant="h6">Aggiungi partecipanti</Typography>
-        <IconButton onClick={onClose}>
-          <Close />
-        </IconButton>
-      </Box>
-      <Box className="modal-content">
-        <Typography variant="subtitle1">Contatti</Typography>
-        <List>
-          {contacts.map((contact) => (
-            <ListItem
-              key={contact.id}
-              component="button"
-              onClick={() => handleAddParticipant(contact)}
-            >
-              <ListItemAvatar>
-                <Avatar>{contact.name.charAt(0)}</Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={contact.name} secondary={contact.status} />
-            </ListItem>
-          ))}
-        </List>
+      <StyleTypography>Contatti</StyleTypography>
+      <List>
+        {contacts.map((contact) => (
+          <StyleListItem
+            key={contact.id}
+            component="button"
+            onClick={() => handleAddParticipant(contact)}
+          >
+            <ListItemAvatar>
+              <StyleAvatar>{contact.name.charAt(0)}</StyleAvatar>
+            </ListItemAvatar>
+            <ListItemText primary={contact.name} secondary={contact.status} />
+          </StyleListItem>
+        ))}
+      </List>
 
-        <Typography variant="subtitle1">Gruppi</Typography>
-        <List>
-          {groups.map((group) => (
-            <ListItem
-              key={group.id}
-              component="button"
-              onClick={() => handleAddParticipant(group)}
-            >
-              <ListItemAvatar>
-                <Avatar>{group.name.charAt(0)}</Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={group.name}
-                secondary={group.description}
-              />
-            </ListItem>
-          ))}
-        </List>
+      <StyleTypography>Gruppi</StyleTypography>
+      <List>
+        {groups.map((group) => (
+          <StyleListItem
+            key={group.id}
+            component="button"
+            onClick={() => handleAddParticipant(group)}
+          >
+            <ListItemAvatar>
+              <StyleAvatar>{group.name.charAt(0)}</StyleAvatar>
+            </ListItemAvatar>
+            <ListItemText primary={group.name} secondary={group.description} />
+          </StyleListItem>
+        ))}
+      </List>
 
-        <Typography variant="subtitle1">Canali vocali</Typography>
-        <List>
-          {channels.map((channel) => (
-            <ListItem
-              key={channel.id}
-              component="button"
-              onClick={() => handleAddParticipant(channel)}
-            >
-              <ListItemAvatar>
-                <Avatar>🔊</Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={channel.name} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      <StyleTypography>Canali vocali</StyleTypography>
+      <List>
+        {channels.map((channel) => (
+          <StyleListItem
+            key={channel.id}
+            component="button"
+            onClick={() => handleAddParticipant(channel)}
+          >
+            <ListItemAvatar>
+              <StyleAvatar>
+                <MdOutlineVolumeUp />
+              </StyleAvatar>
+            </ListItemAvatar>
+            <ListItemText primary={channel.name} />
+          </StyleListItem>
+        ))}
+      </List>
     </Box>
   );
 };

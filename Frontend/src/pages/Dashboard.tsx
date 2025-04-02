@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import EmojiPicker from "emoji-picker-react";
 import ContactInfoPanel from "../Components/ContactMediaPanel";
 import { Message } from "../types/components/typesDashboard";
@@ -10,6 +11,7 @@ import VideoCall from "../../src/Components/chat/VideoCall"; // Correct import f
 import ChatLists from "../Components/chat/ChatLists";
 import ResponsiveAppBar from "../Components/main/BarraSuperiore";
 import DiscordSidebar from "../Components/main/DiscordSidebar";
+
 
 function Dashboard() {
   const [showContactInfo, setShowContactInfo] = useState(false);
@@ -340,14 +342,14 @@ function Dashboard() {
                 <div className="user-info">
                   <div className="avatar">{currentChatName.charAt(0)}</div>
                   <div className="user-details">
-                    <a
-                      href={`/profile/${currentChatId}`}
-                      target="_blank"
-                      rel="noopeener noreferrer"
+                    <Link
+                      to={`/profile/user/${currentChatId}`}
                       className="user-name"
-                    >
+                      target="_blank"
+                      rel="nooper noreferrer"
+                      >
                       {currentChatName}
-                    </a>
+                    </Link>
                     <p>{isOnline ? "Online" : lastSeen}</p>
                   </div>
                 </div>

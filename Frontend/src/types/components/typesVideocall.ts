@@ -4,11 +4,14 @@ export interface Participant {
 }
 
 export interface ParticipantVideoProps {
-  expanded?: boolean;
+  selected?: boolean;
 }
 
 export interface IconButtonProps {
   muted?: boolean;
+  videoOff?: boolean;
   disabled?: boolean;
   endCall?: boolean;
 }
+
+//
