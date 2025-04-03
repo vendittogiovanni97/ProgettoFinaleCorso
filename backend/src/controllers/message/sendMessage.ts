@@ -53,7 +53,7 @@ export async function sendMessage(req: Request, res: Response): Promise<void> {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new AppError(
         responseStatus.BAD_REQUEST,
-        ErrorCodes.DATABASE_ERROR,
+        ErrorCodes.DATABASE_CONNECTION_ERROR,
         "Errore nel salvataggio del messaggio"
       );
     }
