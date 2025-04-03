@@ -9,13 +9,13 @@ import { responseStatus } from "../../constants/status";
 
 export const getConversation = async (req: Request, res: Response) => {
   try {
-    const { user1, user2 } = req.query;
+    const { senderId, receiverId } = req.query;
 
     // Validazione input
-    const userId1 = parseInt(user1 as string, 10);
-    const userId2 = parseInt(user2 as string, 10);
+    const sender = parseInt(senderId as string, 10);
+    const receiver = parseInt(receiverId as string, 10);
 
-    if (isNaN(userId1) || isNaN(userId2)) {
+    if (isNaN(sender) || isNaN(receiver)) {
       throw new AppError(
         responseStatus.BAD_REQUEST,
         ErrorCodes.INVALID_INPUT,
@@ -25,8 +25,8 @@ export const getConversation = async (req: Request, res: Response) => {
 
     // Verifica esistenza utenti
     const [userA, userB] = await Promise.all([
-      dbClient.user.findUnique({ where: { id: userId1 } }),
-      dbClient.user.findUnique({ where: { id: userId2 } }),
+      dbClient.user.findUnique({ where: { id: sender } }),
+      dbClient.user.findUnique({ where: { id: receiver } }),
     ]);
 
     if (!userA || !userB) {
@@ -45,8 +45,8 @@ export const getConversation = async (req: Request, res: Response) => {
     // Query conversazione
     const whereCondition: Prisma.DirectMessageWhereInput = {
       OR: [
-        { senderId: userId1, receiverId: userId2 },
-        { senderId: userId2, receiverId: userId1 },
+        { senderId: sender, receiverId: receiver },
+        { senderId: receiver, receiverId: sender },
       ],
     };
 
@@ -74,9 +74,9 @@ export const getConversation = async (req: Request, res: Response) => {
       "Conversazione ottenuta con successo",
       responseStatus.OK,
       {
-        messages: messages.map((msg) => ({
-          ...msg,
-          createdAt: msg.createdAt.toISOString(),
+        messages: messages.map((message) => ({
+          ...message,
+          createdAt: message.createdAt.toISOString(),
         })),
         pagination: {
           total: totalMessages,
@@ -90,7 +90,7 @@ export const getConversation = async (req: Request, res: Response) => {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new AppError(
         responseStatus.INTERNAL_SERVER_ERROR,
-        ErrorCodes.DATABASE_ERROR,
+        ErrorCodes.DATABASE_CONNECTION_ERROR,
         "Errore nel recupero messaggi"
       );
     }

@@ -2,6 +2,9 @@ import { Router } from "express";
 import { checkAuth } from "../middleware/isLogginMiddleware";
 import { sendMessage } from "../controllers/message/sendMessage";
 import { getConversation } from "../controllers/message/getConversation";
+import { deleteMessage } from "../controllers/message/deleteMessage";
+import { getMessagesBySender } from "../controllers/message/getMessagesBySender";
+import { getMessagesByReceived } from "../controllers/message/getMessagesByReceived";
 
 const MessageRouter = (app: Router) => {
   const router = Router();
@@ -13,19 +16,13 @@ const MessageRouter = (app: Router) => {
   router.get("/conversation", getConversation);
 
   // Ottieni messaggi ricevuti
-  router.get("/received");
+  router.get("/received", getMessagesByReceived);
 
   // Ottieni messaggi inviati
-  router.get("/sent");
+  router.get("/sender", getMessagesBySender);
 
   // Elimina un messaggio
-  router.delete("/:messageId");
-
-  // Ottieni conteggio messaggi non letti
-  router.get("/unread/:userId");
-
-  // Ottieni conversazioni recenti
-  router.get("/conversations/:userId");
+  router.delete("/:messageId", deleteMessage);
 
   app.use("/message", [checkAuth], router);
 };

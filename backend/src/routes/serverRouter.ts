@@ -12,23 +12,19 @@ import { createServer } from "../controllers/server/createServer";
 const serverRoutes = (app: Router) => {
   const router = Router();
 
-  router.get("/user/:userId", [checkAuth], getUserServers);
+  router.get("/user/:userId", getUserServers);
   router.get("/:serverId", [checkAuth]);
-  router.post("/", [checkAuth], createServer);
-  router.put("/:serverId", [checkAuth], updateServer);
-  router.delete("/:serverId", [checkAuth], deleteServer);
+  router.post("/", createServer);
+  router.put("/:serverId", updateServer);
+  router.delete("/:serverId", deleteServer);
 
-  router.post("/members", [checkAuth], addMemberToServer);
-  router.delete(
-    "/members/:serverId/:userId",
-    [checkAuth],
-    removeMemberFromServer
-  );
+  router.post("/members", addMemberToServer);
+  router.delete("/members/:serverId/:userId", removeMemberFromServer);
 
-  router.post("/channels", [checkAuth], createChannel);
-  router.delete("/channels/:channelId", [checkAuth], deleteChannel);
+  router.post("/channels", createChannel);
+  router.delete("/channels/:channelId", deleteChannel);
 
-  app.use("/servers", router);
+  app.use("/servers", [checkAuth], router);
 };
 
 export default serverRoutes;
