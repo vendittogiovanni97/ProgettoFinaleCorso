@@ -11,7 +11,7 @@ export async function sendMessage(req: Request, res: Response): Promise<void> {
     const { content, senderId, receiverId } = req.body;
 
     // Validazione avanzata
-    if (!content?.trim() || !senderId?.trim() || !receiverId?.trim()) {
+    if (!content || !senderId || !receiverId) {
       throw new AppError(
         responseStatus.BAD_REQUEST,
         ErrorCodes.INVALID_INPUT,
