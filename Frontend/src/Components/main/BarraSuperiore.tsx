@@ -92,7 +92,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
       navigate("/Login");
     }
     if (setting === "Profile") {
-      navigate("/profile");
+      window.open("/profilepage", "_blank", "noopener,noreferrer");
     }
   };
 

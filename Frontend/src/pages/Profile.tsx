@@ -19,15 +19,21 @@ import {
 } from "../styled/ProfilePageStyle";
 import { Contact } from "../types/components/typesDashboard";
 import "../styled/ProfilePageStyle";
-
-export interface ContactProfilePageProps {
-  contact?: Contact; // Make contact optional as we'll load it from the ID
-}
+import { ContactProfilePageProps } from "../types/components/typesProfile";
 
 const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact }) => {
   const { id } = useParams<{ id: string }>();
   const [contact, setContact] = useState<Contact | null>(initialContact || null);
-  
+  const [profileDetails, setProfileDetails] = useState({
+    firstName: "",
+    lastName: "",
+    jobTitle: "Not Specified",
+    birthDate: "Not Specified",
+    email: "",
+    location: "Not specified",
+    bio: "No additional bio available.",
+  });
+
   useEffect(() => {
     // If no initial contact is provided, we could fetch the contact based on the ID
     if (!initialContact && id) {
@@ -43,8 +49,26 @@ const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact })
         phone: "+39 392 123 4567"
       };
       setContact(fetchedContact);
+      setProfileDetails({
+        firstName: fetchedContact.name?.split(" ")[0] || "",
+        lastName: fetchedContact.name?.split(" ").slice(1).join(" ") || "",
+        jobTitle: "Not Specified",
+        birthDate: "Not Specified",
+        email: `${fetchedContact.name?.toLowerCase().replace(" ", ".")}@example.com`,
+        location: "Not specified",
+        bio: fetchedContact.status || "No additional bio available.",
+      });
     } else if (initialContact) {
       setContact(initialContact);
+      setProfileDetails({
+        firstName: initialContact.name?.split(" ")[0] || "",
+        lastName: initialContact.name?.split(" ").slice(1).join(" ") || "",
+        jobTitle: "Not Specified",
+        birthDate: "Not Specified",
+        email: `${initialContact.name?.toLowerCase().replace(" ", ".")}@example.com`,
+        location: "Not specified",
+        bio: initialContact.status || "No additional bio available.",
+      });
     }
   }, [id, initialContact]);
 
@@ -52,16 +76,6 @@ const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact })
   if (!contact) {
     return <div>Loading profile...</div>;
   }
-
-  const [profileDetails, setProfileDetails] = useState({
-    firstName: contact.name?.split(" ")[0] || "",
-    lastName: contact.name?.split(" ").slice(1).join(" ") || "",
-    jobTitle: "Not Specified",
-    birthDate: "Not Specified",
-    email: `${contact.name?.toLowerCase().replace(" ", ".")}@example.com`,
-    location: "Not specified",
-    bio: contact.status || "No additional bio available.",
-  });
 
   return (
     <Container>
