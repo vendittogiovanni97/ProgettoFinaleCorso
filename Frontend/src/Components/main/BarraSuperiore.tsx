@@ -17,8 +17,6 @@ import { useNavigate } from "react-router-dom";
 import { ResponsiveAppBarProps } from "../../types/components/typesDashboard";
 import themeColors from "../../styled/BarraSuperioreStyled";
 
-
-
 // Stile per la barra di ricerca
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,23 +57,23 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     null
   );
   const [searchValue, setSearchValue] = React.useState<string>("");
-  
+
   const navigate = useNavigate();
 
   const handleSearch = () => {
-      // Trim the search value to remove whitespace
-      const trimmedSearch = searchValue.trim();
-  
+    // Trim the search value to remove whitespace
+    const trimmedSearch = searchValue.trim();
+
     // Check if search value is not empty
     if (trimmedSearch) {
       // Log the search value (replace with your actual search logic)
       console.log("Search value:", trimmedSearch);
-  
+
       // Example navigation or search action
       // You can customize this based on your application's requirements
       navigate(`/search?q=${encodeURIComponent(trimmedSearch)}`);
     } else {
-      // Optional: Handle empty search 
+      // Optional: Handle empty search
       // You might want to show a toast, snackbar, or just do nothing
       console.warn("Search input is empty");
     }
@@ -96,13 +94,13 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     }
   };
 
-
   return (
     <AppBar
+      style={{ display: "flex" }}
       position="fixed"
       sx={{ backgroundColor: themeColors.backgroundLight }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth={false}>
         <Toolbar disableGutters>
           {/* Logo e menu hamburger per vista mobile */}
           <IconButton
