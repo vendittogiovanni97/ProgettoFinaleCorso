@@ -1,94 +1,41 @@
 import * as React from "react";
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import MuiCard from "@mui/material/Card";
-import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-
-const Card = styled(MuiCard)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  alignSelf: "center",
-  width: "100%",
-  padding: "32px",
-  gap: "16px",
-  margin: "auto",
-  maxWidth: "450px",
-  backgroundColor: "#000000 !important",
-  boxShadow:
-    "0px 5px 15px 0px hsla(220, 30%, 5%, 0.5), 0px 15px 35px -5px hsla(220, 25%, 10%, 0.08)",
-  borderRadius: "8px",
-  border: "1px solid #2c2c2c",
-}));
-
-const ContainerResetPassword = styled(Stack)(() => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100vh",
-  backgroundImage: "url(/pics/image1.jpg)",
-  backgroundSize: "cover",
-}));
-
-const StyledButton = styled(Button)(() => ({
-  backgroundColor: "#ffcc00",
-  color: "#000000 !important",
-  fontWeight: "bold",
-  "& .MuiButton-label": {
-    color: "#000000 !important",
-  },
-  "&.MuiButton-contained": {
-    color: "#000000 !important",
-  },
-  "&:hover": {
-    backgroundColor: "#e6b800",
-    color: "#000000 !important",
-  },
-}));
-
-const StyledTextField = styled(TextField)(() => ({
-  "& .MuiOutlinedInput-root": {
-    backgroundColor: "#2c2c2c",
-    "& fieldset": {
-      borderColor: "#444444",
-    },
-    "&:hover fieldset": {
-      borderColor: "#666666",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#ffa500",
-    },
-  },
-  "& .MuiInputBase-input": {
-    color: "#ffffff",
-  },
-  "& .MuiFormHelperText-root": {
-    color: "#ffa500",
-  },
-}));
-
-const StyledFormLabel = styled(FormLabel)(() => ({
-  color: "#ffa500",
-  marginBottom: "4px",
-}));
+import PasswordVisibility from "../customizations/PasswordVisibility";
+import {
+  ContainerResetPassword,
+  StyledButton,
+  StyledTextField,
+  Card,
+  StyledFormLabel,
+} from "../styled/ResetPasswordStyled";
 
 const ResetPassword: React.FC = () => {
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (emailError || passwordError) {
+      
       return;
     }
 
@@ -102,18 +49,32 @@ const ResetPassword: React.FC = () => {
   const handleLoginClick = () => {
     navigate("/Login");
   };
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleConfirmPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-
+    const email = (document.getElementById("email") as HTMLInputElement)?.value;
     const password = (document.getElementById("password") as HTMLInputElement)
       ?.value;
     const confirmPassword = (
       document.getElementById("confirmPassword") as HTMLInputElement
     )?.value;
 
+    if (!email || !validateEmail(email)) {
+      setEmailError(true);
+      setEmailErrorMessage("Email non valida");
+      return;
+    } else {
+      setEmailError(false);
+      setEmailErrorMessage("");
+    }
+
+    
     if (password === confirmPassword) {
       handleLoginClick();
     } else {
@@ -121,6 +82,7 @@ const ResetPassword: React.FC = () => {
       setPasswordErrorMessage("Le password non corrispondono");
     }
   };
+
 
   return (
     <ContainerResetPassword>
@@ -188,22 +150,23 @@ const ResetPassword: React.FC = () => {
               variant="outlined"
             />
           </FormControl>
-          <FormControl>
+            <FormControl>
             <StyledFormLabel sx={{ color: "#ffd700" }} htmlFor="password">
               Password
             </StyledFormLabel>
             <StyledTextField
               error={passwordError}
               helperText={passwordErrorMessage}
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="password"
-              type="password"
               id="password"
               autoComplete="new-password"
               required
               fullWidth
               variant="outlined"
             />
+            <PasswordVisibility onClick={togglePasswordVisibility} />
             <StyledFormLabel
               htmlFor="confirmPassword"
               sx={{ mt: 2, color: "#ffd700" }}
@@ -213,16 +176,17 @@ const ResetPassword: React.FC = () => {
             <StyledTextField
               error={passwordError}
               helperText={passwordErrorMessage}
+              type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Conferma password"
-              type="password"
               id="confirmPassword"
               autoComplete="new-password"
               required
               fullWidth
               variant="outlined"
             />
-          </FormControl>
+            <PasswordVisibility onClick={toggleConfirmPasswordVisibility} />
+            </FormControl>
           <StyledButton
             type="submit"
             fullWidth

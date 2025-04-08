@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import PasswordVisibility from "../customizations/PasswordVisibility";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
@@ -16,11 +16,12 @@ import {
   Input,
   LoginButton,
   Button2,
-  PasswordButton,
   PasswordContainer,
   PasswordInput,
   StyledForm,
 } from "../styled/LoginStyled";
+
+
 
 
 
@@ -58,10 +59,6 @@ const Login: React.FC = () => {
     }
   };
 
-  // Mostra/nascondi password
-  const togglePasswordVisibility = (): void => {
-    setShowPassword(!showPassword);
-  };
 
   // Gestione dei cambiamenti nei campi del form
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -85,6 +82,10 @@ const Login: React.FC = () => {
   const handleWelcomeClick = () =>{
     setWelcomeClicked(!welcomeClicked);
   }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   return (
     <Container
@@ -168,9 +169,8 @@ const Login: React.FC = () => {
               onChange={handleChange}
               required
             />
-            <PasswordButton type="button" onClick={togglePasswordVisibility}>
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-            </PasswordButton>
+            <PasswordVisibility 
+            onClick={togglePasswordVisibility} />  {/* Added PasswordVisibility component */}
           </PasswordContainer>
 
           {error && <ErrorMessage>{error}</ErrorMessage>}
