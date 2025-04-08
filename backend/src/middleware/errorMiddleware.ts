@@ -1,6 +1,8 @@
 // errorMiddleware.ts
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../types/errorType";
+import { responseStatus } from "../constants/status";
+import { ErrorCodes } from "../constants/errorCodes";
 
 // Definisci il tipo per il middleware di errore
 type ErrorMiddleware = (
@@ -19,7 +21,7 @@ export const errorHandler: ErrorMiddleware = (err, req, res, next) => {
       success: false,
       code: err.code,
       message: err.message,
-      details: err.details
+      details: err.details,
     });
   }
 
@@ -27,12 +29,12 @@ export const errorHandler: ErrorMiddleware = (err, req, res, next) => {
   if (err.name === "PrismaClientKnownRequestError") {
     const prismaError = err as any;
     if (prismaError.code === "P2002") {
-      return res.status(409).json({
-        success: false,
-        code: "DUPLICATE_ENTRY",
-        message: "Email o username già esistenti",
-        details: prismaError.meta?.target
-      });
+      const error = new AppError(
+        responseStatus.CONFLICT,
+        ErrorCodes.INVALID_CREDENTIALS,
+        `Email e password già esistenti`
+      );
+      next(error);
     }
   }
 
@@ -40,6 +42,7 @@ export const errorHandler: ErrorMiddleware = (err, req, res, next) => {
   return res.status(500).json({
     success: false,
     code: "INTERNAL_SERVER_ERROR",
-    message: "Si è verificato un errore interno"
+    message: "Si è verificato un errore interno",
+    next() {},
   });
 };
