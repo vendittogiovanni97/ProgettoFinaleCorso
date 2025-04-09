@@ -8,11 +8,26 @@ export const Container = styled.div`
 `;
 
 export const FormContainer = styled.form`
-  background-color: #ffd700;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  width: 300px;
+  background: rgba(255, 215, 39, 0.85); // 85% di opacità
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow:
+    0 0 25px rgba(255, 215, 0, 0.4),
+    // Ombra più soft
+    0 0 10px rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(4px); // Sfocatura leggera
+  border: 1px solid rgba(255, 215, 0, 0.5); // Bordo più definito
+  z-index: 1;
+  width: 90%;
+  max-width: 450px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow:
+      0 0 35px rgba(255, 215, 0, 0.5),
+      0 0 15px rgba(255, 215, 0, 0.3);
+    background: rgb(253, 219, 1); // Leggermente più opaco al hover
+  }
 `;
 
 export const Form = styled.div`
@@ -27,6 +42,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   background: white;
   color: black;
+  width: 100%;
 `;
 
 export const Button = styled.button`

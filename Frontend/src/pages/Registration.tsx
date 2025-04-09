@@ -32,9 +32,11 @@ const RegistrationForm = () => {
   };
 
   const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    setShowConfirmPassword(
+      (prevShowConfirmPassword) => !prevShowConfirmPassword
+    );
   };
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -75,19 +77,30 @@ const RegistrationForm = () => {
         backgroundSize: "cover",
       }}
     >
-      <h1
-        style={{
-          position: "absolute",
-          top: "50px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          margin: "20px 0",
-          color: "#ffd700",
-        }}
-      >
-        DROCSID
-      </h1>
       <FormContainer onSubmit={handleSubmit}>
+        <h1
+          style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: "30px",
+            padding: "5px",
+            margin: "0, 0, 20px, 0",
+            fontWeight: "bold",
+          }}
+        >
+          DROCSID
+        </h1>
+        <h2
+          style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: "20px",
+            padding: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          Registrati
+        </h2>
         <Form>
           <Input
             type="text"
@@ -113,8 +126,7 @@ const RegistrationForm = () => {
               value={formData.password}
               onChange={handleChange}
             />
-            <PasswordVisibility 
-            onClick={togglePasswordVisibility} />
+            <PasswordVisibility onClick={togglePasswordVisibility} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Input
@@ -124,8 +136,7 @@ const RegistrationForm = () => {
               value={formData.confermaPassword}
               onChange={handleChange}
             />
-           <PasswordVisibility 
-            onClick={toggleConfirmPasswordVisibility} />
+            <PasswordVisibility onClick={toggleConfirmPasswordVisibility} />
           </div>
           {error && <ErrorMessage>{error}</ErrorMessage>}
           <Button type="submit">Registrati</Button>
