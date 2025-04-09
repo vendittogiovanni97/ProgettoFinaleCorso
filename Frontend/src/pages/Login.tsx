@@ -4,7 +4,7 @@ import PasswordVisibility from "../customizations/PasswordVisibility";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
-import { Form} from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { AuthContext } from "../context/Auth.Provider";
 import { Link } from "react-router-dom";
@@ -21,10 +21,6 @@ import {
   StyledForm,
 } from "../styled/LoginStyled";
 
-
-
-
-
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -39,8 +35,7 @@ const Login: React.FC = () => {
   const [isOvered, setIsOvered] = useState(false);
   const [isGoogleHovered, setIsGoogleHovered] = useState(false);
   const [isFacebookHovered, setIsFacebookHovered] = useState(false);
-  const [welcomeClicked, setWelcomeClicked ] = useState(false);
-
+  const [welcomeClicked, setWelcomeClicked] = useState(false);
 
   // Gestione del submit del form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +53,6 @@ const Login: React.FC = () => {
       alert("Credenziali non valide");
     }
   };
-
 
   // Gestione dei cambiamenti nei campi del form
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -79,9 +73,9 @@ const Login: React.FC = () => {
     console.log("Login con Facebook effettuato");
   };
 
-  const handleWelcomeClick = () =>{
+  const handleWelcomeClick = () => {
     setWelcomeClicked(!welcomeClicked);
-  }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -92,6 +86,7 @@ const Login: React.FC = () => {
       style={{
         backgroundImage: "url(/pics/image1.jpg)",
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <div
@@ -101,7 +96,7 @@ const Login: React.FC = () => {
           top-[420px]  {/* Aumentato da 380px a 480px per posizionare più in basso */}
           left-1/6
           -translate-x-1/2 
-          flex 
+          grow 
           flex-col 
           items-start 
           cursor-pointer
@@ -114,6 +109,7 @@ const Login: React.FC = () => {
         text-[var(--primary-color)]
         mb-4
         animate-pulse
+        grow
           "
         >
           WELCOME TO
@@ -125,11 +121,12 @@ const Login: React.FC = () => {
         text-[var(--primary-color)] 
         transition-all 
         duration-300 
+        flexgrow
         ease-in-out 
         hover:text-white 
         hover:drop-shadow-[0_0_15px_rgba(255,215,0,0.9)] 
         hover:animate-bounce
-        ${welcomeClicked ? 'scale-110' : ''}
+        ${welcomeClicked ? "scale-110" : ""}
           `}
         >
           DROCSID
@@ -169,8 +166,8 @@ const Login: React.FC = () => {
               onChange={handleChange}
               required
             />
-            <PasswordVisibility 
-            onClick={togglePasswordVisibility} />  {/* Added PasswordVisibility component */}
+            <PasswordVisibility onClick={togglePasswordVisibility} />{" "}
+            {/* Added PasswordVisibility component */}
           </PasswordContainer>
 
           {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -185,13 +182,18 @@ const Login: React.FC = () => {
               style={{ color: "black", fontWeight: "bold" }}
             />
           </Form.Group>
-          
-          <LoginButton style= {{background: isOvered ? '#ffb700' : 'black', color: isOvered ? 'black': '#ffd700'}} type="submit" 
-          onMouseEnter={() => setIsOvered(true)}
-          onMouseLeave={() => setIsOvered(false)}>
-            
-          Accedi</LoginButton>
-          
+
+          <LoginButton
+            style={{
+              background: isOvered ? "#ffb700" : "black",
+              color: isOvered ? "black" : "#ffd700",
+            }}
+            type="submit"
+            onMouseEnter={() => setIsOvered(true)}
+            onMouseLeave={() => setIsOvered(false)}
+          >
+            Accedi
+          </LoginButton>
         </StyledForm>
         <div className="text-center mt-3">
           <p style={{ color: "black", fontWeight: "bold" }}>
@@ -203,7 +205,8 @@ const Login: React.FC = () => {
               textDecoration: "none",
               color: "black",
               fontWeight: "bold",
-            }}>
+            }}
+          >
             Recupera Password
           </Link>
         </div>
@@ -212,19 +215,21 @@ const Login: React.FC = () => {
             onClick={handleGoogleLogin}
             className="social-button google-button"
             style={{
-              background: isGoogleHovered ? '#ffb700' : 'black',
-              color: isGoogleHovered ? 'black': '#ffd700'}}
-            onMouseEnter={() => setIsGoogleHovered (true)}
-            onMouseLeave={() => setIsGoogleHovered (false)}
+              background: isGoogleHovered ? "#ffb700" : "black",
+              color: isGoogleHovered ? "black" : "#ffd700",
+            }}
+            onMouseEnter={() => setIsGoogleHovered(true)}
+            onMouseLeave={() => setIsGoogleHovered(false)}
           >
             <FontAwesomeIcon icon={faGoogle} /> Accedi con Google
           </Button2>
           <Button2
             onClick={handleFacebookLogin}
             className="social-button facebook-button mt-2"
-            style= {{
-              background: isFacebookHovered ? '#ffb700' : 'black',
-              color: isFacebookHovered ? 'black' : '#ffd700'}}
+            style={{
+              background: isFacebookHovered ? "#ffb700" : "black",
+              color: isFacebookHovered ? "black" : "#ffd700",
+            }}
             onMouseEnter={() => setIsFacebookHovered(true)}
             onMouseLeave={() => setIsFacebookHovered(false)}
           >

@@ -50,7 +50,7 @@ export const Button = styled.button`
   border-radius: 5px;
   border: none;
   background-color: #000;
-  color: #fff;
+  color: #ffd700;
   cursor: pointer;
 `;
 

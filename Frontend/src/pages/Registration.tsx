@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordVisibility from "../customizations/PasswordVisibility";
 import {
@@ -11,33 +11,35 @@ import {
   ErrorMessage,
 } from "../styled/RegistrationStyle";
 import { AuthContext } from "../context/Auth.Provider";
+import { FormData } from "../types/components/typesRegistration";
 
-const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
+const RegistrationForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
     password: "",
     confermaPassword: "",
   });
 
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const navigate = useNavigate();
   const { register } = useContext(AuthContext);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = (): void => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const toggleConfirmPasswordVisibility = () => {
+  const toggleConfirmPasswordVisibility = (): void => {
     setShowConfirmPassword(
       (prevShowConfirmPassword) => !prevShowConfirmPassword
     );
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -45,7 +47,7 @@ const RegistrationForm = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (formData.password !== formData.confermaPassword) {
@@ -99,7 +101,7 @@ const RegistrationForm = () => {
             fontWeight: "bold",
           }}
         >
-          Registrati
+          Registration
         </h2>
         <Form>
           <Input
@@ -118,23 +120,37 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
             <Input
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
+              style={{ marginBottom: 0 }}
             />
             <PasswordVisibility onClick={togglePasswordVisibility} />
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
             <Input
               type={showConfirmPassword ? "text" : "password"}
               name="confermaPassword"
               placeholder="Conferma password"
               value={formData.confermaPassword}
               onChange={handleChange}
+              style={{ marginBottom: 0 }}
             />
             <PasswordVisibility onClick={toggleConfirmPasswordVisibility} />
           </div>
