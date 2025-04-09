@@ -93,7 +93,7 @@ const Login: React.FC = () => {
         onClick={handleWelcomeClick}
         className="
           fixed 
-          top-[420px]  {/* Aumentato da 380px a 480px per posizionare più in basso */}
+          top-[380px]  {/* Aumentato da 380px a 480px per posizionare più in basso */}
           left-1/6
           -translate-x-1/2 
           grow 
@@ -156,8 +156,11 @@ const Login: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            style={{ 
+              backgroundColor: 'white',
+              }}
           />
-          <PasswordContainer>
+            <PasswordContainer style={{ position: 'relative' }}>
             <PasswordInput
               type={showPassword ? "text" : "password"}
               name="password"
@@ -165,10 +168,24 @@ const Login: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              style={{ 
+              paddingRight: '40px', // Lascia spazio per l'icona
+              width: '100%', 
+              backgroundColor: 'white',
+              }}
             />
-            <PasswordVisibility onClick={togglePasswordVisibility} />{" "}
-            {/* Added PasswordVisibility component */}
-          </PasswordContainer>
+            <div 
+              style={{ 
+              position: 'absolute',
+              right: '1px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer'
+              }}
+            >
+              <PasswordVisibility onClick={togglePasswordVisibility} visible={showPassword} />
+            </div>
+            </PasswordContainer>
 
           {error && <ErrorMessage>{error}</ErrorMessage>}
           <Form.Group controlId="formRememberMe">

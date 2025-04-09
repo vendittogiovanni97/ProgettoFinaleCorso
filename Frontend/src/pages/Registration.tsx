@@ -9,6 +9,8 @@ import {
   Input,
   Button,
   ErrorMessage,
+  PasswordContainer,
+  PasswordInput,
 } from "../styled/RegistrationStyle";
 import { AuthContext } from "../context/Auth.Provider";
 import { FormData } from "../types/components/typesRegistration";
@@ -120,40 +122,52 @@ const RegistrationForm: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            <Input
+            <PasswordContainer style={{ position: 'relative', marginBottom: '1rem' }}>
+            <PasswordInput
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              style={{ marginBottom: 0 }}
+              required
+              style={{ paddingRight: '40px' }} // Spazio per l'icona
             />
-            <PasswordVisibility onClick={togglePasswordVisibility} />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            <Input
+            <div 
+              style={{ 
+                position: 'absolute',
+                right: '0.3px',
+                top: '36%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer'
+              }}
+            >
+              <PasswordVisibility visible={showPassword} onClick={togglePasswordVisibility} />
+            </div>
+          </PasswordContainer>
+          
+          {/* Campo Conferma Password */}
+          <PasswordContainer style={{ position: 'relative', marginBottom: '1rem' }}>
+            <PasswordInput
               type={showConfirmPassword ? "text" : "password"}
               name="confermaPassword"
               placeholder="Conferma password"
               value={formData.confermaPassword}
               onChange={handleChange}
-              style={{ marginBottom: 0 }}
+              required
+              style={{ paddingRight: '40px' }} // Spazio per l'icona
             />
-            <PasswordVisibility onClick={toggleConfirmPasswordVisibility} />
-          </div>
+            <div 
+              style={{ 
+                position: 'absolute',
+                right: '0.3px',
+                top: '36%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer'
+              }}
+            >
+              <PasswordVisibility visible={showConfirmPassword} onClick={toggleConfirmPasswordVisibility} />
+            </div>
+          </PasswordContainer>
           {error && <ErrorMessage>{error}</ErrorMessage>}
           <Button type="submit">Registrati</Button>
         </Form>

@@ -59,3 +59,13 @@ export const ErrorMessage = styled.p`
   font-size: 0.9rem;
   margin-bottom: 1rem;
 `;
+
+export const PasswordContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const PasswordInput = styled(Input)`
+  padding-right: 40px; // Spazio per l'icona
+  width: 100%;
+`;
