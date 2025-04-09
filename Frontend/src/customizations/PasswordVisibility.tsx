@@ -14,7 +14,7 @@ const PasswordVisibility: React.FC<PasswordVisibilityProps> = ({ onClick }) => {
 
   return (
     <Button type="button" onClick={togglePasswordVisibility}>
-      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} color="white" />
+      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} color="black" />
     </Button>
   );
 };

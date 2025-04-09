@@ -1,75 +1,101 @@
-import { styled } from "@mui/material/styles";
+import { styled as styled2 } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import MuiCard from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import styled from "styled-components";
 
+export const FormContainer = styled.div`
+  background: rgba(255, 215, 39, 0.85); // 85% di opacità
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow:
+    0 0 25px rgba(255, 215, 0, 0.4),
+    // Ombra più soft
+    0 0 10px rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(4px); // Sfocatura leggera
+  border: 1px solid rgba(255, 215, 0, 0.5); // Bordo più definito
+  z-index: 1;
+  width: 90%;
+  max-width: 450px;
+  transition: all 0.3s ease;
 
-export const Card = styled(MuiCard)(() => ({
-    display: "flex",
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-    padding: "32px",
-    gap: "16px",
-    margin: "auto",
-    maxWidth: "450px",
-    backgroundColor: "#000000 !important",
-    boxShadow:
-      "0px 5px 15px 0px hsla(220, 30%, 5%, 0.5), 0px 15px 35px -5px hsla(220, 25%, 10%, 0.08)",
-    borderRadius: "8px",
-    border: "1px solid #2c2c2c",
-  }));
-  
-  export const ContainerResetPassword = styled(Stack)(() => ({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundImage: "url(/pics/image1.jpg)",
-    backgroundSize: "cover",
-  }));
-  
-  export const StyledButton = styled(Button)(() => ({
-    backgroundColor: "#ffcc00",
+  &:hover {
+    box-shadow:
+      0 0 35px rgba(255, 215, 0, 0.5),
+      0 0 15px rgba(255, 215, 0, 0.3);
+    background: rgb(253, 219, 1); // Leggermente più opaco al hover
+  }
+`;
+
+export const ContainerResetPassword = styled2(Stack)(() => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+  backgroundImage: "url(/pics/image1.jpg)",
+  backgroundSize: "cover",
+}));
+
+export const StyledButton = styled2(Button)(() => ({
+  backgroundColor: "black",
+  color: "#ffd700",
+  fontWeight: "bold",
+  marginTop: "16px",
+  "& .MuiButton-label": {
     color: "#000000 !important",
-    fontWeight: "bold",
-    "& .MuiButton-label": {
-      color: "#000000 !important",
+  },
+  "&.MuiButton-contained": {
+    color: "#000000 !important",
+  },
+  "&:hover": {
+    backgroundColor: "#e6b800",
+    color: "#000000 !important",
+  },
+}));
+
+export const StyledTextField = styled2(TextField)(() => ({
+  "& .MuiOutlinedInput-root": {
+    backgroundColor: "white",
+    "& fieldset": {
+      borderColor: "white",
     },
-    "&.MuiButton-contained": {
-      color: "#000000 !important",
+    "&:hover fieldset": {
+      borderColor: "black",
     },
-    "&:hover": {
-      backgroundColor: "#e6b800",
-      color: "#000000 !important",
+    "&.Mui-focused fieldset": {
+      borderColor: "black",
     },
-  }));
-  
-  export const StyledTextField = styled(TextField)(() => ({
-    "& .MuiOutlinedInput-root": {
-      backgroundColor: "#2c2c2c",
-      "& fieldset": {
-        borderColor: "#444444",
-      },
-      "&:hover fieldset": {
-        borderColor: "#666666",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#ffa500",
-      },
-    },
-    "& .MuiInputBase-input": {
-      color: "#ffffff",
-    },
-    "& .MuiFormHelperText-root": {
-      color: "#ffa500",
-    },
-  }));
-  
-  export const StyledFormLabel = styled(FormLabel)(() => ({
+  },
+  "& .MuiInputBase-input": {
+    color: "black",
+  },
+  "& .MuiFormHelperText-root": {
     color: "#ffa500",
-    marginBottom: "4px",
-  }));
-  
+  },
+}));
+
+export const StyledFormLabel = styled2(FormLabel)(() => ({
+  color: "black",
+  marginBottom: "4px",
+}));
+
+// Nuovi componenti stilizzati per migliorare il componente ResetPassword
+export const TitleTypography = styled2(Typography)(() => ({
+  width: "100%",
+  color: "black",
+  fontWeight: "bold",
+  fontSize: "clamp(1.5rem, 10vw, 2rem)",
+  textAlign: "center",
+  marginBottom: "8px",
+}));
+
+export const SubtitleTypography = styled2(Typography)(() => ({
+  width: "100%",
+  color: "black",
+  fontSize: "clamp(1.3rem, 8vw, 1.7rem)",
+  marginBottom: "24px",
+  textAlign: "center",
+  fontWeight: "bold",
+}));

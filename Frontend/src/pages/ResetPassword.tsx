@@ -1,43 +1,38 @@
-import * as React from "react";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import Typography from "@mui/material/Typography";
+import { useState, FormEvent, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, FormControl } from "@mui/material";
 import PasswordVisibility from "../customizations/PasswordVisibility";
 import {
   ContainerResetPassword,
   StyledButton,
   StyledTextField,
-  Card,
+  FormContainer,
   StyledFormLabel,
+  TitleTypography,
+  SubtitleTypography,
 } from "../styled/ResetPasswordStyled";
 
-const ResetPassword: React.FC = () => {
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const ResetPassword = () => {
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const navigate = useNavigate();
-  
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
+    setShowPassword((prev) => !prev);
   };
 
   const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    setShowConfirmPassword((prev) => !prev);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (emailError || passwordError) {
-      
-      return;
-    }
+    if (emailError || passwordError) return;
 
     const data = new FormData(event.currentTarget);
     console.log({
@@ -49,14 +44,13 @@ const ResetPassword: React.FC = () => {
   const handleLoginClick = () => {
     navigate("/Login");
   };
+
   const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleConfirmPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleConfirmPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const email = (document.getElementById("email") as HTMLInputElement)?.value;
     const password = (document.getElementById("password") as HTMLInputElement)
@@ -74,7 +68,6 @@ const ResetPassword: React.FC = () => {
       setEmailErrorMessage("");
     }
 
-    
     if (password === confirmPassword) {
       handleLoginClick();
     } else {
@@ -83,44 +76,11 @@ const ResetPassword: React.FC = () => {
     }
   };
 
-
   return (
     <ContainerResetPassword>
-      <Card
-        variant="outlined"
-        sx={{
-          backgroundColor: "black",
-          background: "black",
-          opacity: 1,
-        }}
-      >
-        <Typography
-          component="h1"
-          variant="h4"
-          sx={{
-            width: "100%",
-            color: "#ffd700",
-            fontWeight: "bold",
-            fontSize: "clamp(1.5rem, 10vw, 2rem)",
-            textAlign: "center",
-            mb: 1,
-          }}
-        >
-          DROCSID
-        </Typography>
-        <Typography
-          component="h2"
-          variant="h5"
-          sx={{
-            width: "100%",
-            color: "#ffd700",
-            fontSize: "clamp(1.3rem, 8vw, 1.7rem)",
-            mb: 3,
-            textAlign: "center",
-          }}
-        >
-          Reset Password
-        </Typography>
+      <FormContainer>
+        <TitleTypography variant="h4">DROCSID</TitleTypography>
+        <SubtitleTypography variant="h5">Reset Password</SubtitleTypography>
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -129,13 +89,11 @@ const ResetPassword: React.FC = () => {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            gap: 2,
+            gap: "16px",
           }}
         >
           <FormControl>
-            <StyledFormLabel sx={{ color: "#ffd700" }} htmlFor="email">
-              Email
-            </StyledFormLabel>
+            <StyledFormLabel htmlFor="email">Email</StyledFormLabel>
             <StyledTextField
               error={emailError}
               helperText={emailErrorMessage}
@@ -150,10 +108,8 @@ const ResetPassword: React.FC = () => {
               variant="outlined"
             />
           </FormControl>
-            <FormControl>
-            <StyledFormLabel sx={{ color: "#ffd700" }} htmlFor="password">
-              Password
-            </StyledFormLabel>
+          <FormControl>
+            <StyledFormLabel htmlFor="password">Password</StyledFormLabel>
             <StyledTextField
               error={passwordError}
               helperText={passwordErrorMessage}
@@ -165,12 +121,13 @@ const ResetPassword: React.FC = () => {
               required
               fullWidth
               variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <PasswordVisibility onClick={togglePasswordVisibility} />
+                ),
+              }}
             />
-            <PasswordVisibility onClick={togglePasswordVisibility} />
-            <StyledFormLabel
-              htmlFor="confirmPassword"
-              sx={{ mt: 2, color: "#ffd700" }}
-            >
+            <StyledFormLabel htmlFor="confirmPassword" sx={{ mt: 2 }}>
               Conferma Password
             </StyledFormLabel>
             <StyledTextField
@@ -184,23 +141,20 @@ const ResetPassword: React.FC = () => {
               required
               fullWidth
               variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <PasswordVisibility
+                    onClick={toggleConfirmPasswordVisibility}
+                  />
+                ),
+              }}
             />
-            <PasswordVisibility onClick={toggleConfirmPasswordVisibility} />
-            </FormControl>
-          <StyledButton
-            type="submit"
-            fullWidth
-            onClick={handleConfirmPassword}
-            sx={{
-              mt: 2,
-              backgroundColor: "#ffd700",
-              color: "#000000 !important",
-            }}
-          >
+          </FormControl>
+          <StyledButton type="submit" fullWidth onClick={handleConfirmPassword}>
             Reset Password
           </StyledButton>
         </Box>
-      </Card>
+      </FormContainer>
     </ContainerResetPassword>
   );
 };
