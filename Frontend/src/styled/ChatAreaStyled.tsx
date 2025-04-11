@@ -89,12 +89,12 @@ export const ChatContainerStyled = styled.div`
 
 export const MessageContainerStyled = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
   background-color: var(--background-dark);
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 6px;
 `;
 
 export interface MessageBubbleProps {
@@ -102,40 +102,30 @@ export interface MessageBubbleProps {
 }
 
 export const MessageBubbleStyled = styled.div<MessageBubbleProps>`
-  max-width: 70%;
-  padding: 10px 15px;
-  border-radius: 18px;
+  max-width: 65%;
+  padding: 8px 12px;
   position: relative;
   word-wrap: break-word;
-
+  margin-bottom: 6px;
+  font-size: 14px;
+  line-height: 1.3;
   /* Applicare stili condizionali in base al tipo di messaggio */
   ${(props) =>
     props.isUser
       ? `
     background-color: var(--primary-color);
     color: var(--text-dark);
+    align-self: flex-end;
     border-top-right-radius: 4px;
+    margin-left: auto;
+    border-radius: 18px 4px 18px 18px;
   `
       : `
     background-color: var(--background-light);
     color: var(--text-light);
-    border-top-left-radius: 4px;
+    align-self: flex-start;
+    border-radius: 4px 18px 18px 18px;
   `}
-`;
-
-export const MessageTimeStyled = styled.span<MessageBubbleProps>`
-  ${(props) =>
-    props.isUser
-      ? `  
-    color: var(--text-dark);
-    `
-      : `
-  font-size: 10px;
-  opacity: 0.7;
-  display: block;
-  text-align: right;
-  margin-top: 4px;
-`}
 `;
 
 export const MessageInputContainerStyled = styled.form`

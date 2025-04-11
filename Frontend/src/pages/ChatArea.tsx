@@ -1,33 +1,13 @@
+import React, { useState, useRef, useEffect, FormEvent } from "react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import { useState, useRef, useEffect, FormEvent } from "react";
-import ContactInfoPanel from "../Components/ContactMediaPanel";
-import {
-  Message,
-  Contact,
-  SharedMedia,
-} from "../types/components/typesDashboard";
+import * as S from "../styled/ChatAreaStyled";
+import * as AttachmentStyles from "../styled/AttachmentMenuStyled";
+import { Message, Contact } from "../types/components/typesDashboard";
+import { ChatAreaProps } from "../types/components/typesChatArea";
+import AttachmentMenu from "../Components/chat/AttachmentMenu";
 import VideoCall from "../Components/chat/VideoCall";
-import {
-  MessageBubbleComponentProps,
-  ChatAreaProps,
-} from "../types/components/typesChatArea";
-import {
-  ChatAreaStyled,
-  ChatHeaderStyled,
-  UserInfoStyled,
-  AvatarStyled,
-  LinkStyled,
-  HeaderActionsStyled,
-  IconButtonStyled,
-  ChatContainerStyled,
-  MessageContainerStyled,
-  MessageBubbleStyled,
-  MessageTimeStyled,
-  MessageInputContainerStyled,
-  MessageInputStyled,
-  EmojiPickerContainerStyled,
-  SendButtonStyled,
-} from "../styled/ChatAreaStyled";
+import ContactInfoPanel from "../Components/ContactMediaPanel";
+import useOutsideClick from "../hook/useOutsideClick";
 
 const ChatArea: React.FC<ChatAreaProps> = ({
   currentChatId,
@@ -35,95 +15,34 @@ const ChatArea: React.FC<ChatAreaProps> = ({
   isOnline,
   lastSeen,
   initialMessages,
-  setMessages: setParentMessages,
+  setMessages,
   contacts,
-  channelMessages,
-  setChannelMessages,
 }) => {
-  const [showContactInfo, setShowContactInfo] = useState<boolean>(false);
-  const [newMessage, setNewMessage] = useState<string>("");
-  const [isPickerVisible, setIsPickerVisible] = useState<boolean>(false);
-  const [isVideoCallOpen, setIsVideoCallOpen] = useState<boolean>(false);
+  // State
   const [messages, setLocalMessages] = useState<Message[]>(initialMessages);
+  const [newMessage, setNewMessage] = useState("");
+  const [isPickerVisible, setIsPickerVisible] = useState(false);
+  const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
+  const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
+  const [showContactInfo, setShowContactInfo] = useState(false);
 
-  // Sync with parent messages when props change
+  // Refs
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const attachmentRef = useOutsideClick(() => setShowAttachmentMenu(false));
+
+  // Effects
   useEffect(() => {
     setLocalMessages(initialMessages);
   }, [initialMessages]);
 
-  const [sharedMedia] = useState<SharedMedia[]>([
-    {
-      id: 1,
-      type: "image",
-      preview: "/media/image1.jpg",
-      timestamp: new Date(),
-      size: "7:38",
-    },
-    {
-      id: 2,
-      type: "document",
-      preview: "/media/doc1.jpg",
-      name: "Report.pdf",
-      timestamp: new Date(),
-      size: "0:13",
-    },
-    {
-      id: 3,
-      type: "image",
-      preview: "/media/image2.jpg",
-      timestamp: new Date(),
-      size: "0:10",
-    },
-    {
-      id: 4,
-      type: "link",
-      preview: "/media/link1.jpg",
-      name: "GitHub Repository",
-      timestamp: new Date(),
-    },
-    {
-      id: 5,
-      type: "image",
-      preview: "/media/image3.jpg",
-      timestamp: new Date(),
-      size: "0:25",
-    },
-  ]);
-
-  const getRandomResponse = (): string => {
-    const responses = [
-      "Ciao! Come stai?",
-      "Interessante, dimmi di più.",
-      "Non sono sicuro di aver capito.",
-      "Suca per il ritardo nella risposta!",
-      "Hai programmi per il fine settimana?",
-      "Cosa ne pensi di questo tempo?",
-      "Ho visto un film fantastico ieri sera!",
-      "Dovremmo organizzare qualcosa insieme presto.",
-      "Hai sentito le ultime notizie?",
-      "Mi piacerebbe saperne di più su questo argomento.",
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
-  };
-
-  const formatTime = (date: Date): string => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  };
-
-  const toggleContactInfo = (): void => {
-    setShowContactInfo(!showContactInfo);
-  };
-
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Scroll to bottom whenever messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSendMessage = (e: FormEvent): void => {
+  // Handlers
+  const handleSendMessage = (e: FormEvent) => {
     e.preventDefault();
-    if (newMessage.trim() === "") return;
+    if (!newMessage.trim()) return;
 
     const userMessage: Message = {
       id: Date.now(),
@@ -134,156 +53,156 @@ const ChatArea: React.FC<ChatAreaProps> = ({
 
     const updatedMessages = [...messages, userMessage];
     setLocalMessages(updatedMessages);
-    setParentMessages(updatedMessages);
-
-    setChannelMessages((prev) => ({
-      ...prev,
-      [currentChatId.toString()]: updatedMessages,
-    }));
-
+    setMessages(updatedMessages);
     setNewMessage("");
-
-    // Simulate response
-    setTimeout(() => {
-      const responseMessage: Message = {
-        id: Date.now() + 1,
-        text: getRandomResponse(),
-        sender: "other",
-        timestamp: new Date(),
-      };
-      const updatedMessagesWithResponse = [...updatedMessages, responseMessage];
-      setLocalMessages(updatedMessagesWithResponse);
-      setParentMessages(updatedMessagesWithResponse);
-
-      setChannelMessages((prev) => ({
-        ...prev,
-        [currentChatId.toString()]: updatedMessagesWithResponse,
-      }));
-    }, 1000);
   };
 
-  const togglePicker = (): void => {
-    setIsPickerVisible(!isPickerVisible);
+  const handleFileSelect = (
+    file: File,
+    type: "image" | "document" | "video"
+  ) => {
+    console.log(`${type} selected:`, file.name);
+    setShowAttachmentMenu(false);
   };
 
-  const MessageBubbleComponent: React.FC<MessageBubbleComponentProps> = ({
-    isUser,
-    text,
-    timestamp,
-  }) => {
-    return (
-      <div>
-        <p>{text}</p>
-        <span className="message-time">{formatTime(timestamp)}</span>
-      </div>
-    );
-  };
-
-  const handleEmojiClick = (emojiData: EmojiClickData): void => {
-    setNewMessage((prevText) => prevText + emojiData.emoji);
+  const handleEmojiClick = (emojiData: EmojiClickData) => {
+    setNewMessage((prev) => prev + emojiData.emoji);
   };
 
   const getCurrentContact = (): Contact => {
     return (
-      contacts.find((contact) => contact.id === currentChatId) || contacts[0]
+      contacts.find((c) => c.id === currentChatId) || {
+        id: 0,
+        name: "Unknown",
+        status: "",
+        avatar: "",
+        lastSeen: "",
+        isOnline: false,
+        phone: "",
+      }
     );
   };
 
   return (
-    <ChatAreaStyled>
-      <ChatHeaderStyled>
-        <UserInfoStyled>
-          <AvatarStyled>{currentChatName.charAt(0)}</AvatarStyled>
+    <S.ChatAreaStyled>
+      {/* Header */}
+      <S.ChatHeaderStyled>
+        <S.UserInfoStyled>
+          <S.AvatarStyled>{currentChatName.charAt(0)}</S.AvatarStyled>
           <div>
-            <LinkStyled
-              to={`/profile/user/${currentChatId}`}
-              className="user-name"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <S.LinkStyled to={`/profile/${currentChatId}`}>
               {currentChatName}
-            </LinkStyled>
-            <p style={{ fontSize: "12px", opacity: 0.8, margin: 0 }}>
-              {isOnline ? "Online" : lastSeen}
-            </p>
+            </S.LinkStyled>
+            <small>{isOnline ? "Online" : lastSeen}</small>
           </div>
-        </UserInfoStyled>
-        <HeaderActionsStyled>
-          <IconButtonStyled
+        </S.UserInfoStyled>
+
+        <S.HeaderActionsStyled>
+          <S.IconButtonStyled
             onClick={() => setIsVideoCallOpen(!isVideoCallOpen)}
           >
             {isVideoCallOpen ? "💬" : "📹"}
-          </IconButtonStyled>
-          <IconButtonStyled onClick={toggleContactInfo}>⋮</IconButtonStyled>
-        </HeaderActionsStyled>
-      </ChatHeaderStyled>
+          </S.IconButtonStyled>
+          <S.IconButtonStyled
+            onClick={() => setShowContactInfo(!showContactInfo)}
+          >
+            ⋮
+          </S.IconButtonStyled>
+        </S.HeaderActionsStyled>
+      </S.ChatHeaderStyled>
 
+      {/* Main Content */}
       {isVideoCallOpen ? (
         <VideoCall onClose={() => setIsVideoCallOpen(false)} />
       ) : (
-        <ChatContainerStyled>
-          <MessageContainerStyled>
+        <S.ChatContainerStyled>
+          {/* Messages */}
+          <S.MessageContainerStyled>
             {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`message ${
-                  message.sender === "user" ? "user-message" : "other-message"
-                }`}
-                style={{
-                  alignSelf:
-                    message.sender === "user" ? "flex-end" : "flex-start",
-                }}
-              >
-                <MessageBubbleStyled isUser={message.sender === "user"}>
-                  <MessageBubbleComponent
-                    isUser={message.sender === "user"}
-                    text={message.text}
-                    timestamp={message.timestamp}
-                  />
-                </MessageBubbleStyled>
-                <MessageTimeStyled isUser={message.sender === "user"}>
-                  {formatTime(message.timestamp)}
-                </MessageTimeStyled>
+              <div key={message.id}>
+                <S.MessageBubbleStyled isUser={message.sender === "user"}>
+                  <p>{message.text}</p>
+                </S.MessageBubbleStyled>
               </div>
             ))}
             <div ref={messagesEndRef} />
-          </MessageContainerStyled>
+          </S.MessageContainerStyled>
 
-          <MessageInputContainerStyled onSubmit={handleSendMessage}>
-            <IconButtonStyled onClick={() => console.log("Attachment clicked")}>
-              📎
-            </IconButtonStyled>
-            <MessageInputStyled
+          {/* Input Area */}
+          <S.MessageInputContainerStyled onSubmit={handleSendMessage}>
+            <AttachmentStyles.AttachmentWrapper ref={attachmentRef}>
+              <S.IconButtonStyled
+                type="button"
+                onClick={() => setShowAttachmentMenu(!showAttachmentMenu)}
+              >
+                📎
+              </S.IconButtonStyled>
+              <AttachmentMenu
+                isOpen={showAttachmentMenu}
+                onClose={() => setShowAttachmentMenu(false)}
+                onFileSelect={handleFileSelect}
+              />
+            </AttachmentStyles.AttachmentWrapper>
+
+            <S.MessageInputStyled
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message here..."
             />
-            <IconButtonStyled type="button" onClick={togglePicker}>
+
+            <S.IconButtonStyled
+              type="button"
+              onClick={() => setIsPickerVisible(!isPickerVisible)}
+            >
               {isPickerVisible ? "❌" : "😊"}
-            </IconButtonStyled>
+            </S.IconButtonStyled>
+
             {isPickerVisible && (
-              <EmojiPickerContainerStyled>
+              <S.EmojiPickerContainerStyled>
                 <EmojiPicker onEmojiClick={handleEmojiClick} />
-              </EmojiPickerContainerStyled>
+              </S.EmojiPickerContainerStyled>
             )}
-            <SendButtonStyled type="submit" disabled={newMessage.trim() === ""}>
-              <span role="img" aria-label="send">
-                📤
-              </span>
-            </SendButtonStyled>
-          </MessageInputContainerStyled>
-        </ChatContainerStyled>
+
+            <S.SendButtonStyled type="submit" disabled={!newMessage.trim()}>
+              📤
+            </S.SendButtonStyled>
+          </S.MessageInputContainerStyled>
+        </S.ChatContainerStyled>
       )}
 
+      {/* Contact Info */}
       {showContactInfo && (
         <ContactInfoPanel
           contact={getCurrentContact()}
-          onClose={toggleContactInfo}
-          sharedMedia={sharedMedia}
+          onClose={() => setShowContactInfo(false)}
+          sharedMedia={[
+            {
+              id: 1,
+              type: "image",
+              preview: "/media/image1.jpg",
+              timestamp: new Date(),
+              size: "7:38",
+            },
+            {
+              id: 2,
+              type: "document",
+              preview: "/media/doc1.jpg",
+              name: "Report.pdf",
+              timestamp: new Date(),
+              size: "0:13",
+            },
+            {
+              id: 3,
+              type: "image",
+              preview: "/media/image2.jpg",
+              timestamp: new Date(),
+              size: "0:10",
+            },
+          ]}
         />
       )}
-    </ChatAreaStyled>
+    </S.ChatAreaStyled>
   );
 };
 

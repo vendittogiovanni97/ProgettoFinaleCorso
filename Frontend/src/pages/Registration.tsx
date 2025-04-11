@@ -137,8 +137,8 @@ const RegistrationForm: React.FC = () => {
             <div
               style={{
                 position: "absolute",
-                right: "0.3px",
-                top: "36%",
+                right: "0.2px",
+                top: "48%",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
                 left: "85%",
@@ -168,7 +168,7 @@ const RegistrationForm: React.FC = () => {
               style={{
                 position: "absolute",
                 right: "0.3px",
-                top: "36%",
+                top: "48%",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
                 left: "85%",

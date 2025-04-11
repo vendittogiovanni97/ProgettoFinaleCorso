@@ -43,6 +43,7 @@ export const Input = styled.input`
   background: white;
   color: black;
   width: 100%;
+  height: 2.5rem;
 `;
 
 export const Button = styled.button`
@@ -68,4 +69,6 @@ export const PasswordContainer = styled.div`
 export const PasswordInput = styled(Input)`
   padding-right: 40px; // Spazio per l'icona
   width: 100%;
+  margin: 5px 0px 5px 0px; // Spazio per l'icona
+  height: 2.5rem;
 `;

@@ -11,6 +11,9 @@ export const ContactInfoPanelContainer = styled.div`
   flex-direction: column;
   z-index: 15;
   overflow-y: auto;
+  position: absolute;
+  right: 0; // Posizionato a destra
+  top: 0;
 
   @media (max-width: 768px) {
     position: absolute;
