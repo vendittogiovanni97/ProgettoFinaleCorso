@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
+    "ngrok": "C:\\Users\\W11-24h2\\AppData\\Roaming\\npm\\ngrok.cmd http 5173",
+    "dev-with-tunnel": "concurrently \"npm run dev\" \"npm run ngrok\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
