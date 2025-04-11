@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChatListsProps } from "../../types/components/typesChatLists";
-import * as S from "../../styled/ChatListStyled";
+import { useChatListColors, createStyledComponents } from "../../styled/ChatListStyled";
 
 const ChatLists: React.FC<ChatListsProps> = ({
   contacts,
@@ -10,6 +10,10 @@ const ChatLists: React.FC<ChatListsProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<"groups" | "people">("people");
   const [searchQuery, setSearchQuery] = useState("");
+  
+  // Usa i colori dinamici basati sul tema
+  const colors = useChatListColors();
+  const S = createStyledComponents(colors);
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -71,7 +75,7 @@ const ChatLists: React.FC<ChatListsProps> = ({
               </S.ChatDetails>
               <S.ChatMeta>
                 <S.ChatTime>{contact.lastSeen}</S.ChatTime>
-                {Math.random() > 0.5 && <S.UnreadBadge>1</S.UnreadBadge>}
+                {contact.unreadCount > 0 && <S.UnreadBadge>{contact.unreadCount}</S.UnreadBadge>}
               </S.ChatMeta>
             </S.ChatItem>
           ))}
@@ -90,7 +94,7 @@ const ChatLists: React.FC<ChatListsProps> = ({
               </S.ChatDetails>
               <S.ChatMeta>
                 <S.ChatTime>{group.lastActive}</S.ChatTime>
-                {Math.random() > 0.5 && <S.UnreadBadge>2</S.UnreadBadge>}
+                {group.unreadCount && group.unreadCount > 0 && <S.UnreadBadge>{group.unreadCount ?? 0}</S.UnreadBadge>}
               </S.ChatMeta>
             </S.ChatItem>
           ))}

@@ -1,20 +1,20 @@
 export interface Contact {
-    id: number;
-    name: string;
-    status: string;
-    avatar: string;
-    lastSeen: string;
-    isOnline: boolean;
-  }
+  id: number;
+  name: string;
+  isOnline: boolean;
+  status: string;
+  lastSeen: string;
+  unreadCount: number; // Added unreadCount property
+}
 
   
 export interface Group {
-    id: number;
-    name: string;
-    description: string;
-    avatar: string;
-    lastActive: string;
-  }
+  id: number;
+  name: string;
+  description: string;
+  lastActive: string;
+  unreadCount?: number; // Add unreadCount as an optional property
+}
   
 export interface ChatListsProps {
     contacts: Contact[];

@@ -13,52 +13,55 @@ import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import { ResponsiveAppBarProps } from "../../types/components/typesDashboard";
-import themeColors from "../../styled/BarraSuperioreStyled";
-
-// Stile per la barra di ricerca
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(themeColors.primary, 0.15), // Sfondo giallo trasparente
-  "&:hover": {
-    backgroundColor: alpha(themeColors.primary, 0.25), // Sfondo giallo più scuro al passaggio del mouse
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-// Stile per l'input della barra di ricerca
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: themeColors.textLight, // Testo bianco
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
-
-const settings = ["Profile", "Settings", "Dashboard", "Logout"];
+import useThemeColors from "../../styled/BarraSuperioreStyled";
+import { useThemeContext } from "../../context/ThemeContextDefinition";
 
 const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [searchValue, setSearchValue] = React.useState<string>("");
+  const { mode, toggleColorMode } = useThemeContext();
+  const themeColors = useThemeColors(); // Usa i colori dinamici basati sul tema
 
   const navigate = useNavigate();
+
+  // Stile per la barra di ricerca
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(themeColors.primary, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(themeColors.primary, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  }));
+
+  // Stile per l'input della barra di ricerca
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: themeColors.textLight,
+    width: "100%",
+    "& .MuiInputBase-input": {
+      padding: theme.spacing(1, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create("width"),
+      [theme.breakpoints.up("sm")]: {
+        width: "12ch",
+        "&:focus": {
+          width: "20ch",
+        },
+      },
+    },
+  }));
+
+  const settings = ["Profile", "Settings", "Dashboard", "Logout"];
 
   const handleSearch = () => {
     // Trim the search value to remove whitespace
@@ -70,11 +73,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
       console.log("Search value:", trimmedSearch);
 
       // Example navigation or search action
-      // You can customize this based on your application's requirements
       navigate(`/search?q=${encodeURIComponent(trimmedSearch)}`);
     } else {
       // Optional: Handle empty search
-      // You might want to show a toast, snackbar, or just do nothing
       console.warn("Search input is empty");
     }
   };
@@ -98,7 +99,10 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     <AppBar
       style={{ display: "flex" }}
       position="fixed"
-      sx={{ backgroundColor: themeColors.backgroundLight }}
+      sx={{ 
+        backgroundColor: themeColors.backgroundLight, 
+        zIndex: (theme) => theme.zIndex.drawer + 1 
+      }}
     >
       <Container maxWidth={false}>
         <Toolbar disableGutters>
@@ -108,7 +112,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, display: { xs: "flex" } }}
+            sx={{ mr: 2, display: { xs: "flex" }, color: themeColors.textLight }}
             onClick={onMenuClick}
           >
             <MenuIcon />
@@ -124,10 +128,10 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: themeColors.primary, // Colore giallo di default
+              color: themeColors.primary,
               textDecoration: "none",
               "&:hover": {
-                color: "#ffff00", // Giallo più chiaro al passaggio del mouse
+                color: "#ffff00",
               },
             }}
           >
@@ -146,15 +150,16 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: themeColors.primary, // Colore giallo di default
+              color: themeColors.primary,
               textDecoration: "none",
               "&:hover": {
-                color: "#ffff00", // Giallo più chiaro al passaggio del mouse
+                color: "#ffff00",
               },
             }}
           >
             DROCSID
           </Typography>
+          
           {/* Barra di ricerca */}
           <Search
             sx={{
@@ -169,6 +174,11 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
               inputProps={{ "aria-label": "search" }}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
             />
             <Box sx={{ flexGrow: 1 }}>
               <IconButton
@@ -181,13 +191,24 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
             </Box>
           </Search>
 
-          {/* Spazio flessibile che spinge l'avatar a destra */}
+          {/* Spazio flessibile che spinge l'avatar e il theme toggle a destra */}
           <Box sx={{ flexGrow: 1 }} />
+
+          {/* Theme Toggle Button */}
+          {toggleColorMode && (
+            <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
+              <Tooltip title={mode === 'dark' ? 'Passa al tema chiaro' : 'Passa al tema scuro'}>
+                <IconButton onClick={toggleColorMode} color="inherit" sx={{ color: themeColors.textLight }}>
+                  {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
+              </Tooltip>
+            </Box>
+          )}
 
           {/* Avatar e menu utente */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   alt="Eleonora Baroni"
                   src="/static/images/avatar/2.jpg"
@@ -211,8 +232,8 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
               onClose={() => handleCloseUserMenu()}
               PaperProps={{
                 style: {
-                  backgroundColor: themeColors.backgroundLight, // Sfondo scuro
-                  color: themeColors.textLight, // Testo nero
+                  backgroundColor: themeColors.backgroundLight,
+                  color: themeColors.textLight,
                 },
               }}
             >
@@ -220,6 +241,11 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
                 <MenuItem
                   key={setting}
                   onClick={() => handleCloseUserMenu(setting)}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: themeColors.hoverColor,
+                    },
+                  }}
                 >
                   <Typography
                     sx={{ textAlign: "center", color: themeColors.textLight }}

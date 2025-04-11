@@ -1,5 +1,11 @@
 import { useState } from "react";
-import "../App.css";
+import "../customizations/Theme"
+import {
+  AppWrapper,
+  MainContent,
+  ChatLayout,
+  ChatListPanel,
+} from "../styled/DashboardStyled";
 import ChatLists from "../Components/chat/ChatLists";
 import ResponsiveAppBar from "../Components/main/BarraSuperiore";
 import DiscordSidebar from "../Components/main/DiscordSidebar";
@@ -190,25 +196,24 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="app-container">
-      <div className="app-wrapper">
+      <AppWrapper>
         <ResponsiveAppBar onMenuClick={toggleSidebar} />
 
-        <div className="main-content">
+        <MainContent>
           {isSidebarOpen && (
             <DiscordSidebar onChannelSelect={handleDiscordChannelSelect} />
           )}
 
-          <div className="chat-layout">
+          <ChatLayout>
             {showChatList && (
-              <div className="chat-list-panel">
+              <ChatListPanel>
                 <ChatLists
                   contacts={contacts}
                   groups={groups}
                   onSelectChat={handleSelectChat}
                   activeChatId={currentChatId}
                 />
-              </div>
+              </ChatListPanel>
             )}
             <ChatArea
               currentChatId={currentChatId}
@@ -236,10 +241,9 @@ const Dashboard: React.FC = () => {
                 💬
               </button>
             )}
-          </div>
-        </div>
-      </div>
-    </div>
+          </ChatLayout>
+        </MainContent>
+      </AppWrapper>
   );
 };
 

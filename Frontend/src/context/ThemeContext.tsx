@@ -1,47 +1,47 @@
-// src/context/ThemeContext.tsx
-import React, { createContext, useState, useMemo, ReactNode } from "react";
-import { ThemeProvider, createTheme, PaletteMode } from "@mui/material/styles";
+import React, { useState, useEffect } from 'react';
+import { PaletteMode } from '@mui/material';
+import { ThemeContext } from './ThemeContextDefinition';
 
-type ThemeContextType = {
-  mode: PaletteMode;
-  toggleColorMode: () => void;
-};
+// Provider component
+interface ThemeContextProviderProps {
+  children: React.ReactNode;
+}
 
-export const ThemeContext = createContext<ThemeContextType>({
-  mode: "light",
-  toggleColorMode: () => {},
-});
+export const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ children }) => {
+  // Recupera il tema salvato in localStorage se presente, altrimenti usa 'dark'
+  const [mode, setMode] = useState<PaletteMode>(() => {
+    if (typeof window !== 'undefined') {
+      const savedMode = localStorage.getItem('themeMode');
+      return (savedMode as PaletteMode) || 'dark';
+    }
+    return 'dark';
+  });
 
-type ThemeProviderProps = {
-  children: ReactNode;
-};
+  // Funzione per cambiare il tema
+  const toggleColorMode = () => {
+    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+  };
 
-export function CustomThemeProvider({ children }: ThemeProviderProps) {
-  const [mode, setMode] = useState<PaletteMode>("light");
+  // Salva la modalità tema in localStorage quando cambia
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('themeMode', mode);
+      // Aggiorna le variabili CSS in uso in base al tema
+      document.documentElement.setAttribute('data-theme', mode);
+    }
+  }, [mode]);
 
-  const colorMode = useMemo(
-    () => ({
-      mode,
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    [mode]
-  );
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
+  const value = {
+    mode,
+    toggleColorMode
+  };
 
   return (
-    <ThemeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <ThemeContext.Provider value={value}>
+      {children}
     </ThemeContext.Provider>
   );
-}
+};
+
+export default ThemeContextProvider;
+
