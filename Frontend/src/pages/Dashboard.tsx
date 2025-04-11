@@ -1,62 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import EmojiPicker from "emoji-picker-react";
-import ContactInfoPanel from "../Components/ContactMediaPanel";
-import { Message } from "../types/components/typesDashboard";
-import { Contact } from "../types/components/typesDashboard";
-import { Group } from "../types/components/typesDashboard";
-import { SharedMedia } from "../types/components/typesDashboard";
+import { useState } from "react";
 import "../App.css";
-import VideoCall from "../../src/Components/chat/VideoCall"; // Correct import for VideoCall component
 import ChatLists from "../Components/chat/ChatLists";
 import ResponsiveAppBar from "../Components/main/BarraSuperiore";
 import DiscordSidebar from "../Components/main/DiscordSidebar";
+import ChatArea from "./ChatArea";
+import { Message, Contact, Group } from "../types/components/typesDashboard";
 
-
-function Dashboard() {
-  const [showContactInfo, setShowContactInfo] = useState(false);
-  const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
-
-  // Create shared media state
-  const [sharedMedia] = useState<SharedMedia[]>([
-    {
-      id: 1,
-      type: "image",
-      preview: "/media/image1.jpg",
-      timestamp: new Date(),
-      size: "7:38",
-    },
-    {
-      id: 2,
-      type: "document",
-      preview: "/media/doc1.jpg",
-      name: "Report.pdf",
-      timestamp: new Date(),
-      size: "0:13",
-    },
-    {
-      id: 3,
-      type: "image",
-      preview: "/media/image2.jpg",
-      timestamp: new Date(),
-      size: "0:10",
-    },
-    {
-      id: 4,
-      type: "link",
-      preview: "/media/link1.jpg",
-      name: "GitHub Repository",
-      timestamp: new Date(),
-    },
-    {
-      id: 5,
-      type: "image",
-      preview: "/media/image3.jpg",
-      timestamp: new Date(),
-      size: "0:25",
-    },
-  ]);
-
+const Dashboard: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -173,101 +123,26 @@ function Dashboard() {
     },
   ]);
 
-  const [newMessage, setNewMessage] = useState("");
-  const [currentChatName, setCurrentChatName] = useState("Anil");
+  const [currentChatName, setCurrentChatName] = useState<string>("Anil");
   const [currentChatId, setCurrentChatId] = useState<number>(1);
-  const [isOnline, setIsOnline] = useState(true);
-  const [lastSeen, setLastSeen] = useState("Online");
-  const [isPickerVisible, setIsPickerVisible] = useState(false);
-  const [showChatList, setShowChatList] = useState(true);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isOnline, setIsOnline] = useState<boolean>(true);
+  const [lastSeen, setLastSeen] = useState<string>("Online");
+  const [showChatList, setShowChatList] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Stato per memorizzare i messaggi per ogni canale vocale
+  // State for storing messages for each voice channel
   const [channelMessages, setChannelMessages] = useState<
     Record<string, Message[]>
   >({
-    channel1: [], // Messaggi per il canale "Lobby"
-    channel2: [], // Messaggi per il canale "PrimaStanza"
+    channel1: [], // Messages for "Lobby" channel
+    channel2: [], // Messages for "PrimaStanza" channel
   });
 
-  // Get the current contact based on ID
-  const getCurrentContact = () => {
-    return (
-      contacts.find((contact) => contact.id === currentChatId) || contacts[0]
-    );
-  };
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newMessage.trim() === "") return;
-
-    const userMessage: Message = {
-      id: Date.now(),
-      text: newMessage,
-      sender: "user",
-      timestamp: new Date(),
-    };
-
-    const updatedMessages = [...messages, userMessage];
-    setMessages(updatedMessages);
-    setChannelMessages((prev) => ({
-      ...prev,
-      [currentChatId]: updatedMessages,
-    }));
-    setNewMessage("");
-
-    // Simulate response
-    setTimeout(() => {
-      const responseMessage: Message = {
-        id: Date.now() + 1,
-        text: getRandomResponse(),
-        sender: "other",
-        timestamp: new Date(),
-      };
-      const updatedMessagesWithResponse = [...updatedMessages, responseMessage];
-      setMessages(updatedMessagesWithResponse);
-      setChannelMessages((prev) => ({
-        ...prev,
-        [currentChatId]: updatedMessagesWithResponse,
-      }));
-    }, 1000);
-  };
-
-  const getRandomResponse = () => {
-    const responses = [
-      "Ciao! Come stai?",
-      "Interessante, dimmi di più.",
-      "Non sono sicuro di aver capito.",
-      "Suca per il ritardo nella risposta!",
-      "Hai programmi per il fine settimana?",
-      "Cosa ne pensi di questo tempo?",
-      "Ho visto un film fantastico ieri sera!",
-      "Dovremmo organizzare qualcosa insieme presto.",
-      "Hai sentito le ultime notizie?",
-      "Mi piacerebbe saperne di più su questo argomento.",
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  };
-
-  const togglePicker = () => {
-    setIsPickerVisible(!isPickerVisible);
-  };
-
-  const handleEmojiClick = (emojiObject: { emoji: string }) => {
-    setNewMessage((prevText) => prevText + emojiObject.emoji);
-  };
-
-  const handleSelectChat = (id: number, isGroup: boolean, name: string) => {
+  const handleSelectChat = (
+    id: number,
+    isGroup: boolean,
+    name: string
+  ): void => {
     console.log(`Chat selected: ${id}, isGroup: ${isGroup}, name: ${name}`);
     setCurrentChatId(id);
     setCurrentChatName(name);
@@ -294,23 +169,24 @@ function Dashboard() {
     }
   };
 
-  const toggleSidebar = () => {
+  const toggleSidebar = (): void => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const toggleContactInfo = () => {
-    setShowContactInfo(!showContactInfo);
   };
 
   const handleDiscordChannelSelect = (
     channelId: string,
     channelName: string
-  ) => {
+  ): void => {
     setCurrentChatId(Number(channelId));
     setCurrentChatName(channelName);
-    setIsOnline(true); // I canali vocali sono sempre "online"
+    setIsOnline(true); // Voice channels are always "online"
     setLastSeen("Online");
     setMessages(channelMessages[channelId] || []);
+  };
+
+  // Function to toggle chat list on mobile
+  const toggleChatList = (): void => {
+    setShowChatList(!showChatList);
   };
 
   return (
@@ -320,9 +196,7 @@ function Dashboard() {
 
         <div className="main-content">
           {isSidebarOpen && (
-            <div className="sidebar">
-              <DiscordSidebar onChannelSelect={handleDiscordChannelSelect} />
-            </div>
+            <DiscordSidebar onChannelSelect={handleDiscordChannelSelect} />
           )}
 
           <div className="chat-layout">
@@ -336,113 +210,37 @@ function Dashboard() {
                 />
               </div>
             )}
-
-            <div className="chat-area">
-              <div className="chat-header">
-                <div className="user-info">
-                  <div className="avatar">{currentChatName.charAt(0)}</div>
-                  <div className="user-details">
-                    <Link
-                      to={`/profile/user/${currentChatId}`}
-                      className="user-name"
-                      target="_blank"
-                      rel="nooper noreferrer"
-                      >
-                      {currentChatName}
-                    </Link>
-                    <p>{isOnline ? "Online" : lastSeen}</p>
-                  </div>
-                </div>
-                <div className="header-actions">
-                  <button
-                    className="icon-button"
-                    onClick={() => setIsVideoCallOpen(!isVideoCallOpen)}
-                  >
-                    {isVideoCallOpen ? "💬" : "📹"}
-                  </button>
-                  <button
-                    className="icon-button"
-                    onClick={toggleContactInfo}
-                  >
-                    ⋮
-                  </button>
-                </div>
-              </div>
-
-              {isVideoCallOpen ? (
-                <VideoCall onClose={() => setIsVideoCallOpen(false)} />
-              ) : (
-                <div className="chat-container">
-                  <div className="messages-container">
-                    {messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`message ${message.sender === "user" ? "user-message" : "other-message"}`}
-                      >
-                        <div className="message-bubble">
-                          <p>{message.text}</p>
-                          <span className="message-time">
-                            {formatTime(message.timestamp)}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                    <div ref={messagesEndRef} />
-                  </div>
-
-                  <form
-                    className="message-input-container"
-                    onSubmit={handleSendMessage}
-                  >
-                    <button type="button" className="icon-button">
-                      📎
-                    </button>
-                    <input
-                      type="text"
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      placeholder="Type your message here..."
-                      className="message-input"
-                    />
-                    <button
-                      type="button"
-                      className="icon-button"
-                      onClick={togglePicker}
-                    >
-                      {isPickerVisible ? "❌" : "😊"}
-                    </button>
-                    {isPickerVisible && (
-                      <div className="emoji-picker-container">
-                        <EmojiPicker onEmojiClick={handleEmojiClick} />
-                      </div>
-                    )}
-                    <button
-                      type="submit"
-                      className="send-button"
-                      disabled={newMessage.trim() === ""}
-                    >
-                      <span role="img" aria-label="send">
-                        📤
-                      </span>
-                    </button>
-                  </form>
-                </div>
-              )}
-
-              {showContactInfo && (
-                <ContactInfoPanel
-                  contact={getCurrentContact()}
-                  onClose={toggleContactInfo}
-                  sharedMedia={sharedMedia}
-                />
-              )}
-            </div>
+            <ChatArea
+              currentChatId={currentChatId}
+              currentChatName={currentChatName}
+              isOnline={isOnline}
+              lastSeen={lastSeen}
+              initialMessages={messages}
+              setMessages={setMessages}
+              contacts={contacts}
+              channelMessages={channelMessages}
+              setChannelMessages={setChannelMessages}
+            />
+            {!showChatList && (
+              <button
+                className="mobile-toggle-button"
+                onClick={toggleChatList}
+                style={{
+                  position: "absolute",
+                  bottom: "20px",
+                  left: "20px",
+                  zIndex: 100,
+                  display: window.innerWidth <= 768 ? "block" : "none",
+                }}
+              >
+                💬
+              </button>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-}
-
+};
 
 export default Dashboard;

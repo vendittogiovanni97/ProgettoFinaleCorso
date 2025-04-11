@@ -1,6 +1,6 @@
 // ContactInfoPanel.styles.ts
 // ContactInfoPanel.styles.ts
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ContactInfoPanelContainer = styled.div`
   width: 380px;
