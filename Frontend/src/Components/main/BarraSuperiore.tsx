@@ -21,7 +21,9 @@ import useThemeColors from "../../styled/BarraSuperioreStyled";
 import { useThemeContext } from "../../context/ThemeContextDefinition";
 
 const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
   const [searchValue, setSearchValue] = React.useState<string>("");
   const { mode, toggleColorMode } = useThemeContext();
   const themeColors = useThemeColors(); // Usa i colori dinamici basati sul tema
@@ -87,11 +89,16 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
   const handleCloseUserMenu = (setting?: string) => {
     setAnchorElUser(null);
 
+    if (!setting) return; // Se non è stato selezionato nulla, esci
+
     if (setting === "Logout") {
-      navigate("/Login");
+      navigate("/login");
     }
     if (setting === "Profile") {
-      window.open("/profilepage", "_blank", "noopener,noreferrer");
+      navigate("/profilepage");
+    }
+    if (setting === "Settings") {
+      navigate("/settings");
     }
   };
 
@@ -99,9 +106,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     <AppBar
       style={{ display: "flex" }}
       position="fixed"
-      sx={{ 
-        backgroundColor: themeColors.backgroundLight, 
-        zIndex: (theme) => theme.zIndex.drawer + 1 
+      sx={{
+        backgroundColor: themeColors.backgroundLight,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Container maxWidth={false}>
@@ -112,7 +119,11 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, display: { xs: "flex" }, color: themeColors.textLight }}
+            sx={{
+              mr: 2,
+              display: { xs: "flex" },
+              color: themeColors.textLight,
+            }}
             onClick={onMenuClick}
           >
             <MenuIcon />
@@ -159,7 +170,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
           >
             DROCSID
           </Typography>
-          
+
           {/* Barra di ricerca */}
           <Search
             sx={{
@@ -175,7 +186,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               onKeyPress={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   handleSearch();
                 }
               }}
@@ -197,9 +208,19 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
           {/* Theme Toggle Button */}
           {toggleColorMode && (
             <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
-              <Tooltip title={mode === 'dark' ? 'Passa al tema chiaro' : 'Passa al tema scuro'}>
-                <IconButton onClick={toggleColorMode} color="inherit" sx={{ color: themeColors.textLight }}>
-                  {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+              <Tooltip
+                title={
+                  mode === "dark"
+                    ? "Passa al tema chiaro"
+                    : "Passa al tema scuro"
+                }
+              >
+                <IconButton
+                  onClick={toggleColorMode}
+                  color="inherit"
+                  sx={{ color: themeColors.textLight }}
+                >
+                  {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
               </Tooltip>
             </Box>
