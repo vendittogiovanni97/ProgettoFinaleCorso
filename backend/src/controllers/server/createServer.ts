@@ -37,11 +37,14 @@ export const createServer = async (req: Request, res: Response) => {
         name,
         ownerId,
         icon,
+
         // Add default channel "general"
         channels: {
           create: {
             name: "general",
-            type: "TEXT",
+            text: true,
+            voice: true,
+            video: true,
           },
         },
         // Add owner as member with ADMIN role
@@ -49,6 +52,7 @@ export const createServer = async (req: Request, res: Response) => {
           create: {
             userId: ownerId,
             role: "ADMIN",
+            nickname: user.username,
           },
         },
       },

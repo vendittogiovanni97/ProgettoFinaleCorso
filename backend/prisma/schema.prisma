@@ -16,10 +16,6 @@ enum FriendshipStatus {
   BLOCKED
 }
 
-enum ChannelType {
-  TEXT
-  VOICE
-}
 
 enum MemberRole {
   ADMIN
@@ -78,7 +74,9 @@ model Server {
 model Channel {
   id        Int         @id @default(autoincrement())
   name      String
-  type      ChannelType
+  text      Boolean  @default(false)
+  voice     Boolean  @default(false)
+  video     Boolean  @default(false)
   serverId  Int
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt

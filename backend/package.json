@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "nodemon --ext ts --exec ts-node src/server.ts"
+  },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",

@@ -33,7 +33,9 @@ export const createChannel = async (req: Request, res: Response) => {
   const channel = await dbClient.channel.create({
     data: {
       name,
-      type: type as "TEXT" | "VOICE",
+      text: true,
+      voice: true,
+      video: true,
       serverId,
     },
   });
