@@ -197,7 +197,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <AppWrapper>
-      <ResponsiveAppBar onMenuClick={toggleSidebar} />
+      <Navbar onMenuClick={toggleSidebar} />
 
       <MainContent>
         {isSidebarOpen && (
