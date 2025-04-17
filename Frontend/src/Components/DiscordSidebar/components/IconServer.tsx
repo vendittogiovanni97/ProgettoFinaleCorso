@@ -1,7 +1,7 @@
 // ServerIcon.tsx
 import React from "react";
-import { ServerIconProps } from "../../types/components/typesDiscordSidebar";
-import * as S from "../../styled/DiscordSidebarStyled";
+import { ServerIconProps } from "../../../types/components/typesDiscordSidebar";
+import * as S from "../../../styled/DiscordSidebarStyled";
 
 const ServerIcon: React.FC<ServerIconProps> = ({
   server,

@@ -1,8 +1,8 @@
 // ChannelList.tsx
 import React, { useEffect, useState } from "react";
-import backendFetch from "../../services/api";
-import * as S from "../../styled/DiscordSidebarStyled";
-import { Channel } from "../../types/components/typesDiscordSidebar";
+import backendFetch from "../../../services/api";
+import * as S from "../../../styled/DiscordSidebarStyled";
+import { Channel } from "../../../types/components/typesDiscordSidebar";
 
 interface ChannelListProps {
   serverId: string;
