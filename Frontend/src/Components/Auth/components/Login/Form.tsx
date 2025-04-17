@@ -1,20 +1,21 @@
-import { Input } from "@mui/material";
 import PasswordVisibility from "../../../../customizations/PasswordVisibility";
 import {
   StyledForm,
   PasswordContainer,
   PasswordInput,
   ErrorMessage,
+  Input,
 } from "../../../../styled/LoginStyled";
-import { Form } from "react-bootstrap";
 import Button from "./LoginButton";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../../context/Auth.Provider";
 import { FormData } from "../../../../types/components/UserLogged.type";
 import { useNavigate } from "react-router-dom";
+import RememberMe from "./RememberMe";
 
 export default function LoginForm() {
   const { login } = useContext(AuthContext);
+  const [error] = useState<string>("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
@@ -26,8 +27,8 @@ export default function LoginForm() {
     e.preventDefault();
 
     const dataLogin = {
-      email: formData.email, // Correggi qui
-      password: formData.password, // E qui
+      email: formData.email,
+      password: formData.password,
     };
     const response = await login(dataLogin);
     if (response) {
@@ -94,17 +95,7 @@ export default function LoginForm() {
       </PasswordContainer>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      <Form.Group controlId="formRememberMe">
-        <Form.Check
-          type="checkbox"
-          label="Ricordami"
-          checked={rememberMe}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setRememberMe(e.target.checked)
-          }
-          style={{ color: "black", fontWeight: "bold" }}
-        />
-      </Form.Group>
+      <RememberMe />
 
       <Button />
     </StyledForm>

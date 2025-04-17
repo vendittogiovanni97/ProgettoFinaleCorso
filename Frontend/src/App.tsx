@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
 import RegistrationForm from "./Components/Auth/components/Registration/Form";
 import ResetPassword from "./pages/ResetPassword";
 import ProfilePage from "./pages/ProfilePage";
@@ -10,6 +9,7 @@ import ThemeProvider from "../src/customizations/Theme"; // Importa il ThemeProv
 import Layout from "../src/customizations/Layout"; // Importeremo un nuovo componente Layout
 import { AppWrapper } from "../src/styled/DashboardStyled"; // Assicurati che il percorso sia corretto
 import PaginaImpostazioni from "./pages/Settings";
+import LoginPages from "./pages/LoginPages";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Router>
           <Routes>
             {/* Pagine senza layout (login, registrazione, ecc.) */}
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginPages />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/registration" element={<RegistrationForm />} />
 
@@ -68,7 +68,7 @@ function App() {
 
             {/* Pagina di errore */}
             <Route path="/notfound" element={<NotFound404Paged />} />
-            <Route path="*" element={<Login />} />
+            <Route path="*" element={<LoginPages />} />
           </Routes>
         </Router>
       </AppWrapper>
