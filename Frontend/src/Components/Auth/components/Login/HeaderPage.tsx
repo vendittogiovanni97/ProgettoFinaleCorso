@@ -6,15 +6,16 @@ export default function HeaderPage() {
   const handleWelcomeClick = () => {
     setWelcomeClicked(!welcomeClicked);
   };
+
   return (
     <div
       onClick={handleWelcomeClick}
       className="
-          fixed 
-          top-[380px]  {/* Aumentato da 380px a 480px per posizionare più in basso */}
-          left-1/6
-          -translate-x-1/2 
-          grow 
+          fixed
+          top-[390px]
+          left-[30%]
+          z-10
+          flex 
           flex-col 
           items-start 
           cursor-pointer
@@ -27,7 +28,6 @@ export default function HeaderPage() {
         text-[var(--primary-color)]
         mb-4
         animate-pulse
-        grow
           "
       >
         WELCOME TO
@@ -39,7 +39,7 @@ export default function HeaderPage() {
         text-[var(--primary-color)] 
         transition-all 
         duration-300 
-        flexgrow
+        flex-grow
         ease-in-out 
         hover:text-white 
         hover:drop-shadow-[0_0_15px_rgba(255,215,0,0.9)] 

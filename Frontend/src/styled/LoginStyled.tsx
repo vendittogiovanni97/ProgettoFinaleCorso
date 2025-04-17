@@ -125,3 +125,11 @@ export const ErrorMessage = styled.p`
   font-size: 0.9rem;
   margin-bottom: 1rem;
 `;
+
+export const HeaderContainer = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 60px;
+  z-index: 10;
+  width: auto;
+`;

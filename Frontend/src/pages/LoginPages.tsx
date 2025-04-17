@@ -4,8 +4,8 @@ import ButtonGoogle from "../Components/Auth/components/Login/ButtonGoogle";
 import ButtonRegistrati from "../Components/Auth/components/Login/ButtonRegistrati";
 import LoginForm from "../Components/Auth/components/Login/Form";
 import HeaderLogin from "../Components/Auth/components/Login/Header";
-import HeaderPage from "../Components/Auth/components/Login/HeaderPage";
 import RecuperPassword from "../Components/Auth/components/Login/RecuperaPassword";
+import HeaderPage from "../Components/Auth/components/Login/HeaderPage";
 
 export default function LoginPages() {
   return (
@@ -17,7 +17,7 @@ export default function LoginPages() {
       }}
     >
       <HeaderPage />
-      <FormContainer style={{ position: "fixed" }}>
+      <FormContainer>
         <HeaderLogin />
         <LoginForm />
         <RecuperPassword />

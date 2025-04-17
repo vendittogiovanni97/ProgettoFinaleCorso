@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
 import RegistrationForm from "./pages/Registration";
 import ResetPassword from "./pages/ResetPassword";
 import ProfilePage from "./pages/ProfilePage";
@@ -69,7 +68,7 @@ function App() {
 
             {/* Pagina di errore */}
             <Route path="/notfound" element={<NotFound404Paged />} />
-            <Route path="*" element={<Login />} />
+            <Route path="*" element={<LoginPages />} />
           </Routes>
         </Router>
       </AppWrapper>

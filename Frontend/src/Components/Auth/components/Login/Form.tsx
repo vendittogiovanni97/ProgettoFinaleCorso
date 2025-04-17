@@ -1,10 +1,10 @@
-import { Input } from "@mui/material";
 import PasswordVisibility from "../../../../customizations/PasswordVisibility";
 import {
   StyledForm,
   PasswordContainer,
   PasswordInput,
   ErrorMessage,
+  Input,
 } from "../../../../styled/LoginStyled";
 import Button from "./LoginButton";
 import { useContext, useState } from "react";
