@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../customizations/Theme"
+import "../customizations/Theme";
 import {
   AppWrapper,
   MainContent,
@@ -8,9 +8,9 @@ import {
 } from "../styled/DashboardStyled";
 import ChatLists from "../Components/chat/ChatLists";
 import ResponsiveAppBar from "../Components/main/BarraSuperiore";
-import DiscordSidebar from "../Components/main/DiscordSidebar";
 import ChatArea from "./ChatArea";
 import { Message, Contact, Group } from "../types/components/typesDashboard";
+import { DiscordSidebar } from "../Components/DiscordSidebar";
 
 const Dashboard: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -196,54 +196,54 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-      <AppWrapper>
-        <ResponsiveAppBar onMenuClick={toggleSidebar} />
+    <AppWrapper>
+      <ResponsiveAppBar onMenuClick={toggleSidebar} />
 
-        <MainContent>
-          {isSidebarOpen && (
-            <DiscordSidebar onChannelSelect={handleDiscordChannelSelect} />
+      <MainContent>
+        {isSidebarOpen && (
+          <DiscordSidebar onChannelSelect={handleDiscordChannelSelect} />
+        )}
+
+        <ChatLayout>
+          {showChatList && (
+            <ChatListPanel>
+              <ChatLists
+                contacts={contacts}
+                groups={groups}
+                onSelectChat={handleSelectChat}
+                activeChatId={currentChatId}
+              />
+            </ChatListPanel>
           )}
-
-          <ChatLayout>
-            {showChatList && (
-              <ChatListPanel>
-                <ChatLists
-                  contacts={contacts}
-                  groups={groups}
-                  onSelectChat={handleSelectChat}
-                  activeChatId={currentChatId}
-                />
-              </ChatListPanel>
-            )}
-            <ChatArea
-              currentChatId={currentChatId}
-              currentChatName={currentChatName}
-              isOnline={isOnline}
-              lastSeen={lastSeen}
-              initialMessages={messages}
-              setMessages={setMessages}
-              contacts={contacts}
-              channelMessages={channelMessages}
-              setChannelMessages={setChannelMessages}
-            />
-            {!showChatList && (
-              <button
-                className="mobile-toggle-button"
-                onClick={toggleChatList}
-                style={{
-                  position: "absolute",
-                  bottom: "20px",
-                  left: "20px",
-                  zIndex: 100,
-                  display: window.innerWidth <= 768 ? "block" : "none",
-                }}
-              >
-                💬
-              </button>
-            )}
-          </ChatLayout>
-        </MainContent>
-      </AppWrapper>
+          <ChatArea
+            currentChatId={currentChatId}
+            currentChatName={currentChatName}
+            isOnline={isOnline}
+            lastSeen={lastSeen}
+            initialMessages={messages}
+            setMessages={setMessages}
+            contacts={contacts}
+            channelMessages={channelMessages}
+            setChannelMessages={setChannelMessages}
+          />
+          {!showChatList && (
+            <button
+              className="mobile-toggle-button"
+              onClick={toggleChatList}
+              style={{
+                position: "absolute",
+                bottom: "20px",
+                left: "20px",
+                zIndex: 100,
+                display: window.innerWidth <= 768 ? "block" : "none",
+              }}
+            >
+              💬
+            </button>
+          )}
+        </ChatLayout>
+      </MainContent>
+    </AppWrapper>
   );
 };
 

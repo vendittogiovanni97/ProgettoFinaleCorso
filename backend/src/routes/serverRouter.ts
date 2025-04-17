@@ -8,12 +8,14 @@ import { getUserServers } from "../controllers/server/getUserServer";
 import { removeMemberFromServer } from "../controllers/server/removeMemberFromServer";
 import { updateServer } from "../controllers/server/updateServer";
 import { createServer } from "../controllers/server/createServer";
+import { getServers } from "../controllers/server/getServer";
+import { getChannelsByServer } from "../controllers/server/getChannelByServer";
 
 const serverRoutes = (app: Router) => {
   const router = Router();
 
   router.get("/user/:userId", getUserServers);
-  router.get("/:serverId", [checkAuth]);
+  router.get("/server", getServers);
   router.post("/", createServer);
   router.put("/:serverId", updateServer);
   router.delete("/:serverId", deleteServer);
@@ -21,10 +23,11 @@ const serverRoutes = (app: Router) => {
   router.post("/members", addMemberToServer);
   router.delete("/members/:serverId/:userId", removeMemberFromServer);
 
+  router.get("/:serverId/channels", getChannelsByServer);
   router.post("/channels", createChannel);
   router.delete("/channels/:channelId", deleteChannel);
 
-  app.use("/servers", [checkAuth], router);
+  app.use("/servers", router);
 };
 
 export default serverRoutes;
