@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import useOutsideClick from "../../hook/useOutsideClick";
-import * as S from "../../styled/AttachmentMenuStyled";
+import useOutsideClick from "../../../hook/useOutsideClick";
+import * as S from "../../../styled/AttachmentMenuStyled";
 
 type AttachmentMenuProps = {
   isOpen: boolean;
