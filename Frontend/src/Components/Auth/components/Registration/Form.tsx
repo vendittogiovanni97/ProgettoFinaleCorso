@@ -24,7 +24,8 @@ export default function RegistrationForm() {
 
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const navigate = useNavigate();
   const { register } = useContext(AuthContext);
   const [success, setSuccess] = useState<boolean>(false);
@@ -34,7 +35,9 @@ export default function RegistrationForm() {
   };
 
   const toggleConfirmPasswordVisibility = (): void => {
-    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    setShowConfirmPassword(
+      (prevShowConfirmPassword) => !prevShowConfirmPassword
+    );
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -90,7 +93,9 @@ export default function RegistrationForm() {
           onChange={handleChange}
           required
         />
-        <PasswordContainer style={{ position: "relative", marginBottom: "1rem" }}>
+        <PasswordContainer
+          style={{ position: "relative", marginBottom: "1rem" }}
+        >
           <PasswordInput
             type={showPassword ? "text" : "password"}
             name="password"
@@ -117,7 +122,9 @@ export default function RegistrationForm() {
           </div>
         </PasswordContainer>
 
-        <PasswordContainer style={{ position: "relative", marginBottom: "1rem" }}>
+        <PasswordContainer
+          style={{ position: "relative", marginBottom: "1rem" }}
+        >
           <PasswordInput
             type={showConfirmPassword ? "text" : "password"}
             name="confermaPassword"

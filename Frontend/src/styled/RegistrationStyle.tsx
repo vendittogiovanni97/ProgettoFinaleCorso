@@ -11,16 +11,13 @@ export const Container = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 `;
 
 export const FormContainer = styled.form`
   background: rgba(255, 215, 39, 0.85);
   padding: 2.5rem;
   border-radius: 1rem;
-  box-shadow: 
+  box-shadow:
     0 0 25px rgba(255, 215, 0, 0.4),
     0 0 10px rgba(255, 215, 0, 0.2);
   backdrop-filter: blur(4px);
@@ -55,7 +52,7 @@ export const Input = styled.input`
   width: 100%;
   height: 2.5rem;
   font-size: 1rem;
-  
+
   &:focus {
     outline: none;
     border-color: #ffd700;
