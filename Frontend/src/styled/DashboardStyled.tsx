@@ -11,9 +11,7 @@ export const AppWrapper = styled.div`
 
 export const MainContent = styled.div`
   display: flex;
-  height: calc(100vh - 64px);
-  margin-top: 64px; /* Space for top bar */
-  overflow: hidden;
+  height: 92vh;
 `;
 
 export const ChatLayout = styled.div`

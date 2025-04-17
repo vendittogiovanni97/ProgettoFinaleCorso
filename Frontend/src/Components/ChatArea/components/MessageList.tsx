@@ -3,9 +3,9 @@ import React from "react";
 import * as S from "../../../styled/ChatAreaStyled";
 import { Message } from "../../../types/components/typesDashboard";
 
-interface MessageListProps {
+export interface MessageListProps {
   messages: Message[];
-  messagesEndRef: React.RefObject<HTMLDivElement>;
+  messagesEndRef?: React.RefObject<HTMLDivElement>;
 }
 
 const MessageList: React.FC<MessageListProps> = ({
