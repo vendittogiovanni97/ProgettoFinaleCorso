@@ -33,5 +33,5 @@ export interface SharedMedia {
 }
 
 export interface ResponsiveAppBarProps {
-  onMenuClick?: () => void;
+  onMenuClick: () => void;  
 }
