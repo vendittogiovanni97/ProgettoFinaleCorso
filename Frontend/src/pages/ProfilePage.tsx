@@ -22,6 +22,7 @@ import {
   BioTextarea,
   H2Style,
 } from "../styled/ProfilePageStyle";
+import useThemeColors from "../styled/BarraSuperioreStyled";
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState({
@@ -35,7 +36,7 @@ const ProfilePage: React.FC = () => {
     location: "New York, USA",
     bio: "Strategic thinker and innovative problem solver with a passion for turning complex challenges into elegant solutions. Experienced in developing scalable technologies and leading high-performance teams. Believer in continuous learning and pushing boundaries of what's possible.",
   });
-
+  const themeColors = useThemeColors(); 
   const [age, setAge] = useState(0);
 
   const calculateAge = (birthDate: string): number => {
@@ -118,17 +119,17 @@ const ProfilePage: React.FC = () => {
           <Avatar>
             <img src="/pics/default-avatar.png" alt="Profile" />
           </Avatar>
-          <H2Style>
+          <H2Style style={{color: themeColors.textLight}}>
             {profile.firstName} {profile.lastName}
           </H2Style>
-          <p style={{ color: "rgba(255,215,0,0.7)", marginTop: "10px" }}>
+          <p style={{ color: themeColors.primary, marginTop: "10px" }}>
             {profile.jobTitle}
           </p>
 
           <SocialLinks></SocialLinks>
         </ProfileSidebar>
 
-        <ProfileContent>
+        <ProfileContent style={{backgroundColor: themeColors.backgroundLight, color: themeColors.textLight}}>
           <ProfileSection>
             {renderEditableField("firstName", "First Name", <FaUser />, "text")}
             {renderEditableField("lastName", "Last Name", <FaUser />, "text")}
