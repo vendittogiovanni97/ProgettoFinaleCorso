@@ -7,41 +7,35 @@ import {
   User,
   Lock,
   HelpCircle,
-  LayoutDashboard,
 } from "lucide-react";
-import { Divider } from "@mui/material";
-import { List } from "@mui/material";
+import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import useThemeColors from "../styled/BarraSuperioreStyled";
 
 type Tema = "chiaro" | "scuro" | "sistema";
 type Lingua = "italiano" | "english" | "français" | "español";
 
 const PaginaLingua = () => {
-  const [linguaSelezionata, setLinguaSelezionata] =
-    useState<Lingua>("italiano");
+  const [linguaSelezionata, setLinguaSelezionata] = useState<Lingua>("italiano");
   const lingue: Lingua[] = ["italiano", "english", "français", "español"];
 
   return (
-    <div className="w-full p-6">
-      <h2 className="text-2xl font-bold mb-6">Impostazioni Lingua</h2>
-      <div className="space-y-4">
+    <Box p={3}>
+      <Typography variant="h5" gutterBottom>
+        Impostazioni Lingua
+      </Typography>
+      <List>
         {lingue.map((lingua) => (
-          <div
+          <ListItemButton
             key={lingua}
-            className={`p-4 rounded-lg cursor-pointer flex items-center justify-between ${
-              linguaSelezionata === lingua
-                ? "bg-blue-100 dark:bg-blue-900"
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
-            }`}
+            selected={linguaSelezionata === lingua}
             onClick={() => setLinguaSelezionata(lingua)}
           >
-            <span className="font-medium">{lingua}</span>
-            {linguaSelezionata === lingua && (
-              <span className="text-blue-600 dark:text-blue-400">✓</span>
-            )}
-          </div>
+            <ListItemText primary={lingua} />
+            {linguaSelezionata === lingua && <ChevronRight />}
+          </ListItemButton>
         ))}
-      </div>
-    </div>
+      </List>
+    </Box>
   );
 };
 
@@ -66,28 +60,23 @@ const PaginaTema = () => {
   ];
 
   return (
-    <div className="w-full p-6">
-      <h2 className="text-2xl font-bold mb-6">Impostazioni Tema</h2>
-      <div className="space-y-4">
+    <Box p={3}>
+      <Typography variant="h5" gutterBottom>
+        Impostazioni Tema
+      </Typography>
+      <List>
         {temi.map((tema) => (
-          <div
+          <ListItemButton
             key={tema.id}
-            className={`p-4 rounded-lg cursor-pointer ${temaSelezionato === tema.id ? "bg-blue-900" : "hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+            selected={temaSelezionato === tema.id}
             onClick={() => setTemaSelezionato(tema.id)}
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-semibold">{tema.nome}</span>
-              {temaSelezionato === tema.id && (
-                <span className="text-blue-600 dark:text-blue-400">✓</span>
-              )}
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              {tema.descrizione}
-            </p>
-          </div>
+            <ListItemText primary={tema.nome} secondary={tema.descrizione} />
+            {temaSelezionato === tema.id && <ChevronRight />}
+          </ListItemButton>
         ))}
-      </div>
-    </div>
+      </List>
+    </Box>
   );
 };
 
@@ -98,73 +87,75 @@ const PaginaNotifiche = () => {
   const [suoniDisattivati, setSuoniDisattivati] = useState(false);
 
   return (
-    <div className="w-full p-6">
-      <h2 className="text-2xl font-bold mb-6">Impostazioni Notifiche</h2>
-      <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-          <span className="font-medium">Notifiche</span>
+    <Box p={3}>
+      <Typography variant="h5" gutterBottom>
+        Impostazioni Notifiche
+      </Typography>
+      <List>
+        <ListItem>
+          <ListItemText primary="Notifiche" />
           <input
             type="checkbox"
             checked={notificheAttive}
             onChange={() => setNotificheAttive(!notificheAttive)}
-            className="toggle toggle-primary"
           />
-        </div>
-        <div className="flex items-center justify-between p-4 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-          <span className="font-medium">Suoni</span>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Suoni" />
           <input
             type="checkbox"
             checked={suoniAttivi}
             onChange={() => setSuoniAttivi(!suoniAttivi)}
-            className="toggle toggle-primary"
           />
-        </div>
-        <div className="flex items-center justify-between p-4 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-          <span className="font-medium">Disattiva tutte le notifiche</span>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Disattiva tutte le notifiche" />
           <input
             type="checkbox"
             checked={notificheDisattivate}
             onChange={() => setNotificheDisattivate(!notificheDisattivate)}
-            className="toggle toggle-primary"
           />
-        </div>
-        <div className="flex items-center justify-between p-4 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-          <span className="font-medium">Disattiva suoni</span>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Disattiva suoni" />
           <input
             type="checkbox"
             checked={suoniDisattivati}
             onChange={() => setSuoniDisattivati(!suoniDisattivati)}
-            className="toggle toggle-primary"
           />
-        </div>
-      </div>
-    </div>
+        </ListItem>
+      </List>
+    </Box>
   );
 };
 
 const PaginaPrivacy = () => (
-  <div className="w-full p-6">
-    <h2 className="text-2xl font-bold mb-6">Privacy e Sicurezza</h2>
-    <p>Modifica le impostazioni relative a privacy e sicurezza.</p>
-  </div>
+  <Box p={3}>
+    <Typography variant="h5" gutterBottom>
+      Privacy e Sicurezza
+    </Typography>
+    <Typography>
+      Modifica le impostazioni relative a privacy e sicurezza.
+    </Typography>
+  </Box>
 );
 
 const PaginaAssistenza = () => (
-  <div className="w-full p-6">
-    <h2 className="text-2xl font-bold mb-6">Assistenza</h2>
-    <p>Contatta il supporto o consulta le FAQ.</p>
-  </div>
+  <Box p={3}>
+    <Typography variant="h5" gutterBottom>
+      Assistenza
+    </Typography>
+    <Typography>
+      Contatta il supporto o consulta le FAQ.
+    </Typography>
+  </Box>
 );
 
 export default function PaginaImpostazioni() {
   const [paginaAttiva, setPaginaAttiva] = useState("dashboard");
+  const themeColors = useThemeColors();
 
   const menuItems = [
-    {
-      id: "dashboard",
-      nome: "Dashboard",
-      icona: <LayoutDashboard size={20} />,
-    },
     { id: "lingua", nome: "Lingua", icona: <Globe size={20} /> },
     { id: "tema", nome: "Tema", icona: <Palette size={20} /> },
     { id: "notifiche", nome: "Notifiche", icona: <Bell size={20} /> },
@@ -175,7 +166,7 @@ export default function PaginaImpostazioni() {
 
   const renderPagina = () => {
     switch (paginaAttiva) {
-      default:
+      case "lingua":
         return <PaginaLingua />;
       case "tema":
         return <PaginaTema />;
@@ -185,52 +176,58 @@ export default function PaginaImpostazioni() {
         return <PaginaPrivacy />;
       case "assistenza":
         return <PaginaAssistenza />;
+      default:
+        return <PaginaLingua />;
     }
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      {/* Barra laterale */}
-      <Divider
-        orientation="vertical"
-        flexItem
-        textAlign="left"
-        sx={{ marginLeft: "0", marginRight: "900px" }}
+    <Box sx={{ display: 'flex', height: '100vh' }}>
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: 240,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: 240,
+            boxSizing: 'border-box',
+            backgroundColor: themeColors.backgroundLight,
+            color: themeColors.textLight,
+          },
+        }}
       >
-        <List>
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-            <h1 className="text-xl font-bold">Impostazioni</h1>
-          </div>
-          <nav className="mt-4">
-            <ul>
-              {menuItems.map((item) => (
-                <li key={item.id}>
-                  <button
-                    className={`flex items-center w-full p-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                      paginaAttiva === item.id
-                        ? "bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300"
-                        : ""
-                    }`}
-                    onClick={() => setPaginaAttiva(item.id)}
-                  >
-                    <span className="mr-3">{item.icona}</span>
-                    {item.nome}
-                    <ChevronRight size={16} className="ml-auto" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </List>
-      </Divider>
-      <Divider
-        orientation="vertical"
-        flexItem
-        sx={{ marginLeft: "400px", textAlign: "center" }}
-      >
-        {/* Contenuto principale */}
-        <div className="flex-1 overflow-y-auto">{renderPagina()}</div>
-      </Divider>
-    </div>
+        <Box sx={{ overflow: 'auto' }}>
+          <Typography variant="h6" sx={{ p: 2 }}>
+            Impostazioni
+          </Typography>
+          <List>
+            {menuItems.map((item) => (
+              <ListItemButton
+                key={item.id}
+                selected={paginaAttiva === item.id}
+                onClick={() => setPaginaAttiva(item.id)}
+                sx={{
+                  '&.Mui-selected': {
+                    backgroundColor: themeColors.primary,
+                    color: themeColors.textLight,
+                    '&:hover': {
+                      backgroundColor: themeColors.primary,
+                    },
+                  },
+                }}
+              >
+                <ListItemIcon sx={{ color: 'inherit' }}>
+                  {item.icona}
+                </ListItemIcon>
+                <ListItemText primary={item.nome} />
+              </ListItemButton>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: themeColors.backgroundLight }}>
+        {renderPagina()}
+      </Box>
+    </Box>
   );
 }
