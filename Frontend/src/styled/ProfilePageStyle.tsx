@@ -11,8 +11,8 @@ export const Container = styled.div`
   background-image: url(/pics/image1.jpg);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; // Changed from 'contain' to 'cover'
-  background-attachment: fixed; // This ensures the background stays in place during scrolling
+  background-size: cover;
+  background-attachment: fixed;
 `;
 
 export const ProfileGrid = styled.div`
@@ -21,7 +21,7 @@ export const ProfileGrid = styled.div`
   gap: 30px;
   width: 100%;
   max-width: 1200px;
-  background: rgba(30, 30, 30, 0.9);
+  background: ${props => props.theme.colors.backgroundDark};
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -29,19 +29,19 @@ export const ProfileGrid = styled.div`
 `;
 
 export const ProfileSidebar = styled.div`
-  background: rgba(255, 215, 0, 0.05);
+  background: ${props => `${props.theme.colors.primary}0d`};
   padding: 40px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 1px solid rgba(255, 215, 0, 0.1);
+  border-right: 1px solid ${props => `${props.theme.colors.primary}1a`};
 `;
 
 export const Avatar = styled.div`
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 4px solid #ffd700;
+  border: 4px solid ${props => props.theme.colors.primary};
   overflow: hidden;
   margin-bottom: 25px;
   transition: all 0.4s ease;
@@ -54,11 +54,12 @@ export const Avatar = styled.div`
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 20px ${props => `${props.theme.colors.primary}66`};
   }
 `;
+
 export const H2Style = styled.div`
-  color: #ffd700;
+  color: ${props => props.theme.colors.textLight};
 `;
 
 export const SocialLinks = styled.div`
@@ -67,13 +68,13 @@ export const SocialLinks = styled.div`
   margin-top: 25px;
 
   a {
-    color: #ffd700;
+    color: ${props => props.theme.colors.primary};
     font-size: 24px;
     transition: all 0.3s ease;
 
     &:hover {
       transform: scale(1.2);
-      color: #ffeb3b;
+      color: ${props => props.theme.colors.hoverColor};
     }
   }
 `;
@@ -83,6 +84,7 @@ export const ProfileContent = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+  background: ${props => props.theme.colors.backgroundLight};
 `;
 
 const slideIn = keyframes`
@@ -97,7 +99,7 @@ const slideIn = keyframes`
 `;
 
 export const ProfileSection = styled.div`
-  background: rgba(255, 255, 255, 0.05);
+  background: ${props => `${props.theme.colors.backgroundDark}0a`};
   border-radius: 15px;
   padding: 25px;
   transition: all 0.3s ease;
@@ -105,10 +107,10 @@ export const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  color: #ffd700;
+  color: ${props => props.theme.colors.textLight};
 
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: ${props => `${props.theme.colors.backgroundDark}1a`};
     transform: translateY(-5px);
   }
 `;
@@ -123,29 +125,33 @@ export const EditableField = styled.div`
     display: flex;
     align-items: center;
     gap: 15px;
-    color: #ffd700;
+    color: ${props => props.theme.colors.textLight};
     flex-grow: 1;
+
+    svg {
+      color: ${props => props.theme.colors.primary};
+    }
   }
 
   input {
     flex-grow: 1;
     padding: 10px;
     background: transparent;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #ffd700;
+    border: 1px solid ${props => `${props.theme.colors.primary}4d`};
+    color: ${props => props.theme.colors.textLight};
     border-radius: 6px;
     transition: all 0.3s ease;
     width: 100%;
 
     &:focus {
       outline: none;
-      border-color: #ffd700;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      border-color: ${props => props.theme.colors.primary};
+      box-shadow: 0 0 10px ${props => `${props.theme.colors.primary}4d`};
     }
   }
 
   .edit-icon {
-    color: #ffd700;
+    color: ${props => props.theme.colors.primary};
     cursor: pointer;
     opacity: 0.7;
     transition: all 0.3s ease;
@@ -165,8 +171,8 @@ export const BioTextarea = styled.textarea`
   width: 100%;
   max-width: 800px;
   background: transparent;
-  color: #ffd700;
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  color: ${props => props.theme.colors.textLight};
+  border: 1px solid ${props => `${props.theme.colors.primary}4d`};
   border-radius: 6px;
   padding: 15px;
   min-height: 150px;
@@ -175,7 +181,7 @@ export const BioTextarea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    border-color: ${props => props.theme.colors.primary};
+    box-shadow: 0 0 10px ${props => `${props.theme.colors.primary}4d`};
   }
 `;
