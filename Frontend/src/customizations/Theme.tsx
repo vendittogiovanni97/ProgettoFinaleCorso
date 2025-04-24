@@ -21,14 +21,17 @@ const globalStyles = {
     "--border-color-dark": "#444", // Colore del bordo
     "--hover-color-dark": "rgba(255, 215, 0, 0.1)", // Giallo trasparente per hover
 
+        // ... existing code ...
+
     // Colori per il tema chiaro
-    "--primary-color-light": "#ffd700", // Giallo dorato
-    "--background-dark-light": "#f5f5f5", // Bianco sporco per lo sfondo
-    "--background-light-light": "#ffffff", // Bianco per i contenitori
-    "--text-light-light": "#000000", // Testo nero
-    "--text-dark-light": "#ffffff", // Testo bianco
-    "--border-color-light": "#ddd", // Colore del bordo
-    "--hover-color-light": "rgba(255, 215, 0, 0.2)", // Giallo trasparente per hover
+    "--primary-color-light": "#ffd700",
+    "--background-dark-light": "#eef2f7",    // Grigio azzurrino per lo sfondo principale
+    "--background-light-light": "#fcfcfc",   // Bianco sporco per i contenitori
+    "--text-light-light": "#2c3e50",         // Blu scuro per il testo
+    "--text-dark-light": "#ffffff",
+    "--border-color-light": "#cbd5e1",       // Bordo più pronunciato grigio-blu
+    "--hover-color-light": "rgba(255, 215, 0, 0.15)",
+    "--shadow-light": "0 2px 4px rgba(0,0,0,0.08)",  // Ombra sottile per profondità
   },
 };
 
@@ -93,6 +96,61 @@ const ThemeProviderInner: React.FC<{ children: React.ReactNode }> = ({
               },
             },
           },
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+                border: mode === 'light' ? '1px solid #e2e8f0' : 'none',
+                boxShadow: mode === 'light' 
+                  ? '0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)' 
+                  : 'none',
+                background: mode === 'light' 
+                  ? 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)' 
+                  : '#2a2a2a',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: mode === 'light' 
+                    ? '0 6px 8px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.12)' 
+                    : 'none'
+                }
+              }
+            }
+          },
+          MuiCard: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+                border: mode === 'light' ? '1px solid #e2e8f0' : 'none',
+                boxShadow: mode === 'light' 
+                  ? '0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)' 
+                  : 'none',
+                background: mode === 'light' 
+                  ? 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)' 
+                  : '#2a2a2a',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: mode === 'light' 
+                    ? '0 6px 8px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.12)' 
+                    : 'none'
+                }
+              }
+            }
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                borderRadius: '8px',
+                textTransform: 'none',
+                fontWeight: 500,
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-1px)'
+                }
+              }
+            }
+          }
         },
       }),
     [mode]
