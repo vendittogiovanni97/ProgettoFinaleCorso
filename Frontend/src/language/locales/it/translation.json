@@ -1,0 +1,45 @@
+{
+    "app": {
+      "title": "DROCSID",
+      "settings": "Impostazioni"
+    },
+    "settings": {
+      "language": "Lingua",
+      "theme": "Tema",
+      "notifications": "Notifiche",
+      "privacy": "Privacy",
+      "assistance": "Assistenza"
+    },
+    "theme": {
+      "title": "Impostazioni Tema",
+      "light": "Tema Chiaro",
+      "dark": "Tema Scuro",
+      "system": "Tema di Sistema",
+      "lightDesc": "Tema chiaro con testo scuro",
+      "darkDesc": "Tema scuro con testo chiaro",
+      "systemDesc": "Tema basato sulle impostazioni di sistema"
+    },
+    "language": {
+      "title": "Impostazioni Lingua"
+    },
+    "notifications": {
+      "title": "Impostazioni Notifiche",
+      "notifications": "Notifiche",
+      "sounds": "Suoni",
+      "disableAll": "Disattiva tutte le notifiche",
+      "disableSounds": "Disattiva suoni"
+    },
+    "privacy": {
+      "title": "Privacy e Sicurezza",
+      "description": "Modifica le impostazioni relative a privacy e sicurezza."
+    },
+    "assistance": {
+      "title": "Assistenza",
+      "description": "Contatta il supporto o consulta le FAQ."
+    },
+    "navbar": {
+      "search": "Cerca...",
+      "toggleLight": "Passa al tema chiaro",
+      "toggleDark": "Passa al tema scuro"
+    }
+  }

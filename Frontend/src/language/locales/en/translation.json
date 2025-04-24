@@ -1,0 +1,45 @@
+{
+    "app": {
+      "title": "DROCSID",
+      "settings": "Settings"
+    },
+    "settings": {
+      "language": "Language",
+      "theme": "Theme",
+      "notifications": "Notifications",
+      "privacy": "Privacy",
+      "assistance": "Support"
+    },
+    "theme": {
+      "title": "Theme Settings",
+      "light": "Light Theme",
+      "dark": "Dark Theme",
+      "system": "System Theme",
+      "lightDesc": "Light theme with dark text",
+      "darkDesc": "Dark theme with light text",
+      "systemDesc": "Theme based on system settings"
+    },
+    "language": {
+      "title": "Language Settings"
+    },
+    "notifications": {
+      "title": "Notification Settings",
+      "notifications": "Notifications",
+      "sounds": "Sounds",
+      "disableAll": "Disable all notifications",
+      "disableSounds": "Disable sounds"
+    },
+    "privacy": {
+      "title": "Privacy and Security",
+      "description": "Modify privacy and security settings."
+    },
+    "assistance": {
+      "title": "Support",
+      "description": "Contact support or consult FAQs."
+    },
+    "navbar": {
+      "search": "Search...",
+      "toggleLight": "Switch to light theme",
+      "toggleDark": "Switch to dark theme"
+    }
+  }

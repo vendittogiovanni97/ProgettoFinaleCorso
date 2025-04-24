@@ -9,28 +9,31 @@ import {
 } from "lucide-react";
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import useThemeColors from "../styled/BarraSuperioreStyled";
+import { useTranslation } from 'react-i18next';
+import { useLanguageContext } from '../language/LanguageContext';
 
 type Tema = "chiaro" | "scuro" | "sistema";
 type Lingua = "italiano" | "english" | "français" | "español";
 
 const PaginaLingua = () => {
-  const [linguaSelezionata, setLinguaSelezionata] = useState<Lingua>("italiano");
+  const { t } = useTranslation();
+  const { language, changeLanguage } = useLanguageContext();
   const lingue: Lingua[] = ["italiano", "english", "français", "español"];
 
   return (
     <Box p={10}>
       <Typography variant="h5" gutterBottom>
-        Impostazioni Lingua
+        {t('language.title')}
       </Typography>
       <List>
         {lingue.map((lingua) => (
           <ListItemButton
             key={lingua}
-            selected={linguaSelezionata === lingua}
-            onClick={() => setLinguaSelezionata(lingua)}
+            selected={language === lingua}
+            onClick={() => changeLanguage(lingua)}
           >
             <ListItemText primary={lingua} />
-            {linguaSelezionata === lingua && <ChevronRight />}
+            {language === lingua && <ChevronRight />}
           </ListItemButton>
         ))}
       </List>
@@ -39,29 +42,30 @@ const PaginaLingua = () => {
 };
 
 const PaginaTema = () => {
+  const { t } = useTranslation();
   const [temaSelezionato, setTemaSelezionato] = useState<Tema>("chiaro");
   const temi: { id: Tema; nome: string; descrizione: string }[] = [
     {
       id: "chiaro",
-      nome: "Tema Chiaro",
-      descrizione: "Tema chiaro con testo scuro",
+      nome: t('theme.light'),
+      descrizione: t('theme.lightDesc'),
     },
     {
       id: "scuro",
-      nome: "Tema Scuro",
-      descrizione: "Tema scuro con testo chiaro",
+      nome: t('theme.dark'),
+      descrizione: t('theme.darkDesc'),
     },
     {
       id: "sistema",
-      nome: "Tema di Sistema",
-      descrizione: "Tema basato sulle impostazioni di sistema",
+      nome: t('theme.system'),
+      descrizione: t('theme.systemDesc'),
     },
   ];
 
   return (
     <Box p={10}>
       <Typography variant="h5" gutterBottom>
-        Impostazioni Tema
+        {t('theme.title')}
       </Typography>
       <List>
         {temi.map((tema) => (
@@ -80,6 +84,7 @@ const PaginaTema = () => {
 };
 
 const PaginaNotifiche = () => {
+  const { t } = useTranslation();
   const [notificheAttive, setNotificheAttive] = useState(true);
   const [suoniAttivi, setSuoniAttivi] = useState(true);
   const [notificheDisattivate, setNotificheDisattivate] = useState(false);
@@ -88,11 +93,11 @@ const PaginaNotifiche = () => {
   return (
     <Box p={10}>
       <Typography variant="h5" gutterBottom>
-        Impostazioni Notifiche
+        {t('notifications.title')}
       </Typography>
       <List>
         <ListItem>
-          <ListItemText primary="Notifiche" />
+          <ListItemText primary={t('notifications.notifications')} />
           <input
             type="checkbox"
             checked={notificheAttive}
@@ -100,7 +105,7 @@ const PaginaNotifiche = () => {
           />
         </ListItem>
         <ListItem>
-          <ListItemText primary="Suoni" />
+          <ListItemText primary={t('notifications.sounds')} />
           <input
             type="checkbox"
             checked={suoniAttivi}
@@ -108,7 +113,7 @@ const PaginaNotifiche = () => {
           />
         </ListItem>
         <ListItem>
-          <ListItemText primary="Disattiva tutte le notifiche" />
+          <ListItemText primary={t('notifications.disableAll')} />
           <input
             type="checkbox"
             checked={notificheDisattivate}
@@ -116,7 +121,7 @@ const PaginaNotifiche = () => {
           />
         </ListItem>
         <ListItem>
-          <ListItemText primary="Disattiva suoni" />
+          <ListItemText primary={t('notifications.disableSounds')} />
           <input
             type="checkbox"
             checked={suoniDisattivati}
@@ -128,38 +133,45 @@ const PaginaNotifiche = () => {
   );
 };
 
-const PaginaPrivacy = () => (
-  <Box p={10}>
-    <Typography variant="h5" gutterBottom>
-      Privacy e Sicurezza
-    </Typography>
-    <Typography>
-      Modifica le impostazioni relative a privacy e sicurezza.
-    </Typography>
-  </Box>
-);
+const PaginaPrivacy = () => {
+  const { t } = useTranslation();
+  return (
+    <Box p={10}>
+      <Typography variant="h5" gutterBottom>
+        {t('privacy.title')}
+      </Typography>
+      <Typography>
+        {t('privacy.description')}
+      </Typography>
+    </Box>
+  );
+};
 
-const PaginaAssistenza = () => (
-  <Box p={10}>
-    <Typography variant="h5" gutterBottom>
-      Assistenza
-    </Typography>
-    <Typography>
-      Contatta il supporto o consulta le FAQ.
-    </Typography>
-  </Box>
-);
+const PaginaAssistenza = () => {
+  const { t } = useTranslation();
+  return (
+    <Box p={10}>
+      <Typography variant="h5" gutterBottom>
+        {t('assistance.title')}
+      </Typography>
+      <Typography>
+        {t('assistance.description')}
+      </Typography>
+    </Box>
+  );
+};
 
 export default function PaginaImpostazioni() {
-  const [paginaAttiva, setPaginaAttiva] = useState("dashboard");
+  const { t } = useTranslation();
+  const [paginaAttiva, setPaginaAttiva] = useState("lingua");
   const themeColors = useThemeColors();
 
   const menuItems = [
-    { id: "lingua", nome: "Lingua", icona: <Globe size={20} /> },
-    { id: "tema", nome: "Tema", icona: <Palette size={20} /> },
-    { id: "notifiche", nome: "Notifiche", icona: <Bell size={20} /> },
-    { id: "privacy", nome: "Privacy", icona: <Lock size={20} /> },
-    { id: "assistenza", nome: "Assistenza", icona: <HelpCircle size={20} /> },
+    { id: "lingua", nome: t('settings.language'), icona: <Globe size={20} /> },
+    { id: "tema", nome: t('settings.theme'), icona: <Palette size={20} /> },
+    { id: "notifiche", nome: t('settings.notifications'), icona: <Bell size={20} /> },
+    { id: "privacy", nome: t('settings.privacy'), icona: <Lock size={20} /> },
+    { id: "assistenza", nome: t('settings.assistance'), icona: <HelpCircle size={20} /> },
   ];
 
   const renderPagina = () => {
@@ -196,7 +208,7 @@ export default function PaginaImpostazioni() {
       >
         <Box sx={{ overflow: 'auto' }}>
           <Typography variant="h6" sx={{ p: 2 }}>
-            Impostazioni
+            {t('app.settings')}
           </Typography>
           <List>
             {menuItems.map((item) => (

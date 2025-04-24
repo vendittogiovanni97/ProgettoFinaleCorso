@@ -4,8 +4,10 @@ import useThemeColors from "../../../styled/BarraSuperioreStyled";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
+import { useTranslation } from 'react-i18next';
 
 const SearchBar = () => {
+  const { t } = useTranslation();
   const themeColors = useThemeColors(); // Usa i colori dinamici basati sul tema
   const [searchValue, setSearchValue] = React.useState<string>("");
   const navigate = useNavigate();
@@ -62,7 +64,7 @@ const SearchBar = () => {
       }}
     >
       <StyledInputBase
-        placeholder="Search…"
+        placeholder={t('navbar.search')}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         onKeyDown={(e) => {
