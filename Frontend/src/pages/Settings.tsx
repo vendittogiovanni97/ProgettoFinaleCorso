@@ -4,7 +4,6 @@ import {
   Globe,
   Palette,
   Bell,
-  User,
   Lock,
   HelpCircle,
 } from "lucide-react";
@@ -19,7 +18,7 @@ const PaginaLingua = () => {
   const lingue: Lingua[] = ["italiano", "english", "français", "español"];
 
   return (
-    <Box p={3}>
+    <Box p={10}>
       <Typography variant="h5" gutterBottom>
         Impostazioni Lingua
       </Typography>
@@ -60,7 +59,7 @@ const PaginaTema = () => {
   ];
 
   return (
-    <Box p={3}>
+    <Box p={10}>
       <Typography variant="h5" gutterBottom>
         Impostazioni Tema
       </Typography>
@@ -87,7 +86,7 @@ const PaginaNotifiche = () => {
   const [suoniDisattivati, setSuoniDisattivati] = useState(false);
 
   return (
-    <Box p={3}>
+    <Box p={10}>
       <Typography variant="h5" gutterBottom>
         Impostazioni Notifiche
       </Typography>
@@ -130,7 +129,7 @@ const PaginaNotifiche = () => {
 };
 
 const PaginaPrivacy = () => (
-  <Box p={3}>
+  <Box p={10}>
     <Typography variant="h5" gutterBottom>
       Privacy e Sicurezza
     </Typography>
@@ -141,7 +140,7 @@ const PaginaPrivacy = () => (
 );
 
 const PaginaAssistenza = () => (
-  <Box p={3}>
+  <Box p={10}>
     <Typography variant="h5" gutterBottom>
       Assistenza
     </Typography>
@@ -159,7 +158,6 @@ export default function PaginaImpostazioni() {
     { id: "lingua", nome: "Lingua", icona: <Globe size={20} /> },
     { id: "tema", nome: "Tema", icona: <Palette size={20} /> },
     { id: "notifiche", nome: "Notifiche", icona: <Bell size={20} /> },
-    { id: "profilo", nome: "Profilo", icona: <User size={20} /> },
     { id: "privacy", nome: "Privacy", icona: <Lock size={20} /> },
     { id: "assistenza", nome: "Assistenza", icona: <HelpCircle size={20} /> },
   ];
