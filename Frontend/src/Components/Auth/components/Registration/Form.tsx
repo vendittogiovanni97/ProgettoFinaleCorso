@@ -1,18 +1,16 @@
 import { useContext, useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import PasswordVisibility from "../../../../customizations/PasswordVisibility";
 import {
   FormContainer,
   Form,
   Input,
   ErrorMessage,
-  PasswordContainer,
-  PasswordInput,
 } from "../../../../styled/RegistrationStyle";
 import { AuthContext } from "../../../../context/Auth.Provider";
 import { FormData } from "../../../../types/components/typesRegistration";
 import RegistrationButton from "./RegistrationButton";
 import HeaderRegistration from "./Header";
+import PasswordContainer from "./PasswordContainer";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -24,8 +22,7 @@ export default function RegistrationForm() {
 
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const navigate = useNavigate();
   const { register } = useContext(AuthContext);
   const [success, setSuccess] = useState<boolean>(false);
@@ -94,62 +91,21 @@ export default function RegistrationForm() {
           required
         />
         <PasswordContainer
-          style={{ position: "relative", marginBottom: "1rem" }}
-        >
-          <PasswordInput
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            style={{ paddingRight: "40px" }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              right: "0.2px",
-              top: "48%",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-              left: "85%",
-            }}
-          >
-            <PasswordVisibility
-              visible={showPassword}
-              onClick={togglePasswordVisibility}
-            />
-          </div>
-        </PasswordContainer>
-
+          showPassword={showPassword}
+          toggleVisibility={togglePasswordVisibility}
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
         <PasswordContainer
-          style={{ position: "relative", marginBottom: "1rem" }}
-        >
-          <PasswordInput
-            type={showConfirmPassword ? "text" : "password"}
-            name="confermaPassword"
-            placeholder="Conferma password"
-            value={formData.confermaPassword}
-            onChange={handleChange}
-            required
-            style={{ paddingRight: "40px" }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              right: "0.3px",
-              top: "48%",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-              left: "85%",
-            }}
-          >
-            <PasswordVisibility
-              visible={showConfirmPassword}
-              onClick={toggleConfirmPasswordVisibility}
-            />
-          </div>
-        </PasswordContainer>
+          showPassword={showConfirmPassword}
+          toggleVisibility={toggleConfirmPasswordVisibility}
+          name="confermaPassword"
+          placeholder="Conferma password"
+          value={formData.confermaPassword}
+          onChange={handleChange}
+        />
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <RegistrationButton />
       </Form>

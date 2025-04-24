@@ -1,6 +1,7 @@
 import { Container } from "../styled/RegistrationStyle";
 import RegistrationForm from "../Components/Auth/components/Registration/Form";
 
+
 export default function Registration() {
   return (
     <Container

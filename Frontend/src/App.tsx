@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import ResetPassword from "./pages/ResetPassword";
+import ResetPassword from "./pages/ResetPasswordPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound404Paged from "./pages/notFound";
 import Profile from "./pages/Profile";
@@ -9,7 +9,7 @@ import Layout from "../src/customizations/Layout"; // Importeremo un nuovo compo
 import { AppWrapper } from "../src/styled/DashboardStyled"; // Assicurati che il percorso sia corretto
 import PaginaImpostazioni from "./pages/Settings";
 import LoginPages from "./pages/LoginPages";
-import Registration from "./pages/RegistrationPages";
+import Registration from "./pages/RegistrationPage";
 
 function App() {
   return (
