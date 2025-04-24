@@ -8,10 +8,8 @@ import {
 } from "../styled/DashboardStyled";
 import ChatLists from "../Components/chat/ChatLists";
 import Navbar from "../Components/Navbar/Navbar";
-import ChatArea from "./ChatArea";
 import { Message, Contact, Group } from "../types/components/typesDashboard";
 import { DiscordSidebar } from "../Components/DiscordSidebar";
-import Navbar from "../Components/Navbar/Navbar";
 import ChatArea from "../Components/ChatArea/ChatArea";
 
 const Dashboard: React.FC = () => {
