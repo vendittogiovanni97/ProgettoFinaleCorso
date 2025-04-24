@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import * as S from "../../../styled/ChatAreaStyled";
-import EmojiPickerWrapper from "./EmojiPickerWrapper";
 import AttachmentMenuWrapper from "./AttachmentMenuWrapper";
+import EmojiPickerWrapper from "./EmojiPickerWrapper";
 
 interface MessageInputProps {
   onSendMessage: (message: string) => void;

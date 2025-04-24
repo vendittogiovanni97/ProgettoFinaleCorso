@@ -6,7 +6,7 @@ import { Message, Contact } from "../types/components/typesDashboard";
 import { ChatAreaProps } from "../types/components/typesChatArea";
 import AttachmentMenu from "../Components/chat/AttachmentMenu";
 import VideoCall from "../Components/chat/VideoCall";
-import ContactInfoPanel from "../Components/ContactMediaPanel";
+import ContactInfoPanel from "../Components/ChatArea/components/ContactMediaPanel";
 import useOutsideClick from "../hook/useOutsideClick";
 
 const ChatArea: React.FC<ChatAreaProps> = ({

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import MediaGalleryPage from "./MediaGalleryPage";
-import * as S from "../styled/ContactMediaPanelStyled";
-import { ContactInfoPanelProps } from "../types/components/typesContactMediaPanel";
+import MediaGalleryPage from "../../MediaGalleryPage";
+import * as S from "../../../styled/ContactMediaPanelStyled";
+import { ContactInfoPanelProps } from "../../../types/components/typesContactMediaPanel";
 
 const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
   contact,
@@ -10,6 +10,7 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
 }) => {
   const [showMediaGallery, setShowMediaGallery] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mediaByType = {
     image: sharedMedia.filter((item) => item.type === "image"),
     document: sharedMedia.filter((item) => item.type === "document"),
@@ -49,7 +50,9 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
             {contact.avatar ? (
               <S.AvatarImg src={contact.avatar} alt={contact.name} />
             ) : (
-              <S.AvatarPlaceholder>{contact.name.charAt(0)}</S.AvatarPlaceholder>
+              <S.AvatarPlaceholder>
+                {contact.name.charAt(0)}
+              </S.AvatarPlaceholder>
             )}
           </S.ContactInfoAvatar>
           <S.ContactInfoName>{contact.name}</S.ContactInfoName>

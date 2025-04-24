@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import RegistrationForm from "./pages/Registration";
 import ResetPassword from "./pages/ResetPassword";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound404Paged from "./pages/notFound";
@@ -10,6 +9,7 @@ import Layout from "../src/customizations/Layout"; // Importeremo un nuovo compo
 import { AppWrapper } from "../src/styled/DashboardStyled"; // Assicurati che il percorso sia corretto
 import PaginaImpostazioni from "./pages/Settings";
 import LoginPages from "./pages/LoginPages";
+import Registration from "./pages/RegistrationPages";
 
 function App() {
   return (
@@ -20,8 +20,7 @@ function App() {
             {/* Pagine senza layout (login, registrazione, ecc.) */}
             <Route path="/login" element={<LoginPages />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
-            <Route path="/registration" element={<RegistrationForm />} />
-
+            <Route path="/registration" element={<Registration/>} />
             {/* Pagine con layout (dashboard, profilo, ecc.) */}
             <Route
               path="/dashboard"
