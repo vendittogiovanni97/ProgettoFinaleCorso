@@ -1,11 +1,11 @@
 // ChannelList.tsx
 import React, { useEffect, useState } from "react";
-import backendFetch from "../../../services/api";
 import * as S from "../../../styled/DiscordSidebarStyled";
 import { Channel } from "../../../types/components/typesDiscordSidebar";
+import { serverService } from "../../../services/chatService";
 
 interface ChannelListProps {
-  serverId: string;
+  serverId: number;
 }
 
 const ChannelList: React.FC<ChannelListProps> = ({ serverId }) => {
@@ -14,10 +14,8 @@ const ChannelList: React.FC<ChannelListProps> = ({ serverId }) => {
   useEffect(() => {
     const fetchChannels = async () => {
       try {
-        const { responseBody } = await backendFetch(
-          `/servers/${serverId}/channels`
-        );
-        setChannels(responseBody.details);
+        const response = await serverService.getChannels(serverId);
+        setChannels(response);
       } catch (error) {
         console.error("Errore nel recupero dei channel:", error);
       }

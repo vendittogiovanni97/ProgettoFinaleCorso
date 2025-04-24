@@ -1,5 +1,5 @@
 export interface Server {
-  id: string;
+  id: number;
   name: string;
   avatar: string;
   ownerId?: number;
@@ -7,7 +7,7 @@ export interface Server {
 }
 
 export interface Channel {
-  id: string;
+  id: number;
   name: string;
   text: boolean;
   voice: boolean;

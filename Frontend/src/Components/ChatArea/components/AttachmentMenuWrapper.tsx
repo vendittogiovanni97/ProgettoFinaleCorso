@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "../../../styled/ChatAreaStyled";
 import * as AttachmentStyles from "../../../styled/AttachmentMenuStyled";
-import AttachmentMenu from "../../chat/AttachmentMenu";
+import AttachmentMenu from "./AttachmentMenu";
 import useOutsideClick from "../../../hook/useOutsideClick";
 
 interface AttachmentMenuWrapperProps {

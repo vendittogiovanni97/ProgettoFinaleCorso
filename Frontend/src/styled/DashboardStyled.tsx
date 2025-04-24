@@ -11,7 +11,7 @@ export const AppWrapper = styled.div`
 
 export const MainContent = styled.div`
   display: flex;
-  height: 92vh;
+  height: 93vh;
 `;
 
 export const ChatLayout = styled.div`
