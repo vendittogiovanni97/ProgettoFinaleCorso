@@ -1,27 +1,48 @@
 // src/types/index.ts
 
-export interface Message {
+export interface User {
   id: number;
-  text: string;
+  username: string;
+  avatar?: string | null;
+  status?: "ONLINE" | "OFFLINE" | "AWAY" | "DO_NOT_DISTURB";
+}
+
+export interface DirectMessage {
+  id: number;
+  content: string;
   senderId: number;
   receiverId: number;
-  timestamp: Date;
+  read: boolean;
+  createdAt: Date;
 }
 
-export interface Contact {
+export interface Channel {
   id: number;
   name: string;
-  status: string;
-  lastSeen: string;
-  isOnline: boolean;
-  icon: string;
-  phone: string;
+  text: boolean;
+  voice: boolean;
+  video: boolean;
+  serverId: number;
 }
 
-export interface Group {
+export interface ChannelMessage {
+  id: number;
+  content: string;
+  userId: number;
+  channelId: number;
+  createdAt: Date;
+}
+
+export interface Server {
   id: number;
   name: string;
-  description: string;
-  lastActive: string;
-  avatar: string;
+  icon?: string | null;
+  ownerId: number;
+}
+
+export interface Friendship {
+  id: number;
+  userId: number;
+  friendId: number;
+  status: "PENDING" | "ACCEPTED" | "BLOCKED";
 }
