@@ -11,6 +11,9 @@ import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText
 import useThemeColors from "../styled/BarraSuperioreStyled";
 import { useTranslation } from 'react-i18next';
 import { useLanguageContext } from '../language/LanguageContext';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { Home } from "@mui/icons-material";
 
 type Tema = "chiaro" | "scuro" | "sistema";
 type Lingua = "italiano" | "english" | "français" | "español";
@@ -165,6 +168,7 @@ export default function PaginaImpostazioni() {
   const { t } = useTranslation();
   const [paginaAttiva, setPaginaAttiva] = useState("lingua");
   const themeColors = useThemeColors();
+  const navigate = useNavigate();
 
   const menuItems = [
     { id: "lingua", nome: t('settings.language'), icona: <Globe size={20} /> },
@@ -207,7 +211,7 @@ export default function PaginaImpostazioni() {
         }}
       >
         <Box sx={{ overflow: 'auto' }}>
-          <Typography variant="h6" sx={{ p: 2 }}>
+          <Typography variant="h6" sx={{ mt: 15, mb: 5, mx: 3, p:0}}>
             {t('app.settings')}
           </Typography>
           <List>
@@ -233,6 +237,20 @@ export default function PaginaImpostazioni() {
               </ListItemButton>
             ))}
           </List>
+          <Button
+            startIcon ={<Home/>}
+            onClick={() => navigate('/dashboard')}
+            sx={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              pl: 2,
+              color: themeColors.textLight,
+              fontSize: '15px',
+              '&:hover': {
+                backgroundColor: (themeColors.primary, 0.15),
+              },
+            }}
+          > Home </Button>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: themeColors.backgroundLight }}>

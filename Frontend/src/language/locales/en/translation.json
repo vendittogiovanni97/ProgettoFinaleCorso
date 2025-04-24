@@ -41,5 +41,6 @@
       "search": "Search...",
       "toggleLight": "Switch to light theme",
       "toggleDark": "Switch to dark theme"
-    }
+    },
+    "backToDashboard": "Back to Dashboard"
   }

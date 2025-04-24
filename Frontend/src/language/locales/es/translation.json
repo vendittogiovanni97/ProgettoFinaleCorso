@@ -41,5 +41,6 @@
       "search": "Buscar...",
       "toggleLight": "Cambiar al tema claro",
       "toggleDark": "Cambiar al tema oscuro"
-    }
+    },
+    "backToDashboard": "Volver al Panel de Control"
   }

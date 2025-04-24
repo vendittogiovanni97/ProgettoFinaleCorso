@@ -41,5 +41,6 @@
       "search": "Cerca...",
       "toggleLight": "Passa al tema chiaro",
       "toggleDark": "Passa al tema scuro"
-    }
+    },
+    "backToDashboard": "Torna alla Dashboard"
   }

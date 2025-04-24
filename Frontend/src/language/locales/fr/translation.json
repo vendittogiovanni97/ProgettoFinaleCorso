@@ -41,5 +41,6 @@
       "search": "Rechercher...",
       "toggleLight": "Passer au thème clair",
       "toggleDark": "Passer au thème sombre"
-    }
+    },
+  "backToDashboard": "Retour au Tableau de Bord"
   }
