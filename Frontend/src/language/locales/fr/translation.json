@@ -42,5 +42,20 @@
       "toggleLight": "Passer au thème clair",
       "toggleDark": "Passer au thème sombre"
     },
-  "backToDashboard": "Retour au Tableau de Bord"
+  "backToDashboard": "Retour au Tableau de Bord",
+  "sidebar": {
+    "serverProject": "Serveur de Projet"
+  },
+  "chatList": {
+    "groups": "Groupes",
+    "people": "Personnes"
+  },
+  "contactInfo": {
+    "infoContact": "Informations de Contact",
+    "info": "Informations",
+    "mediaLinkDocumenti": "Médias, Liens et Fichiers",
+    "media": "Médias Partagés",
+    "documenti": "Fichiers Partagés",
+    "links": "Liens Partagés"
+  }
   }

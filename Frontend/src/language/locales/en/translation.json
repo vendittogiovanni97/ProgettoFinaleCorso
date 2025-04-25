@@ -42,5 +42,20 @@
       "toggleLight": "Switch to light theme",
       "toggleDark": "Switch to dark theme"
     },
-    "backToDashboard": "Back to Dashboard"
+    "backToDashboard": "Back to Dashboard",
+    "sidebar": {
+      "serverProject": "Project Server"
+    },
+    "chatList": {
+      "groups": "Groups",
+      "people": "People"
+      },
+    "contactInfo": {
+      "infoContact": "Contact Info",
+      "info": "Info",
+      "mediaLinkDocumenti": "Media, Link e Files",
+      "media": "Shared Media",
+      "documenti": "Shared Files",
+      "links": "Shared Links"
+    }
   }

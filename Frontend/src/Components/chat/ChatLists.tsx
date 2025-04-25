@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChatListsProps } from "../../types/components/typesChatLists";
 import { useChatListColors, createStyledComponents } from "../../styled/ChatListStyled";
+import { useTranslation } from "react-i18next";
 
 const ChatLists: React.FC<ChatListsProps> = ({
   contacts,
@@ -8,6 +9,7 @@ const ChatLists: React.FC<ChatListsProps> = ({
   onSelectChat,
   activeChatId,
 }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"groups" | "people">("people");
   const [searchQuery, setSearchQuery] = useState("");
   
@@ -47,13 +49,13 @@ const ChatLists: React.FC<ChatListsProps> = ({
           active={activeTab === "groups"}
           onClick={() => handleTabClick("groups")}
         >
-          Groups
+          {t("chatList.groups")}
         </S.Tab>
         <S.Tab
           active={activeTab === "people"}
           onClick={() => handleTabClick("people")}
         >
-          People
+          {t("chatList.people")}
         </S.Tab>
       </S.TabsContainer>
 
@@ -75,7 +77,7 @@ const ChatLists: React.FC<ChatListsProps> = ({
               </S.ChatDetails>
               <S.ChatMeta>
                 <S.ChatTime>{contact.lastSeen}</S.ChatTime>
-                {contact.unreadCount > 0 && <S.UnreadBadge>{contact.unreadCount}</S.UnreadBadge>}
+                {contact.unreadCount && contact.unreadCount > 0 && <S.UnreadBadge>{contact.unreadCount}</S.UnreadBadge>}
               </S.ChatMeta>
             </S.ChatItem>
           ))}

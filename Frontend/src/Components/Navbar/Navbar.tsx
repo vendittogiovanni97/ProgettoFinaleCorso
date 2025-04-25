@@ -23,15 +23,16 @@ const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
       sx={{
         backgroundColor: themeColors.backgroundLight,
         zIndex: (theme) => theme.zIndex.drawer + 1,
+        width: '100%'
       }}
     >
-      <Container maxWidth={false} disableGutters>
-        <Toolbar disableGutters>
+      <Container maxWidth={false}>
+        <Toolbar>
           <MenuButton 
           onClick={handleMenuClick} />
           <Header />
           <SearchBar />
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 0 }} />
           <ThemeToggleButton />
           <AvatarSideBar />
         </Toolbar>

@@ -42,5 +42,20 @@
       "toggleLight": "Cambiar al tema claro",
       "toggleDark": "Cambiar al tema oscuro"
     },
-    "backToDashboard": "Volver al Panel de Control"
+    "backToDashboard": "Volver al Panel de Control",
+    "sidebar": {
+      "serverProject": "Servidor de Proyecto"
+    },
+    "chatList": {
+      "groups": "Grupos",
+      "people": "Personas"
+      },
+    "contactInfo": {
+      "infoContact": "Información de Contacto",
+      "info": "Información",
+      "mediaLinkDocumenti": "Medias, Enlaces y Archivos",
+      "media": "Medias Compartidos",
+      "documenti": "Archivos Compartidos",
+      "links": "Enlaces Compartidos"
+    }
   }

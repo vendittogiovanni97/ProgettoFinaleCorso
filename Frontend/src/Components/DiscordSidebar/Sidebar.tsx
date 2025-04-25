@@ -7,10 +7,12 @@ import {
 import * as S from "../../styled/DiscordSidebarStyled";
 import backendFetch from "../../services/api";
 import { ChannelList, ServerIcon } from ".";
+import { useTranslation } from "react-i18next";
 
 const DiscordSidebar: React.FC<DiscordSidebarProps> = () => {
   const [servers, setServers] = useState<Server[]>([]);
   const [activeServer, setActiveServer] = useState<string>("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchServer = async () => {
@@ -40,8 +42,8 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = () => {
           <ServerIcon
             key={server.id}
             server={server}
-            isActive={activeServer === server.id}
-            onClick={() => handleServerSelect(server.id)}
+            isActive={activeServer.toString() === server.id.toString()}
+            onClick={() => handleServerSelect(server.id.toString())}
           />
         ))}
         <S.DiscordServerIcon $addServer>
@@ -56,10 +58,10 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = () => {
 
       <S.DiscordChannelSidebar>
         <S.DiscordServerHeader>
-          <h3>Server Progetto</h3>
+          <h3>{t('sidebar.serverProject')}</h3>
           <S.ServerDropdown>▾</S.ServerDropdown>
         </S.DiscordServerHeader>
-        {activeServer && <ChannelList serverId={activeServer} />}
+        {activeServer && <ChannelList serverId={parseInt(activeServer)} />}
       </S.DiscordChannelSidebar>
     </S.DiscordSidebarContainer>
   );

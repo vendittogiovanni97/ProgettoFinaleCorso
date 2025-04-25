@@ -42,5 +42,20 @@
       "toggleLight": "Passa al tema chiaro",
       "toggleDark": "Passa al tema scuro"
     },
-    "backToDashboard": "Torna alla Dashboard"
+    "backToDashboard": "Torna alla Dashboard",
+    "sidebar": {
+      "serverProject": "Server Progetto"
+    },
+    "chatList": {
+      "groups": "Gruppi",
+      "people": "Persone"
+    },
+    "contactInfo": {
+      "infoContact": "Informazioni Contatto",
+      "info": "Informazioni",
+      "mediaLinkDocumenti": "Media, Link e Documenti",
+      "media": "Media Condivisi",
+      "documenti": "Documenti Condivisi",
+      "links": "Link Condivisi"
+    }
   }

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import MediaGalleryPage from "../../MediaGalleryPage";
 import * as S from "../../../styled/ContactMediaPanelStyled";
 import { ContactInfoPanelProps } from "../../../types/components/typesContactMediaPanel";
+import { useTranslation } from "react-i18next";
 
 const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
   contact,
   onClose,
   sharedMedia,
 }) => {
+  const { t } = useTranslation();
   const [showMediaGallery, setShowMediaGallery] = useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,7 +43,7 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
         <S.IconButton onClick={onClose}>
           <span>✕</span>
         </S.IconButton>
-        <h2>Info contatto</h2>
+        <h2>{t('contactInfo.infoContact')}</h2>
       </S.ContactInfoHeader>
 
       <S.ContactInfoContent>
@@ -62,13 +64,13 @@ const ContactInfoPanel: React.FC<ContactInfoPanelProps> = ({
         </S.ContactInfoAvatarContainer>
 
         <S.ContactInfoSection>
-          <S.SectionTitle>Info</S.SectionTitle>
+          <S.SectionTitle>{t('contactInfo.info')}</S.SectionTitle>
           <S.ContactInfoStatus>{contact.status}</S.ContactInfoStatus>
         </S.ContactInfoSection>
 
         <S.ContactInfoSection>
           <S.ContactInfoMediaHeader onClick={handleMediaClick}>
-            <S.SectionTitle>Media, link e documenti</S.SectionTitle>
+            <S.SectionTitle>{t('contactInfo.mediaLinkDocumenti')}</S.SectionTitle>
             <S.MediaCount>{sharedMedia.length}</S.MediaCount>
             <S.MediaArrow>›</S.MediaArrow>
           </S.ContactInfoMediaHeader>
