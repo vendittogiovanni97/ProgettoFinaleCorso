@@ -1,30 +1,31 @@
-import React, { useRef } from "react";
-import useOutsideClick from "../../../hook/useOutsideClick";
+import React, { useRef, useCallback } from "react";
 import * as S from "../../../styled/AttachmentMenuStyled";
 
 type AttachmentMenuProps = {
   isOpen: boolean;
   onClose: () => void;
   onFileSelect: (file: File, type: "image" | "document" | "video") => void;
+  menuRef: React.RefObject<HTMLDivElement>;
 };
 
 const AttachmentMenu: React.FC<AttachmentMenuProps> = ({
   isOpen,
   onClose,
   onFileSelect,
+  menuRef
 }) => {
-  const menuRef = useOutsideClick(onClose);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: "image" | "document" | "video"
-  ) => {
-    if (e.target.files && e.target.files.length > 0) {
-      onFileSelect(e.target.files[0], type);
-      onClose();
-    }
-  };
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, type: "image" | "document" | "video") => {
+      if (e.target.files && e.target.files.length > 0) {
+        onFileSelect(e.target.files[0], type);
+        onClose();
+        e.target.value = ''; // Reset input dopo la selezione
+      }
+    },
+    [onFileSelect, onClose]
+  );
 
   const triggerFileInput = (type: string) => {
     if (fileInputRef.current) {
@@ -42,7 +43,10 @@ const AttachmentMenu: React.FC<AttachmentMenuProps> = ({
 
   return (
     <>
-      <S.AttachmentMenuContainer ref={menuRef}>
+      <S.AttachmentMenuContainer 
+        ref={menuRef}
+        onClick={(e) => e.stopPropagation()} // Previene la propagazione del click
+      >
         <S.AttachmentMenuItem onClick={() => triggerFileInput("image")}>
           <S.AttachmentIcon>🖼️</S.AttachmentIcon>
           <span>Image</span>
@@ -75,4 +79,5 @@ const AttachmentMenu: React.FC<AttachmentMenuProps> = ({
     </>
   );
 };
+
 export default AttachmentMenu;

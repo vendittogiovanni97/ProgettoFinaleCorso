@@ -33,16 +33,13 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   return (
     <S.MessageInputContainerStyled onSubmit={handleSendMessage}>
       <AttachmentMenuWrapper onFileSelect={handleFileSelect} />
-
       <S.MessageInputStyled
         type="text"
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         placeholder="Type your message here..."
       />
-
       <EmojiPickerWrapper onEmojiSelect={handleEmojiSelect} />
-
       <S.SendButtonStyled type="submit" disabled={!newMessage.trim()}>
         📤
       </S.SendButtonStyled>

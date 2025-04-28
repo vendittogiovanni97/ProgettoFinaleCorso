@@ -3,7 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPasswordPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound404Paged from "./pages/notFound";
-import Profile from "./pages/Profile";
+import Profile from './pages/Profile';
 import ThemeProvider from "../src/customizations/Theme"; // Importa il ThemeProvider
 import Layout from "../src/customizations/Layout"; // Importeremo un nuovo componente Layout
 import { AppWrapper } from "../src/styled/DashboardStyled"; // Assicurati che il percorso sia corretto

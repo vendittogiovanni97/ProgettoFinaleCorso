@@ -189,3 +189,42 @@ export const createStyledComponents = (colors: ReturnType<typeof useChatListColo
     UnreadBadge
   };
 };
+
+export const SearchContainer = styled.div`
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+  background-color: #fff3cd;
+  border-radius: 20px;
+  
+  &:hover {
+    background-color: #ffe69c;
+  }
+`;
+
+export const SearchInput = styled.input`
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #000;
+  
+  &::placeholder {
+    color: #666;
+    opacity: 0.8;
+  }
+`;
+
+export const SearchButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #000;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+`;

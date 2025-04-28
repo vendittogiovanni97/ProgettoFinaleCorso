@@ -135,18 +135,24 @@ export const MessageInputContainerStyled = styled.form`
   background-color: var(--background-light);
   border-top: 1px solid var(--border-color);
   position: relative;
+  width: calc(100% - 60px);
+  margin-left: 45px;
 `;
+
 export const MessageInputStyled = styled.input`
   flex: 1;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border: 1px solid var(--border-color);
   border-radius: 20px;
   margin: 0 10px;
   outline: none;
   background-color: var(--background-dark);
   color: var(--text-light);
+  height: 40px;
+  min-height: 40px;
+  max-width: calc(100% - 90px);
 
-  &: focus {
+  &:focus {
     border-color: var(--primary-color);
   }
 `;

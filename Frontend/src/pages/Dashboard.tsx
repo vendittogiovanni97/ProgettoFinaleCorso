@@ -6,7 +6,7 @@ import {
   ChatLayout,
   ChatListPanel,
 } from "../styled/DashboardStyled";
-import ChatLists from "../Components/chat/ChatLists";
+import ChatLists from "../Components/ChatList/ChatLists";
 import Navbar from "../Components/Navbar/Navbar";
 import { Message, Contact, Group } from "../types/components/typesDashboard";
 import { DiscordSidebar } from "../Components/DiscordSidebar";

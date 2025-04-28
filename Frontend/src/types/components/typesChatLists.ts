@@ -21,3 +21,10 @@ export interface ChatListsProps {
   onSelectChat: (id: number, isGroup: boolean, name: string) => void;
   activeChatId: number;
 }
+
+export interface SearchBarProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  onSearch: () => void;
+}
+

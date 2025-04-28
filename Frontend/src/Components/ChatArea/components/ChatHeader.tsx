@@ -22,11 +22,22 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
     <S.ChatHeaderStyled>
       <S.UserInfoStyled>
         <S.AvatarStyled>{currentChatName.charAt(0)}</S.AvatarStyled>
-        <div>
-          <S.LinkStyled to={`/profile/${currentChatId}`}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <S.LinkStyled 
+            to={`/profile/${currentChatId}`}
+            style={{ 
+              textDecoration: 'none',
+            }}
+          >
             {currentChatName}
           </S.LinkStyled>
-          <small>{isOnline ? "Online" : lastSeen}</small>
+          <small style={{ 
+            fontSize: '12px', 
+            color: 'var(--text-light)',
+            opacity: '0.8' 
+          }}>
+            {isOnline ? "Online" : lastSeen}
+          </small>
         </div>
       </S.UserInfoStyled>
 

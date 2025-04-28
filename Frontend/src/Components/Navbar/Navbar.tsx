@@ -32,7 +32,7 @@ const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
           onClick={handleMenuClick} />
           <Header />
           <SearchBar />
-          <Box sx={{ flexGrow: 0 }} />
+          <Box sx={{ width: '20px' }} />
           <ThemeToggleButton />
           <AvatarSideBar />
         </Toolbar>
