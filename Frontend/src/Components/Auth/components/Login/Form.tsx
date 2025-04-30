@@ -5,6 +5,7 @@ import {
   PasswordInput,
   ErrorMessage,
   Input,
+  PasswordVisibilityWrapper
 } from "../../../../styled/LoginStyled";
 import Button from "./LoginButton";
 import { useContext, useState } from "react";
@@ -73,25 +74,17 @@ export default function LoginForm() {
           onChange={handleChange}
           required
           style={{
-            paddingRight: "40px", // Lascia spazio per l'icona
+            paddingRight: "40px",
             width: "100%",
             backgroundColor: "white",
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            right: "1px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            cursor: "pointer",
-          }}
-        >
+        <PasswordVisibilityWrapper>
           <PasswordVisibility
             onClick={togglePasswordVisibility}
             visible={showPassword}
           />
-        </div>
+        </PasswordVisibilityWrapper>
       </PasswordContainer>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}

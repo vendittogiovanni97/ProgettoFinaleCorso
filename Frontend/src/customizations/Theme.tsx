@@ -99,7 +99,7 @@ const ThemeProviderInner: React.FC<{ children: React.ReactNode }> = ({
           MuiPaper: {
             styleOverrides: {
               root: {
-                borderRadius: '12px',
+                borderRadius: '0',
                 border: mode === 'light' ? '1px solid #e2e8f0' : 'none',
                 boxShadow: mode === 'light' 
                   ? '0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)' 
@@ -120,7 +120,7 @@ const ThemeProviderInner: React.FC<{ children: React.ReactNode }> = ({
           MuiCard: {
             styleOverrides: {
               root: {
-                borderRadius: '12px',
+                borderRadius: '0',
                 border: mode === 'light' ? '1px solid #e2e8f0' : 'none',
                 boxShadow: mode === 'light' 
                   ? '0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)' 
@@ -141,7 +141,7 @@ const ThemeProviderInner: React.FC<{ children: React.ReactNode }> = ({
           MuiButton: {
             styleOverrides: {
               root: {
-                borderRadius: '8px',
+                borderRadius: '0',
                 textTransform: 'none',
                 fontWeight: 500,
                 transition: 'all 0.2s ease-in-out',
