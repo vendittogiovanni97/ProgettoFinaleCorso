@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPasswordPage";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePageWrapper from "./Components/ProfilePage/ProfilePage";
 import NotFound404Paged from "./pages/notFound";
 import Profile from './pages/Profile';
 import ThemeProvider from "../src/customizations/Theme"; // Importa il ThemeProvider
@@ -34,7 +34,7 @@ function App() {
               path="/profilepage"
               element={
                 <Layout>
-                  <ProfilePage />
+                  <ProfilePageWrapper />
                 </Layout>
               }
             />
