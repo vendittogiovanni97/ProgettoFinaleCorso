@@ -9,9 +9,12 @@ import ThemeToggleButton from "./components/ThemeToggleButton";
 import { Box } from "@mui/material";
 import AvatarSideBar from "./components/Avatar";
 import { ResponsiveAppBarProps } from "../../types/components/typesDashboard";
+import { useThemeContext } from "../../context/ThemeContextDefinition";
 
 const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
-  const themeColors = useThemeColors(); // Usa i colori dinamici basati sul tema
+  const themeColors = useThemeColors();
+  const { mode } = useThemeContext();
+  
   const handleMenuClick = () => {
     onMenuClick();
   };
@@ -23,13 +26,19 @@ const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
       sx={{
         backgroundColor: themeColors.backgroundLight,
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        width: '100%'
+        width: '100%',
+        borderRadius: 0,
+        borderBottom: mode === 'dark' ? '1px solid #333' : '1px solid #ddd',
+        boxShadow: mode === 'dark' ? '0 2px 4px rgba(0, 0, 0, 0.2)' : '0 2px 4px rgba(255, 255, 255, 0.2)',
+        transition: 'background-color 0.3s ease, border-color 0.3s ease',
+        "&:hover": {
+          backgroundColor: mode === 'dark' ? '#444' : '#f0f0f0',
+        },
       }}
     >
       <Container maxWidth={false}>
         <Toolbar>
-          <MenuButton 
-          onClick={handleMenuClick} />
+          <MenuButton onClick={handleMenuClick} />
           <Header />
           <SearchBar />
           <Box sx={{ width: '20px' }} />
@@ -40,4 +49,5 @@ const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
     </AppBar>
   );
 };
+
 export default Navbar;
