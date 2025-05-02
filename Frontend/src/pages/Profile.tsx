@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Container, ProfileGrid } from "../styled/ProfilePageStyle";
 import ProfileSidebarComponent from "../Components/Profile/ProfileSidebar";
@@ -7,27 +7,40 @@ import {
   ContactProfilePageProps,
   ProfileDetails
 } from "../types/components/typesProfile";
+import { ThemeContext } from "../context/ThemeContextDefinition";
 
 const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact }) => {
   const { id } = useParams<{ id: string }>();
-  const [contact, setContact] = useState<Contact | null>(initialContact || null);
+  const { mode } = useContext(ThemeContext); // Get current theme mode
+  
+  // For development: fallback to test user if no contact is provided
+  const testContact = {
+    id: 1,
+    name: "Mario Rossi",
+    status: "Attivo",
+    lastSeen: "14:02",
+    isOnline: true,
+    avatar: "/pics.png",
+    phone: "+39 392 123 4567"
+  };
+  const [contact, setContact] = useState<Contact | null>(initialContact || testContact);
   const [profileDetails, setProfileDetails] = useState<ProfileDetails>({
     firstName: "",
     lastName: "",
-    jobTitle: "Not Specified",
-    birthDate: "Not Specified",
+    jobTitle: "Non specificato",
+    birthDate: "Non specificato",
     email: "",
-    location: "Not specified",
-    bio: "No additional bio available.",
+    location: "Non specificato",
+    bio: "Nessuna bio aggiuntiva disponibile.",
   });
 
   useEffect(() => {
     if (!initialContact && id) {
       const fetchedContact: Contact = {
         id: parseInt(id),
-        name: `User ${id}`,
-        status: "Active",
-        lastSeen: "2:02pm",
+        name: `Utente ${id}`,
+        status: "Attivo",
+        lastSeen: "14:02",
         isOnline: true,
         avatar: "/pics.png",
         phone: "+39 392 123 4567"
@@ -36,22 +49,22 @@ const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact })
       setProfileDetails({
         firstName: fetchedContact.name?.split(" ")[0] || "",
         lastName: fetchedContact.name?.split(" ").slice(1).join(" ") || "",
-        jobTitle: "Not Specified",
-        birthDate: "Not Specified",
-        email: `${fetchedContact.name?.toLowerCase().replace(" ", ".")}@example.com`,
-        location: "Not specified",
-        bio: fetchedContact.status || "No additional bio available.",
+        jobTitle: "Non specificato",
+        birthDate: "Non specificato",
+        email: `${fetchedContact.name?.toLowerCase().replace(" ", ".")}@esempio.com`,
+        location: "Non specificato",
+        bio: fetchedContact.status || "Nessuna bio aggiuntiva disponibile.",
       });
     } else if (initialContact) {
       setContact(initialContact);
       setProfileDetails({
         firstName: initialContact.name?.split(" ")[0] || "",
         lastName: initialContact.name?.split(" ").slice(1).join(" ") || "",
-        jobTitle: "Not Specified",
-        birthDate: "Not Specified",
-        email: `${initialContact.name?.toLowerCase().replace(" ", ".")}@example.com`,
-        location: "Not specified",
-        bio: initialContact.status || "No additional bio available.",
+        jobTitle: "Non specificato",
+        birthDate: "Non specificato",
+        email: `${initialContact.name?.toLowerCase().replace(" ", ".")}@esempio.com`,
+        location: "Non specificato",
+        bio: initialContact.status || "Nessuna bio aggiuntiva disponibile.",
       });
     }
   }, [id, initialContact]);
@@ -61,7 +74,7 @@ const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact })
   }
 
   return (
-    <Container>
+    <Container themeMode={mode}>
       <ProfileGrid>
         <ProfileSidebarComponent 
           contact={contact} 
