@@ -1,33 +1,49 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState } from "react";
+import { MessageInputProps } from "../../../types/components/typesChatArea";
+import channelMessageService from "../../../services/components/channelMessageService";
+import directMessageService from "../../../services/components/directMessageService";
 import * as S from "../../../styled/ChatAreaStyled";
 import AttachmentMenuWrapper from "./AttachmentMenuWrapper";
 import EmojiPickerWrapper from "./EmojiPickerWrapper";
 
-interface MessageInputProps {
-  onSendMessage: (message: string) => void;
-}
+const MessageInput: React.FC<MessageInputProps> = ({
+  channelId,
+  isDirectMessage,
+  receiverId,
+}) => {
+  const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
-  const [newMessage, setNewMessage] = useState("");
+  const handleSendMessage = async () => {
+    if (!message.trim() || isSending) return;
 
-  const handleSendMessage = (e: FormEvent) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
+    try {
+      setIsSending(true);
 
-    onSendMessage(newMessage);
-    setNewMessage("");
+      if (isDirectMessage && receiverId) {
+        await directMessageService.sendMessage(receiverId, message);
+      } else if (channelId) {
+        await channelMessageService.sendMessage(channelId, message);
+      }
+
+      setMessage("");
+    } catch (error) {
+      console.error("Errore nell'invio del messaggio:", error);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleFileSelect = (
     file: File,
     type: "image" | "document" | "video"
   ) => {
-    console.log(`${type} selected:`, file.name);
+    console.log(`${type} selected:, file.name`);
     // Qui potresti voler implementare la logica per inviare file
   };
 
   const handleEmojiSelect = (emoji: string) => {
-    setNewMessage((prev) => prev + emoji);
+    setMessage((prev) => prev + emoji);
   };
 
   return (
@@ -35,12 +51,12 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
       <AttachmentMenuWrapper onFileSelect={handleFileSelect} />
       <S.MessageInputStyled
         type="text"
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
         placeholder="Type your message here..."
       />
       <EmojiPickerWrapper onEmojiSelect={handleEmojiSelect} />
-      <S.SendButtonStyled type="submit" disabled={!newMessage.trim()}>
+      <S.SendButtonStyled type="submit" disabled={!message.trim()}>
         📤
       </S.SendButtonStyled>
     </S.MessageInputContainerStyled>

@@ -15,3 +15,10 @@ export interface ChatAreaProps {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   contacts: Contact[];
 }
+
+export interface MessageInputProps {
+  channelId?: number;
+  isDirectMessage?: boolean;
+  receiverId?: number;
+  onMessageSent?: () => void; // callback opzionale per notificare il componente padre
+}

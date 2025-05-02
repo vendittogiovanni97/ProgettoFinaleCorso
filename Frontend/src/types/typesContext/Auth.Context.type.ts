@@ -1,6 +1,6 @@
-import { LoginForm } from "./typesFetch/Login.Form.Type";
-import { RegisterForm } from "./typesFetch/Register.Form.Type";
-import { User } from "./UserLogged.type";
+import { LoginForm } from "../typesFetch/Login.Form.Type";
+import { RegisterForm } from "../typesFetch/Register.Form.Type";
+import { User } from "../components/UserLogged.type";
 
 export type AuthContextType = {
   login: (data: LoginForm) => Promise<boolean>;

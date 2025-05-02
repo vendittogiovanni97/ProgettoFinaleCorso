@@ -1,54 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, List, ListItemAvatar, ListItemText } from "@mui/material";
-import { Contact } from "../types/components/typesChatLists";
-import { Group } from "../types/components/typesChatLists";
+import { Contact, Group } from "../types/components/typesChatLists";
 import { Channel } from "../types/components/typesDiscordSidebar";
 import { AddParticipantsModalProps } from "../types/components/typesAddParticipantsModal";
 import {
   StyleTypography,
   StyleListItem,
   StyleAvatar,
-  StyleListItemText,
 } from "../styled/AddParticipantsModalStyled";
 import { MdOutlineVolumeUp } from "react-icons/md";
+import userService from "../services/components/userService";
 
 const AddParticipantsModal: React.FC<AddParticipantsModalProps> = ({
   onAddParticipant,
   onClose,
 }) => {
-  const contacts: Contact[] = [
-    {
-      id: 1,
-      name: "Anil",
-      status: "Online",
-      avatar: "",
-      lastSeen: "2:02pm",
-      isOnline: true,
-    },
-    {
-      id: 2,
-      name: "Chutthiya",
-      status: "Busy",
-      avatar: "",
-      lastSeen: "12:15pm",
-      isOnline: false,
-    },
-  ];
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [channels, setChannels] = useState<Channel[]>([]);
 
-  const groups: Group[] = [
-    {
-      id: 101,
-      name: "Friends Forever",
-      description: "hahahaha!!!",
-      avatar: "",
-      lastActive: "9:50pm",
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Recupera i contatti (amici)
+        const friendsList = await userService.getFriends();
+        const formattedContacts = friendsList.map((friend) => ({
+          id: friend.id,
+          name: friend.username,
+          status: friend.status || "Online",
+          avatar: friend.avatar || "",
+          lastSeen:
+            friend.lastSeen instanceof Date
+              ? friend.lastSeen.toISOString()
+              : friend.lastSeen || "",
+          isOnline: friend.isOnline || true,
+        }));
+        setContacts(formattedContacts);
 
-  const channels: Channel[] = [
-    { id: "channel1", name: "Lobby", type: "voice" },
-    { id: "channel2", name: "PrimaStanza", type: "voice" },
-  ];
+        // Per ora manteniamo i gruppi statici come esempio
+        setGroups([
+          {
+            id: 101,
+            name: "Friends Forever",
+            description: "hahahaha!!!",
+            avatar: "",
+            lastActive: "9:50pm",
+          },
+        ]);
+
+        // Per ora manteniamo i canali statici come esempio
+        setChannels([
+          { id: "channel1", name: "Lobby", type: "voice" },
+          { id: "channel2", name: "PrimaStanza", type: "voice" },
+        ]);
+      } catch (error) {
+        console.error("Errore nel recupero dei dati:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleAddParticipant = (participant: {
     id: string | number;
@@ -65,7 +76,7 @@ const AddParticipantsModal: React.FC<AddParticipantsModalProps> = ({
         {contacts.map((contact) => (
           <StyleListItem
             key={contact.id}
-            component="button"
+            as="button"
             onClick={() => handleAddParticipant(contact)}
           >
             <ListItemAvatar>
@@ -81,7 +92,7 @@ const AddParticipantsModal: React.FC<AddParticipantsModalProps> = ({
         {groups.map((group) => (
           <StyleListItem
             key={group.id}
-            component="button"
+            as="button"
             onClick={() => handleAddParticipant(group)}
           >
             <ListItemAvatar>
@@ -97,7 +108,7 @@ const AddParticipantsModal: React.FC<AddParticipantsModalProps> = ({
         {channels.map((channel) => (
           <StyleListItem
             key={channel.id}
-            component="button"
+            as="button"
             onClick={() => handleAddParticipant(channel)}
           >
             <ListItemAvatar>

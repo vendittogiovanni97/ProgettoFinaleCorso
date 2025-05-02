@@ -7,8 +7,9 @@ import {
   Friendship,
   Server,
   User,
-} from "../context/types";
-import backendFetch from "./api";
+} from "../../context/types";
+import backendFetch from "../api";
+import { ChannelPermissions } from "../../types/components/typesDiscordSidebar";
 
 // Funzione di aiuto per gestire errori nelle chiamate fetch
 const handleResponse = async (response: Response) => {
@@ -92,6 +93,26 @@ export const serverService = {
       throw error;
     }
   },
+
+  getChannelType: async (channelId: number): Promise<string> => {
+    try {
+      const { responseBody } = await backendFetch(`/channels/${channelId}/type`);
+      return responseBody.type;
+    } catch (error) {
+      console.error("Errore nel recupero del tipo di canale:", error);
+      return 'text'; // tipo di default
+    }
+  },
+
+  getChannelPermissions: async (channelId: number): Promise<ChannelPermissions> => {
+    try {
+      const { responseBody } = await backendFetch(`/channels/${channelId}/permissions`);
+      return responseBody.permissions;
+    } catch (error) {
+      console.error("Errore nel recupero dei permessi del canale:", error);
+      return { read: true, write: true }; // permessi di default
+    }
+  }
 };
 
 // API per i messaggi nei canali

@@ -1,6 +1,6 @@
 const serverConfig = {
-  basePath: "https://localhost:",
+  basePath: "http://localhost:",
   basePort: "8080",
-  baseRest: "/rest",
+  baseRest: "/api",
 };
 export default serverConfig;

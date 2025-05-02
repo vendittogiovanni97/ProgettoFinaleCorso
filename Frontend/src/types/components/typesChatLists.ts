@@ -13,6 +13,7 @@ export interface Group {
   description: string;
   lastActive: string;
   unreadCount?: number; // Add unreadCount as an optional property
+  avatar: string;
 }
 
 export interface ChatListsProps {
@@ -27,4 +28,3 @@ export interface SearchBarProps {
   setSearchQuery: (query: string) => void;
   onSearch: () => void;
 }
-

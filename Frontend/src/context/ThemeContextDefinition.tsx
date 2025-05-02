@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { PaletteMode } from '@mui/material';
 
 // Interfaccia per il contesto del tema
