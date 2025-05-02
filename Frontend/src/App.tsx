@@ -55,7 +55,7 @@ function App() {
                       id: 1,
                       name: "Anil",
                       status: "active",
-                      avatar: "https://example.com/avatar.jpg",
+                      avatar: "http://example.com/avatar.jpg",
                       lastSeen: new Date().toISOString(),
                       isOnline: true,
                       phone: "123-456-7890",

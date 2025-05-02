@@ -1,4 +1,3 @@
-// DiscordSidebar.tsx
 import React, { useEffect, useState } from "react";
 import {
   DiscordSidebarProps,
@@ -9,7 +8,7 @@ import backendFetch from "../../services/api";
 import { ChannelList, ServerIcon } from ".";
 import { useTranslation } from "react-i18next";
 
-const DiscordSidebar: React.FC<DiscordSidebarProps> = () => {
+const DiscordSidebar: React.FC<DiscordSidebarProps> = ({ onChannelSelect }) => {
   const [servers, setServers] = useState<Server[]>([]);
   const [activeServer, setActiveServer] = useState<string>("");
   const { t } = useTranslation();
@@ -35,6 +34,12 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = () => {
     setActiveServer(serverId);
   };
 
+  const handleChannelSelect = (channelId: string, channelName: string) => {
+    if (onChannelSelect) {
+      onChannelSelect(channelId, channelName);
+    }
+  };
+
   return (
     <S.DiscordSidebarContainer>
       <S.DiscordServerList>
@@ -58,10 +63,17 @@ const DiscordSidebar: React.FC<DiscordSidebarProps> = () => {
 
       <S.DiscordChannelSidebar>
         <S.DiscordServerHeader>
-          <h3>{t('sidebar.serverProject')}</h3>
+          <h3>{t("sidebar.serverProject")}</h3>
           <S.ServerDropdown>▾</S.ServerDropdown>
         </S.DiscordServerHeader>
-        {activeServer && <ChannelList serverId={parseInt(activeServer)} />}
+        {activeServer && (
+          <ChannelList
+            serverId={parseInt(activeServer)}
+            onChannelSelect={(channelId, channelName) =>
+              handleChannelSelect(channelId.toString(), channelName)
+            }
+          />
+        )}
       </S.DiscordChannelSidebar>
     </S.DiscordSidebarContainer>
   );

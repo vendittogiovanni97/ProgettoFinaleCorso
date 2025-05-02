@@ -5,6 +5,8 @@ export interface User {
   username: string;
   avatar?: string | null;
   status?: "ONLINE" | "OFFLINE" | "AWAY" | "DO_NOT_DISTURB";
+  lastSeen?: Date | null;
+  isOnline?: boolean;
 }
 
 export interface DirectMessage {

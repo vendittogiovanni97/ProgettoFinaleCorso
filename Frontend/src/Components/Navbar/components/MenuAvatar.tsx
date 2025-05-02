@@ -13,7 +13,7 @@ interface MenuAvatarProps {
 const MenuAvatar = ({ anchorEl, setAnchorEl }: MenuAvatarProps) =>  {
   const themeColors = useThemeColors();
   const navigate = useNavigate();
-  const settings = ["Profile", "Settings", "Dashboard", "Logout"];
+  const settings = ["Profile", "Settings", "Logout"];
 
   const handleCloseUserMenu = (setting?: string) => {
     setAnchorEl(null);

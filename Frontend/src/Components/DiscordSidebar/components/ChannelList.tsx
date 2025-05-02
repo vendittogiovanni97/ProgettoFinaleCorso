@@ -1,28 +1,42 @@
-// ChannelList.tsx
 import React, { useEffect, useState } from "react";
 import * as S from "../../../styled/DiscordSidebarStyled";
-import { Channel } from "../../../types/components/typesDiscordSidebar";
-import { serverService } from "../../../services/chatService";
+import {
+  Channel,
+  ChannelListProps,
+} from "../../../types/components/typesDiscordSidebar";
+import serverService from "../../../services/components/serverService";
 
-interface ChannelListProps {
-  serverId: number;
-}
-
-const ChannelList: React.FC<ChannelListProps> = ({ serverId }) => {
+const ChannelList: React.FC<ChannelListProps> = ({
+  serverId,
+  onChannelSelect,
+}) => {
   const [channels, setChannels] = useState<Channel[]>([]);
 
   useEffect(() => {
     const fetchChannels = async () => {
       try {
-        const response = await serverService.getChannels(serverId);
-        setChannels(response);
+        const channelsData = await serverService.getChannels(serverId);
+        setChannels(
+          channelsData.map((channel) => ({
+            ...channel,
+            id: channel.id.toString(),
+          }))
+        );
       } catch (error) {
-        console.error("Errore nel recupero dei channel:", error);
+        console.error("Errore nel recupero dei canali:", error);
       }
     };
 
-    if (serverId) fetchChannels();
+    if (serverId) {
+      fetchChannels();
+    }
   }, [serverId]);
+
+  const handleChannelClick = (channelId: string, channelName: string) => {
+    if (onChannelSelect) {
+      onChannelSelect(channelId, channelName);
+    }
+  };
 
   return (
     <S.DiscordCategories>
@@ -32,8 +46,15 @@ const ChannelList: React.FC<ChannelListProps> = ({ serverId }) => {
       </S.DiscordCategoryHeader>
       <S.DiscordChannelList>
         {channels.map((channel) => (
-          <S.DiscordChannel key={channel.id}>
-            <S.DiscordChannelIcon></S.DiscordChannelIcon>
+          <S.DiscordChannel
+            key={channel.id}
+            onClick={() =>
+              handleChannelClick(channel.id.toString(), channel.name)
+            }
+          >
+            <S.DiscordChannelIcon>
+              {channel.type === "voice" ? "🔊" : "#"}
+            </S.DiscordChannelIcon>
             <S.DiscordChannelName>{channel.name}</S.DiscordChannelName>
           </S.DiscordChannel>
         ))}
