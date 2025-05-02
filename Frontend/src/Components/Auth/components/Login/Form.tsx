@@ -16,7 +16,7 @@ import RememberMe from "./RememberMe";
 
 export default function LoginForm() {
   const { login } = useContext(AuthContext);
-  const [error] = useState<string>("");
+  const [error, setError] = useState<string>(""); // Cambiato qui
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
@@ -31,12 +31,17 @@ export default function LoginForm() {
       email: formData.email,
       password: formData.password,
     };
-    const response = await login(dataLogin);
-    if (response) {
-      console.log("Login Successful");
-      navigate("/dashboard");
-    } else {
-      alert("Credenziali non valide");
+    setError(""); // Reset eventuali errori precedenti
+    try {
+      const response = await login(dataLogin);
+      if (response) {
+        console.log("Login Successful");
+        navigate("/dashboard");
+      } else {
+        setError("Credenziali non valide o errore di connessione.");
+      }
+    } catch (err) {
+      setError("Errore di rete o del server.");
     }
   };
 

@@ -1,4 +1,4 @@
-import { useContext, useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormContainer,
@@ -6,11 +6,11 @@ import {
   Input,
   ErrorMessage,
 } from "../../../../styled/RegistrationStyle";
-import { AuthContext } from "../../../../context/Auth.Provider";
 import { FormData } from "../../../../types/components/typesRegistration";
 import RegistrationButton from "./RegistrationButton";
 import HeaderRegistration from "./Header";
 import PasswordContainer from "./PasswordContainer";
+import authService from "../../../../services/components/authService";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -24,8 +24,6 @@ export default function RegistrationForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { register } = useContext(AuthContext);
-  const [success, setSuccess] = useState<boolean>(false);
 
   const togglePasswordVisibility = (): void => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -54,12 +52,16 @@ export default function RegistrationForm() {
     }
 
     try {
-      const responseBody = await register(formData);
-      setError("");
-      console.log("Dati inviati:", responseBody);
+      const response = await authService.register({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
 
-      if (responseBody) {
-        setSuccess(true);
+      setError("");
+      console.log("Registrazione completata:", response);
+
+      if (response) {
         navigate("/login");
       } else {
         setError("Si è verificato un errore durante la registrazione.");

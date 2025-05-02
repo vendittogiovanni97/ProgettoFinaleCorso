@@ -11,5 +11,14 @@ export default defineConfig({
       ".ngrok-free.app", // Permetti tutti i domini Ngrok (consigliato)
     ],
     host: "0.0.0.0", // Importante per accesso da rete locale
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+        timeout: 30000,
+        ws: true,
+      }
+    }
   },
 });

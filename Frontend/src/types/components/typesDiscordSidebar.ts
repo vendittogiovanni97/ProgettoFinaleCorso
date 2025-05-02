@@ -6,13 +6,25 @@ export interface Server {
   unreadCount?: number;
 }
 
+export interface ChannelPermissions {
+  read: boolean;
+  write: boolean;
+}
+
+export interface ChannelListProps {
+  serverId: number;
+  onChannelSelect: (channelId: string, channelName: string) => void;
+}
+
 export interface Channel {
-  id: number;
+  id: string;
   name: string;
-  text: boolean;
-  voice: boolean;
-  video: boolean;
+  text?: boolean;
+  voice?: boolean;
+  video?: boolean;
   isActive?: boolean;
+  type?: string;
+  permissions?: ChannelPermissions;
 }
 
 export interface ServerIconProps {

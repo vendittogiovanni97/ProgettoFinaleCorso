@@ -4,13 +4,14 @@ import expressSession from "express-session";
 import cors from "cors";
 import expressWs from "express-ws";
 import { addWsRoutes } from "./routes-websocket/index-websocket";
-import https from "https";
+import http from "http";  // Cambiato da https a http
 import fs from "fs";
 import addRoutes from "./routes";
 import { WebSocketManager } from "./websocket-server";
 import { oggi } from "./configuration/time.config";
 import { errorHandler } from "./middleware/errorMiddleware";
 import path from "path";
+import accountRouter from "./routes/accountRouter";
 
 dotenv.config();
 
@@ -23,23 +24,19 @@ if (process.env.SESSION_SECRET === undefined) {
 const app = express();
 const appws = expressWs(app);
 
-const certificatoKey = path.join(__dirname, "../certificati/domain.key");
-const certificatoCrt = path.join(__dirname, "../certificati/domain.crt");
+const server = http.createServer(appws.app);
 
-const server = https.createServer(
-  {
-    key: fs.readFileSync(certificatoKey),
-    cert: fs.readFileSync(certificatoCrt),
-    passphrase: "pippo",
-  },
-  appws.app
-);
-
+// Aggiungiamo il middleware keep-alive come primo middleware
 app.use((request, response, next) => {
-  console.log(request.method, request.url);
+  response.setHeader('Connection', 'keep-alive');
+  response.setTimeout(30000);
   next();
 });
 
+// Prima configuriamo il parsing del body
+app.use(express.json());
+
+// Poi configuriamo CORS
 app.use(
   cors({
     origin: process.env.ORIGIN,
@@ -47,7 +44,18 @@ app.use(
   })
 );
 
-app.use(express.json());
+// Infine il logging
+app.use((request, response, next) => {
+  console.log('Richiesta ricevuta:', {
+    method: request.method,
+    url: request.url,
+    body: request.body,
+    headers: request.headers
+  });
+  next();
+});
+
+// Il resto dei middleware
 app.use(
   expressSession({
     secret: process.env.SESSION_SECRET,
@@ -57,10 +65,11 @@ app.use(
     cookie: {
       maxAge: 86400000,
       sameSite: "strict",
-      secure: true,
     },
   })
 );
+
+app.use("/api/account", accountRouter);
 
 new WebSocketManager(server);
 
@@ -68,6 +77,14 @@ addRoutes(app);
 addWsRoutes(app);
 
 app.use(errorHandler);
+
+app.use((request, response, next) => {
+  // Imposta l'header Connection su keep-alive
+  response.setHeader('Connection', 'keep-alive');
+  // Imposta il timeout della connessione a 30 secondi
+  response.setTimeout(30000);
+  next();
+});
 
 server.listen(port, () => {
   console.log(`Server in ascolto sulla porta ${port} ${oggi}`);
