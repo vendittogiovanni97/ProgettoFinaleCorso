@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import {useThemeColors} from "../../styled/BarraSuperioreStyled";
+import useThemeColors from "../../styled/BarraSuperioreStyled";
 import { useNavigate } from "react-router-dom";
 import { Globe, Palette, Bell, Lock, HelpCircle} from "lucide-react";
 import PaginaLingua from "./components/PageLanguages";

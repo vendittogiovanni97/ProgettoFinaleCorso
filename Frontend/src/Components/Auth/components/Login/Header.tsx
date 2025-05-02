@@ -8,10 +8,12 @@ export default function HeaderLogin() {
       sx={{
         width: "100%",
         color: "black",
-        fontSize: "clamp(1.9rem, 11vw, 2.7rem)",
+        fontSize: "2.5rem",
+        fontFamily: "'Roboto', sans-serif",
+        fontWeight: "bold",
         mb: 3,
         textAlign: "center",
-        fontWeight: "bold",
+        textTransform: "uppercase", 
       }}
     >
       Login
