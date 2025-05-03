@@ -8,7 +8,6 @@ import {
 } from "../styled/DashboardStyled";
 import ChatLists from "../Components/ChatList/ChatLists";
 import Navbar from "../Components/Navbar/Navbar";
-// FIX: Import the default export from the correct file
 import DiscordSidebar from "../Components/DiscordSidebar/Sidebar";
 import ChatArea from "../Components/ChatArea/ChatArea";
 import { Message, Contact, Group } from "../types/components/typesDashboard";
@@ -137,13 +136,6 @@ const Dashboard: React.FC = () => {
   const [showChatList, setShowChatList] = useState<boolean>(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
-  // State for storing messages for each voice channel
-  const [channelMessages, setChannelMessages] = useState<
-    Record<string, Message[]>
-  >({
-    channel1: [], // Messages for "Lobby" channel
-    channel2: [], // Messages for "PrimaStanza" channel
-  });
 
   const handleSelectChat = (
     id: number,
@@ -180,16 +172,7 @@ const Dashboard: React.FC = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleDiscordChannelSelect = (
-    channelId: string,
-    channelName: string
-  ): void => {
-    setCurrentChatId(Number(channelId));
-    setCurrentChatName(channelName);
-    setIsOnline(true); // Voice channels are always "online"
-    setLastSeen("Online");
-    setMessages(channelMessages[channelId] || []);
-  };
+
 
   // Function to toggle chat list on mobile
   const toggleChatList = (): void => {
@@ -202,7 +185,7 @@ const Dashboard: React.FC = () => {
 
       <MainContent>
         {isSidebarOpen && (
-          <DiscordSidebar onChannelSelect={handleDiscordChannelSelect} />
+          <DiscordSidebar/>
         )}
 
         <ChatLayout>
@@ -224,8 +207,6 @@ const Dashboard: React.FC = () => {
             initialMessages={messages}
             setMessages={setMessages}
             contacts={contacts}
-            channelMessages={channelMessages}
-            setChannelMessages={setChannelMessages}
           />
           {!showChatList && (
             <button

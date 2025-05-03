@@ -27,9 +27,14 @@ const Amici: React.FC = () => {
   const fetchFriends = async () => {
     try {
       const res = await friendService.getFriends(CURRENT_USER_ID);
-      if (res.success) setFriends(res.data);
-      else setFriends([]);
-    } catch {
+      if (res.success) {
+        setFriends(res.data);
+      } else {
+        setFriends([]);
+        setMessage(res.message || "Nessun amico trovato");
+      }
+    } catch (error) {
+      console.error("Error fetching friends:", error);
       setFriends([]);
       setMessage("Errore nel caricamento amici");
     }
@@ -38,9 +43,14 @@ const Amici: React.FC = () => {
   const fetchRequests = async () => {
     try {
       const res = await friendService.getPendingRequests(CURRENT_USER_ID);
-      if (res.success) setRequests(res.data);
-      else setRequests([]);
-    } catch {
+      if (res.success) {
+        setRequests(res.data);
+      } else {
+        setRequests([]);
+        setMessage(res.message || "Nessuna richiesta trovata");
+      }
+    } catch (error) {
+      console.error("Error fetching requests:", error);
       setRequests([]);
       setMessage("Errore nel caricamento richieste");
     }
@@ -50,9 +60,24 @@ const Amici: React.FC = () => {
   const handleSearch = async () => {
     setHasSearched(true);
     if (search.trim()) {
-      const res = await userService.searchUsers(search, CURRENT_USER_ID); // <-- aggiornata
-      if (res.success) setSearchResults(res.data);
-      else setSearchResults([]);
+      try {
+        const res = await userService.searchUsers(search, CURRENT_USER_ID);
+        if (res.success) {
+          setSearchResults(res.data);
+          setMessage(res.data.length === 0 ? "Nessun utente trovato" : "");
+        } else {
+          setSearchResults([]);
+          setMessage(res.message || "Errore nella ricerca");
+        }
+      } catch (error: unknown) { // Use unknown instead of any
+        console.error("Search error:", error);
+        setSearchResults([]);
+        if (error instanceof SyntaxError) { // Check if the error is a SyntaxError.
+          setMessage("Errore nella risposta del server"); // Notify the user that the error is related to the server response.
+        } else {
+          setMessage("Errore nella ricerca"); // A generic network error.
+        }
+      }
     } else {
       setSearchResults([]);
     }
