@@ -8,9 +8,10 @@ import {
 } from "../styled/DashboardStyled";
 import ChatLists from "../Components/ChatList/ChatLists";
 import Navbar from "../Components/Navbar/Navbar";
-import { Message, Contact, Group } from "../types/components/typesDashboard";
-import { DiscordSidebar } from "../Components/DiscordSidebar";
+// FIX: Import the default export from the correct file
+import DiscordSidebar from "../Components/DiscordSidebar/Sidebar";
 import ChatArea from "../Components/ChatArea/ChatArea";
+import { Message, Contact, Group } from "../types/components/typesDashboard";
 
 const Dashboard: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([

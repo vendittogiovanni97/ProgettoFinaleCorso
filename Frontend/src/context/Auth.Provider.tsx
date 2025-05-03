@@ -6,8 +6,8 @@ import backendFetch from "../services/api";
 import { AuthContextType } from "../types/typesContext/Auth.Context.type";
 
 export const AuthContext = createContext<AuthContextType>({
-  login: async (data: LoginForm) => false,
-  register: async (data: RegisterForm) => false,
+  login: async (_data: LoginForm) => false,
+  register: async (_data: RegisterForm) => false,
   isLogged: false,
   userLogged: null,
 });

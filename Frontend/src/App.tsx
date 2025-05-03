@@ -10,6 +10,7 @@ import { AppWrapper } from "../src/styled/DashboardStyled"; // Assicurati che il
 import PaginaImpostazioni from "./pages/Settings";
 import LoginPages from "./pages/LoginPages";
 import Registration from "./pages/RegistrationPage";
+import Amici from "./pages/Amici";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
 
             {/* Pagina di errore */}
             <Route path="/notfound" element={<NotFound404Paged />} />
+            <Route path="/amici" element={<Amici />} />
             <Route path="*" element={<LoginPages />} />
           </Routes>
         </Router>

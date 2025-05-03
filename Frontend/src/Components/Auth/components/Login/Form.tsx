@@ -40,7 +40,7 @@ export default function LoginForm() {
       } else {
         setError("Credenziali non valide o errore di connessione.");
       }
-    } catch (err) {
+    } catch {
       setError("Errore di rete o del server.");
     }
   };
