@@ -20,7 +20,7 @@ export const ProfileGrid = styled.div`
   gap: 30px;
   width: 100%;
   max-width: 1200px;
-  background: #1a1a1a;
+  background: ${props => props.theme.colors.backgroundDark || '#1a1a1a'};
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);

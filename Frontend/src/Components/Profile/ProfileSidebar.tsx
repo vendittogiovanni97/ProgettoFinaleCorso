@@ -1,6 +1,8 @@
 import React from "react";
-import { ProfileSidebar, Avatar, H2Style } from "../../styled/ProfilePageStyle";
 import { ProfileSidebarProps } from "../../types/components/typesProfile";
+import { Avatar } from "../ProfilePage/components/avatar/AvatarStyles";
+import { H2Style } from "../ProfilePage/ProfilePageStyles";
+import ProfileSidebar from '../ProfilePage/components/Sidebar/SidebarStyles'
 
 const ProfileSidebarComponent: React.FC<ProfileSidebarProps> = ({ 
   contact, 

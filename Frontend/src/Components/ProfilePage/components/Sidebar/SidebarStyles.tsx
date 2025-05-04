@@ -8,4 +8,6 @@ const ProfileSidebar = styled.div`
   align-items: center;
   border-right: 1px solid ${props => `${props.theme.colors.primary}1a`};
 `;
+
+
 export default ProfileSidebar;

@@ -1,5 +1,4 @@
 import React from "react";
-import { ProfileContent, ProfileSection } from "../../styled/ProfilePageStyle";
 import { ProfileContentProps } from "../../types/components/typesProfile";
 import {
   FaUser,
@@ -9,13 +8,14 @@ import {
   FaMobileAlt,
   FaBriefcase,
 } from "react-icons/fa";
+import { ProfileContentContainer, ProfileSection } from "../ProfilePage/components/ProfileContent/ProfileContentStyle";
 
 const ProfileContentComponent: React.FC<ProfileContentProps> = ({
   profileDetails,
   phone,
 }) => {
   return (
-    <ProfileContent>
+    <ProfileContentContainer>
       <ProfileSection>
         <div className="field-content">
           <FaUser />
@@ -63,7 +63,7 @@ const ProfileContentComponent: React.FC<ProfileContentProps> = ({
           </p>
         </div>
       </ProfileSection>
-    </ProfileContent>
+    </ProfileContentContainer>
   );
 };
 

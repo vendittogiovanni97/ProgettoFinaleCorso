@@ -5,6 +5,8 @@ export interface Contact {
   status: string;
   lastSeen: string;
   unreadCount?: number; // Added unreadCount property
+  avatar: string;
+  phone: string;
 }
 
 export interface Group {

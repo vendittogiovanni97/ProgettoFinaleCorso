@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, ProfileGrid } from "../styled/ProfilePageStyle";
 import ProfileSidebarComponent from "../Components/Profile/ProfileSidebar";
 import ProfileContentComponent from "../Components/Profile/ProfileContent";
 import { 
   ContactProfilePageProps,
   ProfileDetails
 } from "../types/components/typesProfile";
+import { Container, ProfileGrid } from "../Components/ProfilePage/ProfilePageStyles";
+import { Contact } from "../types/components/typesChatLists";
 
 const Profile: React.FC<ContactProfilePageProps> = ({ contact: initialContact }) => {
   const { id } = useParams<{ id: string }>();

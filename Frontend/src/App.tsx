@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPasswordPage";
-import ProfilePageWrapper from "./Components/ProfilePage/ProfilePage";
+import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import NotFound404Paged from "./pages/notFound";
 import Profile from './pages/Profile';
-import ThemeProvider from "../src/customizations/Theme"; // Importa il ThemeProvider
-import Layout from "../src/customizations/Layout"; // Importeremo un nuovo componente Layout
-import { AppWrapper } from "../src/styled/DashboardStyled"; // Assicurati che il percorso sia corretto
+import ThemeProvider from "../src/customizations/Theme";
+import Layout from "../src/customizations/Layout";
+import { AppWrapper } from "../src/styled/DashboardStyled";
 import PaginaImpostazioni from "./pages/Settings";
 import LoginPages from "./pages/LoginPages";
 import Registration from "./pages/RegistrationPage";
@@ -20,7 +20,7 @@ function App() {
             {/* Pagine senza layout (login, registrazione, ecc.) */}
             <Route path="/login" element={<LoginPages />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
-            <Route path="/registration" element={<Registration/>} />
+            <Route path="/registration" element={<Registration />} />
             {/* Pagine con layout (dashboard, profilo, ecc.) */}
             <Route
               path="/dashboard"
@@ -34,7 +34,7 @@ function App() {
               path="/profilepage"
               element={
                 <Layout>
-                  <ProfilePageWrapper />
+                  <ProfilePage />
                 </Layout>
               }
             />
@@ -50,21 +50,10 @@ function App() {
               path="/profile/user/:id"
               element={
                 <Layout>
-                  <Profile
-                    contact={{
-                      id: 1,
-                      name: "Anil",
-                      status: "active",
-                      avatar: "http://example.com/avatar.jpg",
-                      lastSeen: new Date().toISOString(),
-                      isOnline: true,
-                      phone: "123-456-7890",
-                    }}
-                  />
+                  <Profile />
                 </Layout>
               }
             />
-
             {/* Pagina di errore */}
             <Route path="/notfound" element={<NotFound404Paged />} />
             <Route path="*" element={<LoginPages />} />

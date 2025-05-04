@@ -13,13 +13,17 @@ const Sidebar: React.FC = () => {
     jobTitle: "Professional Developer"
   };
 
+  if (!themeColors) {
+    return <div>Caricamento...</div>;
+  }
+
   return (
     <ProfileSidebar>
       <Avatar />
-      <H2Style style={{color: themeColors?.textLight}}>
+      <H2Style style={{color: themeColors.textLight}}>
         {profile.firstName} {profile.lastName}
       </H2Style>
-      <p style={{ color: themeColors?.primary, marginTop: "10px" }}>
+      <p style={{ color: themeColors.primary, marginTop: "10px" }}>
         {profile.jobTitle}
       </p>
       <SocialLinks />

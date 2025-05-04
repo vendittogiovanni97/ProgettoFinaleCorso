@@ -17,10 +17,11 @@ export const ProfileContentContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+  background: ${props => props.theme.colors.backgroundLight};
 `;
 
 export const ProfileSection = styled.div`
-  background: rgba(26, 26, 26, 0.1);
+  background: ${props => `${props.theme.colors.backgroundDark || '#1a1a1a'}0a`};
   border-radius: 15px;
   padding: 25px;
   transition: all 0.3s ease;
@@ -28,9 +29,10 @@ export const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  color: ${props => props.theme.colors.textLight};
 
   &:hover {
-    background: rgba(26, 26, 26, 0.15);
+    background: ${props => `${props.theme.colors.backgroundDark}1a`};
     transform: translateY(-5px);
   }
 `;
