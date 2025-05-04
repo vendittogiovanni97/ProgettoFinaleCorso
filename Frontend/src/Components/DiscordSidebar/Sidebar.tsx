@@ -1,80 +1,38 @@
-import React, { useEffect, useState } from "react";
-import {
-  DiscordSidebarProps,
-  Server,
-} from "../../types/components/typesDiscordSidebar";
+import React from "react";
 import * as S from "../../styled/DiscordSidebarStyled";
-import backendFetch from "../../services/api";
-import { ChannelList, ServerIcon } from ".";
-import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
-const DiscordSidebar: React.FC<DiscordSidebarProps> = ({ onChannelSelect }) => {
-  const [servers, setServers] = useState<Server[]>([]);
-  const [activeServer, setActiveServer] = useState<string>("");
-  const { t } = useTranslation();
+const DiscordSidebar: React.FC = () => {
+  const navigate = useNavigate();
+  const settings = ["Profile", "Settings", "Amici", "Logout"];
 
-  useEffect(() => {
-    const fetchServer = async () => {
-      try {
-        const { responseBody } = await backendFetch("/servers/server");
-        setServers(responseBody.details);
-        console.log("Server ricevuti", responseBody);
-        if (responseBody.details.length > 0) {
-          setActiveServer(responseBody.details[0].id);
-        }
-      } catch (error) {
-        console.error("Errore nel recupero dei server:", error);
-      }
-    };
-
-    fetchServer();
-  }, []);
-
-  const handleServerSelect = (serverId: string) => {
-    setActiveServer(serverId);
-  };
-
-  const handleChannelSelect = (channelId: string, channelName: string) => {
-    if (onChannelSelect) {
-      onChannelSelect(channelId, channelName);
+  const handleMenuSelect = (setting: string) => {
+    if (setting === "Logout") {
+      navigate("/login");
+    }
+    if (setting === "Profile") {
+      navigate("/profilepage");
+    }
+    if (setting === "Settings") {
+      navigate("/settings");
+    }
+    if (setting === "Amici") {
+      navigate("/amici");
     }
   };
 
   return (
     <S.DiscordSidebarContainer>
-      <S.DiscordServerList>
-        {servers.map((server) => (
-          <ServerIcon
-            key={server.id}
-            server={server}
-            isActive={activeServer.toString() === server.id.toString()}
-            onClick={() => handleServerSelect(server.id.toString())}
-          />
+      <S.SidebarMenuList>
+        {settings.map((setting) => (
+          <S.SidebarMenuItem
+            key={setting}
+            onClick={() => handleMenuSelect(setting)}
+          >
+            {setting}
+          </S.SidebarMenuItem>
         ))}
-        <S.DiscordServerIcon $addServer>
-          <span>+</span>
-        </S.DiscordServerIcon>
-        <S.DiscordServerIcon $explore>
-          <span role="img" aria-label="explore">
-            🔍
-          </span>
-        </S.DiscordServerIcon>
-      </S.DiscordServerList>
-
-      <S.DiscordChannelSidebar>
-        <S.DiscordServerHeader>
-          <h3>{t("sidebar.serverProject")}</h3>
-          <S.ServerDropdown>▾</S.ServerDropdown>
-        </S.DiscordServerHeader>
-        {activeServer && (
-          <ChannelList
-            serverId={parseInt(activeServer)}
-            onChannelSelect={(channelId, channelName) =>
-              handleChannelSelect(channelId.toString(), channelName)
-            }
-          />
-        )}
-      </S.DiscordChannelSidebar>
+      </S.SidebarMenuList>
     </S.DiscordSidebarContainer>
   );
 };

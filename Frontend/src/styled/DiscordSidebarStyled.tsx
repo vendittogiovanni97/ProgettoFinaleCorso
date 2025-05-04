@@ -3,10 +3,42 @@ import styled from 'styled-components';
 
 export const DiscordSidebarContainer = styled.div`
   display: flex;
+  flex-direction: column; /* Ensure vertical stacking */
   height: 100%;
-  color: var(--text-light);
   width: 250px;
   z-index: 1;
+  background-color: var(--background-light); /* Uniform background */
+  color: var(--text-light);
+  align-items: stretch;
+  padding-top: 32px;
+`;
+
+export const SidebarMenuList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  margin-top: 0;
+`;
+
+// Keep only ONE definition like this:
+export const SidebarMenuItem = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 14px 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: transparent;
+  color: var(--text-light);
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+  }
 `;
 
 export const DiscordServerList = styled.div`
@@ -194,4 +226,41 @@ export const DiscordChannelName = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+
+export const AvatarButton = styled.button`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--background-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px auto;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+  &:hover {
+    background: var(--hover-color);
+  }
+`;
+
+export const AvatarIcon = styled.div`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark);
+  font-size: 20px;
+  font-weight: bold;
+  /* You can replace this with an <img> if you want a real avatar */
+  &::before {
+    content: "👤";
+    display: block;
+  }
 `;

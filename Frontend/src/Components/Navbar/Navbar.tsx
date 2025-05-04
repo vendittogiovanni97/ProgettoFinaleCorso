@@ -4,12 +4,12 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import useThemeColors from "../../styled/BarraSuperioreStyled";
 import Header from "./components/Header";
-import SearchBar from "./components/SearchBar";
 import ThemeToggleButton from "./components/ThemeToggleButton";
 import { Box } from "@mui/material";
 import AvatarSideBar from "./components/Avatar";
 import { ResponsiveAppBarProps } from "../../types/components/typesDashboard";
 import { useThemeContext } from "../../context/ThemeContextDefinition";
+// import SearchBar from "./components/SearchBar"; // REMOVE this line
 
 const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
   const themeColors = useThemeColors();
@@ -40,7 +40,7 @@ const Navbar: React.FC<ResponsiveAppBarProps> = ({ onMenuClick }) => {
         <Toolbar>
           <MenuButton onClick={handleMenuClick} />
           <Header />
-          <SearchBar />
+          {/* <SearchBar /> */} {/* REMOVE or comment out this line */}
           <Box sx={{ width: '20px' }} />
           <ThemeToggleButton />
           <AvatarSideBar />

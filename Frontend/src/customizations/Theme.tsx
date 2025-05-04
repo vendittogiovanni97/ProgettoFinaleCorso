@@ -39,6 +39,20 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
+// Funzione per creare il tema per styled-components
+const getStyledTheme = (mode: "light" | "dark") => ({
+  colors: {
+    backgroundDark: mode === "dark" ? "#1a1a1a" : "#eef2f7",
+    backgroundLight: mode === "dark" ? "#2a2a2a" : "#fcfcfc",
+    primary: "#ffd700",
+    textLight: mode === "dark" ? "#ffffff" : "#2c3e50",
+    hoverColor: mode === "dark"
+      ? "rgba(255, 215, 0, 0.1)"
+      : "rgba(255, 215, 0, 0.15)",
+    // aggiungi altre proprietà se servono
+  },
+});
+
 const ThemeProviderInner: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -189,7 +203,7 @@ const ThemeProviderInner: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <MUIThemeProvider theme={theme}>
-      <StyledThemeProvider theme={theme}>
+      <StyledThemeProvider theme={getStyledTheme(mode)}>
         <CssBaseline />
         <GlobalStyles styles={globalStyles} />
         <GlobalStyles styles={dynamicStyles} />

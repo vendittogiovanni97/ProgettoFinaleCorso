@@ -17,6 +17,11 @@ const userService = {
     });
     return handleResponse(response);
   },
+
+  searchUsers: async (query: string, currentUserId: number) => {
+    const res = await fetch(`/api/users/search?query=${encodeURIComponent(query)}&exclude=${currentUserId}`);
+    return await res.json();
+  },
 };
 
 export default userService;
